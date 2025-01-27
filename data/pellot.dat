@@ -1,10 +1,10 @@
-;id	|Pellon nimi	|Maanmuokkaus	|Kylvetty vilja	|Lannoitus		|Rikkaruohot	|Korjuu	|
-1	|Pelto 20		|Kynnetty		|Vehnä			|Kerran			|Poisto			|Puinti	|
-1	|Pelto 21		|Äestetty		|Ohra			|Kaksi kertaa	|Poisto			|Puinti	|
-1	|Pelto 22		|Äestetty		|Maissi			|Kerran			|Poisto			|Puinti	|
-1	|Pelto 23		|Kynnetty		|Nurmi			|Kaksi kertaa	|Ei poistoa		|Niitto	|
-2	|Pelto 43		|Suorakylvetty	|Kaura			|Ei kertaakaan	|Poisto			|Puinti	|
-2	|Pelto 42		|Suorakylvetty	|Kaura			|Ei kertaakaan	|Poisto			|Puinti	|
-2	|Pelto 31		|Suorakylvetty	|Nurmi			|Kerran			|Ei poistoa		|Niitto	|
-3	|Pelto 10		|Äestetty		|Vehnä			|Kaksi kertaa	|Poisto			|Puinti	|
-3	|Pelto 09		|Äestetty		|Maissi			|Kaksi kertaa	|Poisto			|Puinti	|
+;id     |tallennuksen id |Pellon nimi   |Maanmuokkaus   |Kylvetty vilja	|Lannoitus	|Rikkaruohot	|Korjuu	|
+1       |1	         |Pelto 20	|Kynnetty	|Vehnä	        |Kerran		|Poisto		|Puinti	|
+2       |1	         |Pelto 21	|Äestetty	|Ohra	        |Kaksi kertaa   |Poisto		|Puinti	|
+3       |1	         |Pelto 22	|Äestetty	|Maissi	        |Kerran		|Poisto		|Puinti	|
+4       |1	         |Pelto 23	|Kynnetty	|Nurmi	        |Kaksi kertaa	|Ei poistoa	|Niitto	|
+5       |2	         |Pelto 43	|Suorakylvetty	|Kaura	        |Ei kertaakaan	|Poisto		|Puinti	|
+6       |2	         |Pelto 42	|Suorakylvetty	|Kaura	        |Ei kertaakaan	|Poisto		|Puinti	|
+7       |2	         |Pelto 31	|Suorakylvetty	|Nurmi	        |Kerran	        |Ei poistoa	|Niitto	|
+8       |3	         |Pelto 10	|Äestetty	|Vehnä	        |Kaksi kertaa	|Poisto		|Puinti	|
+9       |3	         |Pelto 09	|Äestetty	|Maissi	        |Kaksi kertaa   |Poisto		|Puinti	|
