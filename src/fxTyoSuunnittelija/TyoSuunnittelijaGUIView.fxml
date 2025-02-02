@@ -1,10 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import fi.jyu.mit.fxgui.ComboBoxChooser?>
+<?import fi.jyu.mit.fxgui.ListChooser?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="fxTyoSuunnittelija.TyoSuunnittelijaGUIController">
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxTyoSuunnittelija.TyoSuunnittelijaGUIController">
    <top>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="Tiedosto">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Tallenna" />
+                  <MenuItem mnemonicParsing="false" text="Lopeta" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Muokkaa">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Lisää uusi tallennus" />
+                  <MenuItem mnemonicParsing="false" text="Lisää uusi pelto" />
+                  <MenuItem mnemonicParsing="false" text="Muuta tallennuksen nimeä" />
+                  <MenuItem mnemonicParsing="false" text="Muuta pellon nimeä" />
+                  <MenuItem mnemonicParsing="false" text="Poista tallennus" />
+                  <MenuItem mnemonicParsing="false" text="Poista pelto" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Apua">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Ohje" />
+                  <MenuItem mnemonicParsing="false" text="Tietoja" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
    </top>
+   <center>
+      <HBox BorderPane.alignment="CENTER">
+         <children>
+            <BorderPane prefHeight="200.0">
+               <top>
+                  <Label text="Tallennukset" BorderPane.alignment="CENTER" />
+               </top>
+               <center>
+                  <VBox BorderPane.alignment="CENTER">
+                     <children>
+                        <ListChooser rivit="Tallennus 1&#10;Tallennus 2&#10;Tallennus 3" />
+                        <ComboBoxChooser prefWidth="250.0" rivit="Tallennukset&#10;Pellot" />
+                        <TextField />
+                     </children>
+                  </VBox>
+               </center>
+            </BorderPane>
+            <BorderPane prefHeight="200.0" prefWidth="200.0">
+               <top>
+                  <Label text="Pellot" BorderPane.alignment="CENTER" />
+               </top>
+            </BorderPane>
+            <BorderPane prefHeight="200.0" prefWidth="200.0">
+               <top>
+                  <Label text="Työtehtävät" BorderPane.alignment="CENTER" />
+               </top>
+            </BorderPane>
+         </children>
+      </HBox>
+   </center>
 </BorderPane>
