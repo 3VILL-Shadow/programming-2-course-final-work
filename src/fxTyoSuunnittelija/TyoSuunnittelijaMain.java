@@ -18,12 +18,18 @@ public class TyoSuunnittelijaMain extends Application {
     public void start(Stage primaryStage) {
         try {
             FXMLLoader ldr = new FXMLLoader(getClass().getResource("TyoSuunnittelijaGUIView.fxml"));
-            final Pane root = ldr.load();
-            //final TyoSuunnittelijaGUIController tyosuunnittelijaCtrl = (TyoSuunnittelijaGUIController) ldr.getController();
-            Scene scene = new Scene(root);
+            final Pane root = (Pane)ldr.load();
+            final TyoSuunnittelijaGUIController tyosuunnittelijaCtrl = (TyoSuunnittelijaGUIController) ldr.getController();
+            
+            final Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("tyosuunnittelija.css").toExternalForm());
             primaryStage.setScene(scene);
             primaryStage.setTitle("TyoSuunnittelija");
+            
+            primaryStage.setOnCloseRequest((event) -> {
+                if (!tyosuunnittelijaCtrl.voikoSulkea() ) event.consume();
+            });
+            
             primaryStage.show();
         } catch(Exception e) {
             e.printStackTrace();
