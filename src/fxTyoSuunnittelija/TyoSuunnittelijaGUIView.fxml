@@ -46,7 +46,7 @@
    <center>
       <HBox BorderPane.alignment="CENTER">
          <children>
-            <BorderPane prefHeight="200.0">
+            <BorderPane id="Tallennukset" prefHeight="200.0">
                <top>
                   <Label text="Tallennukset" BorderPane.alignment="CENTER">
                      <BorderPane.margin>
@@ -56,7 +56,7 @@
                <center>
                   <VBox BorderPane.alignment="CENTER">
                      <children>
-                        <ListChooser rivit="Tallennus 1&#10;Tallennus 2&#10;Tallennus 3" />
+                        <ListChooser fx:id="chooserTallennukset" rivit="Tallennus 1&#10;Tallennus 2&#10;Tallennus 3" />
                         <ComboBoxChooser prefWidth="250.0" rivit="Tallennukset&#10;Pellot" />
                         <TextField />
                      </children>
@@ -66,7 +66,7 @@
                   <Insets bottom="3.0" left="3.0" right="3.0" />
                </HBox.margin>
             </BorderPane>
-            <BorderPane prefHeight="200.0" prefWidth="200.0">
+            <BorderPane id="Pellot" fx:id="panePellot" prefHeight="200.0" prefWidth="200.0">
                <top>
                   <Label text="Pellot" BorderPane.alignment="CENTER">
                      <BorderPane.margin>
@@ -74,13 +74,13 @@
                      </BorderPane.margin></Label>
                </top>
                <center>
-                  <ListChooser rivit="Pelto 20&#10;Pelto 21&#10;Pelto 22&#10;Pelto 23" BorderPane.alignment="CENTER" />
+                  <ListChooser fx:id="chooserPellot" rivit="Pelto 20&#10;Pelto 21&#10;Pelto 22&#10;Pelto 23" BorderPane.alignment="CENTER" />
                </center>
                <HBox.margin>
                   <Insets bottom="3.0" left="3.0" right="3.0" />
                </HBox.margin>
             </BorderPane>
-            <BorderPane>
+            <BorderPane id="Tyotehtavat" fx:id="paneTyotehtavat">
                <top>
                   <Label text="Työtehtävät" BorderPane.alignment="CENTER">
                      <BorderPane.margin>

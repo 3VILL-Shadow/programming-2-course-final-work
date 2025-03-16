@@ -2,6 +2,7 @@ package fxTyoSuunnittelija;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import tyoSuunnittelija.TyoSuunnittelija;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.fxml.FXMLLoader;
@@ -30,6 +31,10 @@ public class TyoSuunnittelijaMain extends Application {
                 if (!tyosuunnittelijaCtrl.voikoSulkea() ) event.consume();
             });
             
+            
+            TyoSuunnittelija tyoSuunnittelija = new TyoSuunnittelija();  
+            tyosuunnittelijaCtrl.setTyoSuunnittelija(tyoSuunnittelija);
+
             primaryStage.show();
         } catch(Exception e) {
             e.printStackTrace();

@@ -2,10 +2,18 @@ package fxTyoSuunnittelija;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Font;
+import tyoSuunnittelija.SailoException;
+import tyoSuunnittelija.Tallennus;
 //import javafx.fxml.Initializable;
+import tyoSuunnittelija.TyoSuunnittelija;
 
 import java.awt.Desktop;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 //import java.net.URL;
@@ -21,11 +29,15 @@ import fi.jyu.mit.fxgui.*;
 public class TyoSuunnittelijaGUIController {
       
     
+    @FXML private ScrollPane  paneTallennus;
+    @FXML private ListChooser<Tallennus> chooserTallennukset;
+    
     /**
      * Lisätään uusi tallennus
      */
     @FXML private void handleUusiTallennus() {
-        Dialogs.showMessageDialog("Ei osata vielä lisätä tallennusta");
+        uusiTallennus();
+        //Dialogs.showMessageDialog("Ei osata vielä lisätä tallennusta");
     }
 
     /**
@@ -135,6 +147,87 @@ public class TyoSuunnittelijaGUIController {
      */
     @FXML private void handleTietoja() {
         ModalController.showModal(TyoSuunnittelijaGUIController.class.getResource("TyoSuunnittelijaAboutGUIView.fxml"), "TyöSuunnittelija", null, "");
+    }
+
+    
+    //===========================================================================================    
+    // Tästä eteenpäin ei käyttöliittymään suoraan liittyvää koodia    
+  
+    private TyoSuunnittelija tyoSuunnittelija;
+    private Tallennus tallennusKohdalla;
+    private TextArea areaTallennus = new TextArea();
+    
+    /**
+     * Tekee tarvittavat muut alustukset, nyt vaihdetaan ListChooserin tilalle
+     * yksi iso tekstikenttä, johon voidaan tulostaa jäsenten tiedot.
+     * Alustetaan myös Tallennuslistan kuuntelija 
+     */
+    protected void alusta() {
+        //paneTallennus.setContent(areaTallennus);
+        //areaTallennus.setFont(new Font("Courier New", 12));
+        //paneTallennus.setFitToHeight(true);
+        
+        chooserTallennukset.clear();
+        chooserTallennukset.addSelectionListener(e -> naytaTallennus());
+    }
+
+    
+    /**
+     * Näyttää listasta valitun jäsenen tiedot, tilapäisesti yhteen isoon edit-kenttään
+     */
+    protected void naytaTallennus() {
+        tallennusKohdalla = chooserTallennukset.getSelectedObject();
+
+        if (tallennusKohdalla == null) return;
+
+        areaTallennus.setText("");
+        try (PrintStream os = TextAreaOutputStream.getTextPrintStream(areaTallennus)) {
+            tallennusKohdalla.tulosta(os);
+        }
+    }
+    
+    
+    /**
+     * Hakee tallennusten tiedot listaan
+     * @param tnro tallennuksen numero, joka aktivoidaan haun jälkeen
+     */
+    protected void hae(int tnro) {
+        chooserTallennukset.clear();
+
+        int index = 0;
+        for (int i = 0; i < tyoSuunnittelija.getTallennuksia(); i++) {
+            Tallennus tallennus = tyoSuunnittelija.annaTallennukset(i);
+            if (tallennus.getTunnusNro() == tnro) index = i;
+            chooserTallennukset.add(tallennus.getNimi(), tallennus);
+        }
+        chooserTallennukset.setSelectedIndex(index); // tästä tulee muutosviesti joka näyttää jäsenen
+    }
+
+    
+    /**
+     * Luo uuden tallennuksen jota aletaan editoimaan 
+     */
+    protected void uusiTallennus() {
+        Tallennus uusi = new Tallennus();
+        uusi.rekisteroi();
+        uusi.kokeileTallennus();
+        try {
+            tyoSuunnittelija.lisaa(uusi);
+        } catch (SailoException e) {
+            Dialogs.showMessageDialog("Ongelmia uuden luomisessa " + e.getMessage());
+            return;
+        }
+        hae(uusi.getTunnusNro());
+    }
+
+    
+    /**
+     * @param tyoSuunnittelija työSuunnittelija jota käytetään tässä käyttöliittymässä
+     */
+    public void setTyoSuunnittelija(TyoSuunnittelija tyoSuunnittelija) {
+        this.tyoSuunnittelija = tyoSuunnittelija;
+        naytaTallennus();
+
     }
 
 }
