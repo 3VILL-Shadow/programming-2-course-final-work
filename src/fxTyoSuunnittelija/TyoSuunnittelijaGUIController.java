@@ -2,22 +2,17 @@ package fxTyoSuunnittelija;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.text.Font;
+import javafx.fxml.Initializable;
 import tyoSuunnittelija.SailoException;
 import tyoSuunnittelija.Tallennus;
-//import javafx.fxml.Initializable;
 import tyoSuunnittelija.TyoSuunnittelija;
 
 import java.awt.Desktop;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.net.URI;
 import java.net.URISyntaxException;
-//import java.net.URL;
-//import java.util.ResourceBundle;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import fi.jyu.mit.fxgui.*;
 
@@ -26,11 +21,16 @@ import fi.jyu.mit.fxgui.*;
  * @version 27.1.2025
  *
  */
-public class TyoSuunnittelijaGUIController {
+public class TyoSuunnittelijaGUIController implements Initializable {
       
-    
-    @FXML private ScrollPane  paneTallennus;
     @FXML private ListChooser<Tallennus> chooserTallennukset;
+    
+    
+    @Override
+    public void initialize(URL url, ResourceBundle bundle) {
+        alusta();      
+    }
+    
     
     /**
      * Lisätään uusi tallennus
@@ -91,13 +91,6 @@ public class TyoSuunnittelijaGUIController {
     }
     
     
-    /**
-     * Tietojen tallennus
-     */
-    private void tallenna() {
-        Dialogs.showMessageDialog("Tallennetetaan! Mutta ei toimi vielä");
-    }
-    
     
     /**
      * Käsitellään lopetuskäsky
@@ -108,16 +101,7 @@ public class TyoSuunnittelijaGUIController {
     }
     
     
-    /**
-     * Tarkistetaan onko tallennus tehty
-     * @return true jos saa sulkaa sovelluksen, false jos ei
-     */
-    public boolean voikoSulkea() {
-        tallenna();
-        return true;
-    }
     
- 
     /**
      * Haetaan apua netistä 
      */
@@ -125,6 +109,21 @@ public class TyoSuunnittelijaGUIController {
         avustus();
     }
 
+    
+    /**
+     * Näytetään käyttäjälle tietoja sovelluksesta
+     */
+    @FXML private void handleTietoja() {
+        ModalController.showModal(TyoSuunnittelijaGUIController.class.getResource("TyoSuunnittelijaAboutGUIView.fxml"), "TyöSuunnittelija", null, "");
+    }
+
+    
+    //===========================================================================================    
+    // Tästä eteenpäin ei käyttöliittymään suoraan liittyvää koodia    
+  
+    private TyoSuunnittelija tyoSuunnittelija;
+    private Tallennus tallennusKohdalla;
+    
     
     /**
      * Näytetään ohjelman suunnitelma erillisessä selaimessa.
@@ -143,19 +142,22 @@ public class TyoSuunnittelijaGUIController {
 
     
     /**
-     * Näytetään käyttäjälle tietoja sovelluksesta
+     * Tarkistetaan onko tallennus tehty
+     * @return true jos saa sulkaa sovelluksen, false jos ei
      */
-    @FXML private void handleTietoja() {
-        ModalController.showModal(TyoSuunnittelijaGUIController.class.getResource("TyoSuunnittelijaAboutGUIView.fxml"), "TyöSuunnittelija", null, "");
+    public boolean voikoSulkea() {
+        tallenna();
+        return true;
     }
-
     
-    //===========================================================================================    
-    // Tästä eteenpäin ei käyttöliittymään suoraan liittyvää koodia    
-  
-    private TyoSuunnittelija tyoSuunnittelija;
-    private Tallennus tallennusKohdalla;
-    private TextArea areaTallennus = new TextArea();
+ 
+    /**
+     * Tietojen tallennus
+     */
+    private void tallenna() {
+        Dialogs.showMessageDialog("Tallennetetaan! Mutta ei toimi vielä");
+    }
+    
     
     /**
      * Tekee tarvittavat muut alustukset, nyt vaihdetaan ListChooserin tilalle
@@ -163,14 +165,9 @@ public class TyoSuunnittelijaGUIController {
      * Alustetaan myös Tallennuslistan kuuntelija 
      */
     protected void alusta() {
-        //paneTallennus.setContent(areaTallennus);
-        //areaTallennus.setFont(new Font("Courier New", 12));
-        //paneTallennus.setFitToHeight(true);
-        
         chooserTallennukset.clear();
-        chooserTallennukset.addSelectionListener(e -> naytaTallennus());
+        chooserTallennukset.addSelectionListener(e -> naytaTallennus());;
     }
-
     
     /**
      * Näyttää listasta valitun jäsenen tiedot, tilapäisesti yhteen isoon edit-kenttään
@@ -180,10 +177,6 @@ public class TyoSuunnittelijaGUIController {
 
         if (tallennusKohdalla == null) return;
 
-        areaTallennus.setText("");
-        try (PrintStream os = TextAreaOutputStream.getTextPrintStream(areaTallennus)) {
-            tallennusKohdalla.tulosta(os);
-        }
     }
     
     

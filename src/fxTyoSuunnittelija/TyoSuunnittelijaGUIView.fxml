@@ -66,7 +66,7 @@
                   <Insets bottom="3.0" left="3.0" right="3.0" />
                </HBox.margin>
             </BorderPane>
-            <BorderPane id="Pellot" fx:id="panePellot" prefHeight="200.0" prefWidth="200.0">
+            <BorderPane id="Pellot" prefHeight="200.0" prefWidth="200.0">
                <top>
                   <Label text="Pellot" BorderPane.alignment="CENTER">
                      <BorderPane.margin>
