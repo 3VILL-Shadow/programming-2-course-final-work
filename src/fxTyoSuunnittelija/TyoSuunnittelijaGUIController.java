@@ -2,14 +2,14 @@ package fxTyoSuunnittelija;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+//import javafx.fxml.Initializable;
 
 import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.ResourceBundle;
+//import java.net.URL;
+//import java.util.ResourceBundle;
 
 import fi.jyu.mit.fxgui.*;
 
