@@ -28,19 +28,24 @@ public class Tallennukset {
      * #THROWS SailoException 
      * Tallennukset tallennukset = new Tallennukset();
      * Tallennus testiTallennus3 = new Tallennus(), testiTallennus4 = new Tallennus();
-     * Tallennukset.getLkm() === 0;
-     * Tallennukset.lisaa(testiTallennus3); Tallennukset.getLkm() === 1;
-     * Tallennukset.lisaa(testiTallennus4); Tallennukset.getLkm() === 2;
-     * Tallennukset.lisaa(aktestiTallennus3u1); Tallennukset.getLkm() === 3;
-     * Tallennukset.anna(0) === testiTallennus3;
-     * Tallennukset.anna(1) === testiTallennus3;
-     * Tallennukset.anna(2) === testiTallennus3;
-     * Tallennukset.anna(1) == testiTallennus3 === false;
-     * Tallennukset.anna(1) == testiTallennus4 === true;
-     * Tallennukset.anna(3) === testiTallennus3; #THROWS IndexOutOfBoundsException 
-     * Tallennukset.lisaa(testiTallennus3); Tallennukset.getLkm() === 4;
-     * Tallennukset.lisaa(testiTallennus3); Tallennukset.getLkm() === 5;
-     * Tallennukset.lisaa(testiTallennus3);  #THROWS SailoException
+     * tallennukset.getLkm() === 0;
+     * tallennukset.lisaa(testiTallennus3); tallennukset.getLkm() === 1;
+     * tallennukset.lisaa(testiTallennus4); tallennukset.getLkm() === 2;
+     * tallennukset.lisaa(testiTallennus3); tallennukset.getLkm() === 3;
+     * tallennukset.anna(0) === testiTallennus3;
+     * tallennukset.anna(1) === testiTallennus4;
+     * tallennukset.anna(2) === testiTallennus3;
+     * tallennukset.anna(1) == testiTallennus3 === false;
+     * tallennukset.anna(1) == testiTallennus4 === true;
+     * tallennukset.anna(3) === testiTallennus3; #THROWS IndexOutOfBoundsException 
+     * tallennukset.lisaa(testiTallennus3); tallennukset.getLkm() === 4;
+     * tallennukset.lisaa(testiTallennus3); tallennukset.getLkm() === 5;
+     * tallennukset.lisaa(testiTallennus3); tallennukset.getLkm() === 6;
+     * tallennukset.lisaa(testiTallennus3); tallennukset.getLkm() === 7;
+     * tallennukset.lisaa(testiTallennus3); tallennukset.getLkm() === 8;
+     * tallennukset.lisaa(testiTallennus3); tallennukset.getLkm() === 9;
+     * tallennukset.lisaa(testiTallennus3); tallennukset.getLkm() === 10;
+     * tallennukset.lisaa(testiTallennus3); #THROWS SailoException
      * </pre>
      */
     public void lisaa(Tallennus tallennus) throws SailoException {
