@@ -30,7 +30,7 @@ public class TyoSuunnittelijaGUIController implements Initializable {
     public void initialize(URL url, ResourceBundle bundle) {
         alusta();      
     }
-    
+
     
     /**
      * Lisätään uusi tallennus
@@ -166,8 +166,9 @@ public class TyoSuunnittelijaGUIController implements Initializable {
      */
     protected void alusta() {
         chooserTallennukset.clear();
-        chooserTallennukset.addSelectionListener(e -> naytaTallennus());;
+        chooserTallennukset.addSelectionListener(e -> naytaTallennus());
     }
+
     
     /**
      * Näyttää listasta valitun jäsenen tiedot, tilapäisesti yhteen isoon edit-kenttään
