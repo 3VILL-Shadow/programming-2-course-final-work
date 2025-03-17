@@ -1,5 +1,7 @@
 package tyoSuunnittelija;
 
+import java.util.List;
+
 /**
  * TyöSunnittelija-luokka, joka huolehtii tallennuksista.  Pääosin kaikki metodit
  * ovat vain "välittäjämetodeja" tallennuksiin.
@@ -8,7 +10,54 @@ package tyoSuunnittelija;
  */
 public class TyoSuunnittelija {
     private final Tallennukset tallennukset = new Tallennukset();
+    private final Pellot pellot = new Pellot();
+    
+    
+    /**
+     * Listään uusi harrastus kerhoon
+     * @param pel lisättävä harrastus 
+     */
+    public void lisaa(Pelto pel) {
+        pellot.lisaa(pel);
+    }
 
+    
+    /**
+     * Haetaan kaikki tallennuksen pellot
+     * @param tallennus tallennus jolle peltoja haetaan
+     * @return tietorakenne jossa viiteet löydetteyihin peltoihin
+     * @example
+     * <pre name="test">
+     * #import java.util.*;
+     * 
+     *  TyoSuunnittelija tyoSuunnittelija = new TyoSuunnittelija();
+     *  Tallennus testiTallennus3 = new Tallennus(), testiTallennus4 = new Tallennus(), testiTallennus5 = new Tallennus();
+     *  testiTallennus3.rekisteroi(); testiTallennus4.rekisteroi(); testiTallennus5.rekisteroi();
+     *  int id1 = testiTallennus3.getTunnusNro();
+     *  int id2 = testiTallennus4.getTunnusNro();
+     *  Pelto testiPelto11 = new Pelto(id1); tyoSuunnittelija.lisaa(testiPelto11);
+     *  Pelto testiPelto12 = new Pelto(id1); tyoSuunnittelija.lisaa(testiPelto12);
+     *  Pelto testiPelto21 = new Pelto(id2); tyoSuunnittelija.lisaa(testiPelto21);
+     *  Pelto testiPelto22 = new Pelto(id2); tyoSuunnittelija.lisaa(testiPelto22);
+     *  Pelto testiPelto23 = new Pelto(id2); tyoSuunnittelija.lisaa(testiPelto23);
+     *  
+     *  List<Pelto> loytyneet;
+     *  loytyneet = tyoSuunnittelija.annaPellot(testiTallennus5);
+     *  loytyneet.size() === 0; 
+     *  loytyneet = tyoSuunnittelija.annaPellot(testiTallennus3);
+     *  loytyneet.size() === 2; 
+     *  loytyneet.get(0) == testiPelto11 === true;
+     *  loytyneet.get(1) == testiPelto12 === true;
+     *  loytyneet = tyoSuunnittelija.annaPellot(testiTallennus4);
+     *  loytyneet.size() === 3; 
+     *  loytyneet.get(0) == testiPelto21 === true;
+     * </pre> 
+     */
+    public List<Pelto> annaPellot(Tallennus tallennus) {
+        return pellot.annaPellot(tallennus.getTunnusNro());
+    }
+
+    
     
     /**
      * Palautaa TyöSuuttnittelijan tallennusten määrän
@@ -83,6 +132,7 @@ public class TyoSuunnittelija {
      */
     public void lueTiedostosta(String nimi) throws SailoException {
         tallennukset.lueTiedostosta(nimi);
+        pellot.lueTiedostosta(nimi);
     }
 
 
@@ -92,6 +142,7 @@ public class TyoSuunnittelija {
      */
     public void talleta() throws SailoException {
         tallennukset.talleta();
+        pellot.talleta();
         // TODO: yritä tallettaa toinen vaikka toinen epäonnistuisi
     }
 
@@ -114,6 +165,15 @@ public class TyoSuunnittelija {
             
             tyoSuunnittelija.lisaa(testiTallennus);
             tyoSuunnittelija.lisaa(testiTallennus2);
+            
+            int id1 = testiTallennus.getTunnusNro();
+            int id2 = testiTallennus2.getTunnusNro();
+            Pelto testiPelto11 = new Pelto(id1); testiPelto11.kokeilePelto(id1); tyoSuunnittelija.lisaa(testiPelto11);
+            Pelto testiPelto12 = new Pelto(id1); testiPelto12.kokeilePelto(id1); tyoSuunnittelija.lisaa(testiPelto12);
+            Pelto testiPelto21 = new Pelto(id2); testiPelto21.kokeilePelto(id2); tyoSuunnittelija.lisaa(testiPelto21);
+            Pelto testiPelto22 = new Pelto(id2); testiPelto22.kokeilePelto(id2); tyoSuunnittelija.lisaa(testiPelto22);
+            Pelto testiPelto23 = new Pelto(id2); testiPelto23.kokeilePelto(id2); tyoSuunnittelija.lisaa(testiPelto23);
+
 
             System.out.println("============= TyoSuunnittelijan testi =================");
 
@@ -121,6 +181,10 @@ public class TyoSuunnittelija {
                 Tallennus tallennus = tyoSuunnittelija.annaTallennukset(i);
                 System.out.println("Tallennus nro: " + i);
                 tallennus.tulosta(System.out);
+                List<Pelto> loytyneet = tyoSuunnittelija.annaPellot(tallennus);
+                for (Pelto testiPelto : loytyneet)
+                    testiPelto.tulosta(System.out);
+
             }
 
         } catch (SailoException ex) {
