@@ -3,6 +3,7 @@ package fxTyoSuunnittelija;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import tyoSuunnittelija.Pelto;
 import tyoSuunnittelija.SailoException;
 import tyoSuunnittelija.Tallennus;
 import tyoSuunnittelija.TyoSuunnittelija;
@@ -24,6 +25,7 @@ import fi.jyu.mit.fxgui.*;
 public class TyoSuunnittelijaGUIController implements Initializable {
       
     @FXML private ListChooser<Tallennus> chooserTallennukset;
+    @FXML private ListChooser<Pelto> chooserPellot;
     
     
     @Override
@@ -44,7 +46,8 @@ public class TyoSuunnittelijaGUIController implements Initializable {
      * Lisätään uusi pelto
      */
     @FXML private void handleUusiPelto() {
-        Dialogs.showMessageDialog("Ei osata vielä lisätä peltoa");
+        uusiPelto();
+        //Dialogs.showMessageDialog("Ei osata vielä lisätä peltoa");
     }
     
     
@@ -123,6 +126,7 @@ public class TyoSuunnittelijaGUIController implements Initializable {
   
     private TyoSuunnittelija tyoSuunnittelija;
     private Tallennus tallennusKohdalla;
+    private Pelto peltoKohdalla;
     
     
     /**
@@ -167,17 +171,29 @@ public class TyoSuunnittelijaGUIController implements Initializable {
     protected void alusta() {
         chooserTallennukset.clear();
         chooserTallennukset.addSelectionListener(_ -> naytaTallennus());
+        
+        chooserPellot.clear();
+        chooserPellot.addSelectionListener(_ -> naytaPelto());
     }
 
     
     /**
-     * Näyttää listasta valitun jäsenen tiedot, tilapäisesti yhteen isoon edit-kenttään
+     * Näyttää listasta valitun tallennuksen tiedot, tilapäisesti yhteen isoon edit-kenttään
      */
     protected void naytaTallennus() {
         tallennusKohdalla = chooserTallennukset.getSelectedObject();
 
         if (tallennusKohdalla == null) return;
 
+    }
+    
+    /**
+     * Näytä listasta valitun pellon tiedot
+     */
+    protected void naytaPelto() {
+        peltoKohdalla = chooserPellot.getSelectedObject();
+        
+        if (peltoKohdalla == null) return;
     }
     
     
@@ -214,6 +230,20 @@ public class TyoSuunnittelijaGUIController implements Initializable {
         hae(uusi.getTunnusNro());
     }
 
+    
+    /** 
+     * Tekee uuden tyhjän pellon editointia varten 
+     */ 
+    public void uusiPelto() { 
+        if ( tallennusKohdalla == null ) return;  
+        Pelto pel = new Pelto();  
+        pel.rekisteroi();  
+        pel.kokeilePelto(tallennusKohdalla.getTunnusNro());  
+        tyoSuunnittelija.lisaa(pel);  
+        hae(pel.getTunnusNro());          
+    } 
+
+    
     
     /**
      * @param tyoSuunnittelija työSuunnittelija jota käytetään tässä käyttöliittymässä
