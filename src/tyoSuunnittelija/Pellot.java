@@ -106,9 +106,9 @@ public class Pellot implements Iterable<Pelto> {
     
     
     /**
-     * Haetaan kaikki jäsen harrastukset
-     * @param tunnusnro jäsenen tunnusnumero jolle harrastuksia haetaan
-     * @return tietorakenne jossa viiteet löydetteyihin harrastuksiin
+     * Haetaan kaikki tallennuksen pellot
+     * @param tunnusnro tallennuksen tunnusnumero jolle peltoja haetaan
+     * @return tietorakenne jossa viiteet löydetteyihin peltoihin
      * @example
      * <pre name="test">
      * #import java.util.*;

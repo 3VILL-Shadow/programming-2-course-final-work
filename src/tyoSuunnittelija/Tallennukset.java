@@ -100,7 +100,7 @@ public class Tallennukset {
     
     
     /**
-     * Testiohjelma jäsenistölle
+     * Testiohjelma tallennuksille
      * @param args ei käytössä
      */
     public static void main(String args[]) {

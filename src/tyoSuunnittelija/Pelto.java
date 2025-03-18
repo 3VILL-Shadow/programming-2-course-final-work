@@ -118,8 +118,8 @@ public class Pelto {
 
 
     /**
-     * Palautetaan mille jäsenelle harrastus kuuluu
-     * @return jäsenen id
+     * Palautetaan mille tallennukselle pelto kuuluu
+     * @return tallennuksen id
      */
     public int getTallennusNro() {
         return tallennusNro;

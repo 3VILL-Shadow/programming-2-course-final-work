@@ -164,9 +164,7 @@ public class TyoSuunnittelijaGUIController implements Initializable {
     
     
     /**
-     * Tekee tarvittavat muut alustukset, nyt vaihdetaan ListChooserin tilalle
-     * yksi iso tekstikenttä, johon voidaan tulostaa jäsenten tiedot.
-     * Alustetaan myös Tallennuslistan kuuntelija 
+     * 
      */
     protected void alusta() {
         chooserTallennukset.clear();
@@ -210,7 +208,7 @@ public class TyoSuunnittelijaGUIController implements Initializable {
             if (tallennus.getTunnusNro() == tnro) index = i;
             chooserTallennukset.add(tallennus.getNimi(), tallennus);
         }
-        chooserTallennukset.setSelectedIndex(index); // tästä tulee muutosviesti joka näyttää jäsenen
+        chooserTallennukset.setSelectedIndex(index); 
     }
 
     
@@ -251,7 +249,6 @@ public class TyoSuunnittelijaGUIController implements Initializable {
     public void setTyoSuunnittelija(TyoSuunnittelija tyoSuunnittelija) {
         this.tyoSuunnittelija = tyoSuunnittelija;
         naytaTallennus();
-
     }
 
 }

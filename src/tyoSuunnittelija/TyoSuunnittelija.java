@@ -80,8 +80,8 @@ public class TyoSuunnittelija {
     
     
     /**
-     * Lisää kerhoon uuden jäsenen
-     * @param jasen lisättävä jäsen
+     * Lisää työsuunnittelijaan uuden tallennuksen
+     * @param tallennus lisättävä tallennus
      * @throws SailoException jos lisäystä ei voida tehdä
      * @example
      * <pre name="test">
@@ -109,8 +109,8 @@ public class TyoSuunnittelija {
      * tyoSuunnittelija.lisaa(testiTallennus3); #THROWS SailoException
      * </pre>
      */
-    public void lisaa(Tallennus jasen) throws SailoException {
-        tallennukset.lisaa(jasen);
+    public void lisaa(Tallennus tallennus) throws SailoException {
+        tallennukset.lisaa(tallennus);
     }
 
     
