@@ -166,7 +166,7 @@ public class TyoSuunnittelijaGUIController implements Initializable {
      */
     protected void alusta() {
         chooserTallennukset.clear();
-        chooserTallennukset.addSelectionListener(e -> naytaTallennus());
+        chooserTallennukset.addSelectionListener(_ -> naytaTallennus());
     }
 
     

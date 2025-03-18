@@ -163,7 +163,7 @@ public class Pellot implements Iterable<Pelto> {
         testiPellot.lisaa(testiPelto2);
         testiPellot.lisaa(testiPelto4);
 
-        System.out.println("============= Harrastukset testi =================");
+        System.out.println("============= Pellot testi =================");
 
         List<Pelto> testiPellot2 = testiPellot.annaPellot(2);
 
