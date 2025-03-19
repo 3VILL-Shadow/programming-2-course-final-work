@@ -186,7 +186,7 @@ public class TyoSuunnittelijaGUIController implements Initializable {
         tallennusKohdalla = chooserTallennukset.getSelectedObject();
         
         if (tallennusKohdalla == null) return;
-
+        areaPelto.setText("");
         haeP(tallennusKohdalla.getTunnusNro());
     }
     
