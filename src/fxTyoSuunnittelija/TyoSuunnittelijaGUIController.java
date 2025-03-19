@@ -3,6 +3,7 @@ package fxTyoSuunnittelija;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TextArea;
 import tyoSuunnittelija.Pelto;
 import tyoSuunnittelija.SailoException;
 import tyoSuunnittelija.Tallennus;
@@ -10,6 +11,7 @@ import tyoSuunnittelija.TyoSuunnittelija;
 
 import java.awt.Desktop;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -27,6 +29,7 @@ public class TyoSuunnittelijaGUIController implements Initializable {
       
     @FXML private ListChooser<Tallennus> chooserTallennukset;
     @FXML private ListChooser<Pelto> chooserPellot;
+    @FXML private TextArea areaPelto;
     
     
     @Override
@@ -181,9 +184,10 @@ public class TyoSuunnittelijaGUIController implements Initializable {
      */
     protected void naytaTallennus() {
         tallennusKohdalla = chooserTallennukset.getSelectedObject();
-
+        
         if (tallennusKohdalla == null) return;
 
+        haeP(tallennusKohdalla.getTunnusNro());
     }
     
     /**
@@ -193,6 +197,12 @@ public class TyoSuunnittelijaGUIController implements Initializable {
         peltoKohdalla = chooserPellot.getSelectedObject();
         
         if (peltoKohdalla == null) return;
+        
+        areaPelto.setText("");
+        try (PrintStream os = TextAreaOutputStream.getTextPrintStream(areaPelto)) {
+            tulosta(os, peltoKohdalla);  
+        }
+        
     }
     
     
@@ -263,6 +273,18 @@ public class TyoSuunnittelijaGUIController implements Initializable {
         tyoSuunnittelija.lisaa(pel);  
         haeP(pel.getTunnusNro());          
     } 
+
+    
+    /**
+     * Tulostaa pellon tiedot
+     * @param os tietovirta johon tulostetaan
+     * @param pelto tulostettava pelto
+     */
+    public void tulosta(PrintStream os, final Pelto pelto) {
+        os.println("----------------------------------------------");
+        pelto.tulosta(os);
+        os.println("----------------------------------------------");
+    }
 
     
     
