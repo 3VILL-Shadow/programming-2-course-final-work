@@ -48,6 +48,15 @@ public class Pelto {
     
     
     /**
+     * 
+     * @return pellon nimi
+     */
+    public String getNimi() {
+        return nimi;
+    }
+    
+    
+    /**
      * Testi metodi jolla annetaan testiarvot
      * @param nro viite tallennukseen, jonka pellosta kyse
      */

@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import fi.jyu.mit.fxgui.*;
@@ -199,7 +200,7 @@ public class TyoSuunnittelijaGUIController implements Initializable {
      * Hakee tallennusten tiedot listaan
      * @param tnro tallennuksen numero, joka aktivoidaan haun jälkeen
      */
-    protected void hae(int tnro) {
+    protected void haeT(int tnro) {
         chooserTallennukset.clear();
 
         int index = 0;
@@ -211,6 +212,28 @@ public class TyoSuunnittelijaGUIController implements Initializable {
         chooserTallennukset.setSelectedIndex(index); 
     }
 
+    
+    /**
+     * Hakee tallennusten tiedot listaan
+     * @param pnro tallennuksen numero, joka aktivoidaan haun jälkeen
+     */
+    protected void haeP(int pnro) {
+        chooserPellot.clear();
+        Tallennus valittuTal = chooserTallennukset.getSelectedObject();
+        
+        if (valittuTal == null) return;
+        
+        List<Pelto> pellot = tyoSuunnittelija.annaPellot(valittuTal);
+        
+        int index = 0;
+        for (int i = 0; i < pellot.size(); i++) {
+            Pelto pelto = pellot.get(i);
+            if (pelto.getTunnusNro() == pnro) index = i;
+            chooserPellot.add(pelto.getNimi(), pelto);
+        }
+        chooserPellot.setSelectedIndex(index); 
+    }
+    
     
     /**
      * Luo uuden tallennuksen jota aletaan editoimaan 
@@ -225,7 +248,7 @@ public class TyoSuunnittelijaGUIController implements Initializable {
             Dialogs.showMessageDialog("Ongelmia uuden luomisessa " + e.getMessage());
             return;
         }
-        hae(uusi.getTunnusNro());
+        haeT(uusi.getTunnusNro());
     }
 
     
@@ -238,7 +261,7 @@ public class TyoSuunnittelijaGUIController implements Initializable {
         pel.rekisteroi();  
         pel.kokeilePelto(tallennusKohdalla.getTunnusNro());  
         tyoSuunnittelija.lisaa(pel);  
-        hae(pel.getTunnusNro());          
+        haeP(pel.getTunnusNro());          
     } 
 
     

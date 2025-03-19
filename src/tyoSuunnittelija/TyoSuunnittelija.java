@@ -66,6 +66,14 @@ public class TyoSuunnittelija {
     public int getTallennuksia() {
         return tallennukset.getLkm();
     }
+    
+    /**
+     * Palauttaa työsuunnittelijan peltojen määrän
+     * @return peltojen määrä
+     */
+    public int getPeltoja() {
+        return pellot.getLkm();
+    }
 
     
     /**
