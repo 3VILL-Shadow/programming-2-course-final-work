@@ -5,11 +5,13 @@ package tyoSuunnittelija;
  * @author Ville
  * @version 16 Mar 2025
  */
-public class Tallennukset {
+public class Tallennukset implements Iterable<Tallennus> {
     private static final int MAX_TALLENNUKSIA = 10;
     private int lkm = 0;
-    private String tiedNimi = "";
+    private String tiedPerusNimi = "";
     private Tallennus alkiot[] = new Tallennus[MAX_TALLENNUKSIA];
+    private boolean muutettu = false;
+    private String kokoNimi = "";
     
     /**
      * Oletus muodostaja
@@ -52,6 +54,7 @@ public class Tallennukset {
         if (lkm >= alkiot.length) throw new SailoException("Liikaa alkioita");
         alkiot[lkm] = tallennus;
         lkm++;
+        muutettu = true;
     }
     
     
@@ -73,6 +76,39 @@ public class Tallennukset {
      * Lukee tallennukset tiedostosta.  Kesken.
      * @param hakemisto tiedoston hakemisto
      * @throws SailoException jos lukeminen epäonnistuu
+     * @example
+     * <pre name="test">
+     * #THROWS SailoException 
+     * #import java.io.File;
+     * 
+     *  Jasenet jasenet = new Jasenet();
+     *  Jasen aku1 = new Jasen(), aku2 = new Jasen();
+     *  aku1.vastaaAkuAnkka();
+     *  aku2.vastaaAkuAnkka();
+     *  String hakemisto = "testikelmit";
+     *  String tiedNimi = hakemisto+"/nimet";
+     *  File ftied = new File(tiedNimi+".dat");
+     *  File dir = new File(hakemisto);
+     *  dir.mkdir();
+     *  ftied.delete();
+     *  jasenet.lueTiedostosta(tiedNimi); #THROWS SailoException
+     *  jasenet.lisaa(aku1);
+     *  jasenet.lisaa(aku2);
+     *  jasenet.tallenna();
+     *  jasenet = new Jasenet();            // Poistetaan vanhat luomalla uusi
+     *  jasenet.lueTiedostosta(tiedNimi);  // johon ladataan tiedot tiedostosta.
+     *  Iterator<Jasen> i = jasenet.iterator();
+     *  i.next() === aku1;
+     *  i.next() === aku2;
+     *  i.hasNext() === false;
+     *  jasenet.lisaa(aku2);
+     *  jasenet.tallenna();
+     *  ftied.delete() === true;
+     *  File fbak = new File(tiedNimi+".bak");
+     *  fbak.delete() === true;
+     *  dir.delete() === true;
+     * </pre>
+
      */
     public void lueTiedostosta(String hakemisto) throws SailoException {
         tiedNimi = hakemisto + "/tallennukset.dat";

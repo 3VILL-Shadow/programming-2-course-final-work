@@ -4,6 +4,8 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.random.RandomGenerator;
 
+import fi.jyu.mit.ohj2.Mjonot;
+
 /**
  * Työ suunnittelijan tallennus, joka pitää huolta numerostaan ja nimestään
  * @author Ville
@@ -89,6 +91,77 @@ public class Tallennus {
     public int getTunnusNro() {
         return tunnusNro;
     }
+    
+    
+    /**
+     * Asettaa tunnusnumeron ja samalla varmistaa että
+     * seuraava numero on aina suurempi kuin tähän mennessä suurin.
+     * @param nr asetettava tunnusnumero
+     */
+    private void setTunnusNro(int nr) {
+        tunnusNro = nr;
+        if (tunnusNro >= seuraavaNro) seuraavaNro = tunnusNro + 1;
+    }
+
+    
+    /**
+     * Palauttaa tallennuksen tiedot merkkijonona jonka voi tallentaa tiedostoon.
+     * @return tallennus tolppaeroteltuna merkkijonona 
+     * @example
+     * <pre name="test">
+     *   Tallennus tallennus= new Tallennus();
+     *   tallennus.parse(" 1 | Tallennus 1");
+     *   tallennus.toString() === "1|Tallennus 1"
+     * </pre>  
+     */
+    @Override
+    public String toString() {
+        return "" +
+                getTunnusNro() + "|" +
+                nimi;
+    }
+
+    
+    /**
+     * Selvitää tallennuksen tiedot | erotellusta merkkijonosta
+     * Pitää huolen että seuraavaNro on suurempi kuin tuleva tunnusNro.
+     * @param rivi josta tallennuksen tiedot otetaan
+     * 
+     * @example
+     * <pre name="test">
+     *   Tallennus tallennus = new Tallennus();
+     *   tallennus.parse("   3  |  Tallennus 3");
+     *   tallennus.getTunnusNro() === 3;
+     *   tallennus.toString() === "3|Tallennus 3"
+     *
+     *   tallennus.rekisteroi();
+     *   int n = tallennus.getTunnusNro();
+     *   tallennus.parse(""+(n+20));
+     *   tallennus.rekisteroi();
+     *   tallennus.getTunnusNro() === n+20+1;
+     *     
+     * </pre>
+     */
+    public void parse(String rivi) {
+        StringBuilder sb = new StringBuilder(rivi);
+        setTunnusNro(Mjonot.erota(sb, '|', getTunnusNro()));
+        nimi = Mjonot.erota(sb, '|', nimi);
+       
+    }
+
+    
+    @Override
+    public boolean equals(Object jasen) {
+        if ( jasen == null ) return false;
+        return this.toString().equals(jasen.toString());
+    }
+
+
+    @Override
+    public int hashCode() {
+        return tunnusNro;
+    }
+
     
     
     /**
