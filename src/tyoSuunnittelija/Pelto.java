@@ -5,6 +5,8 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.random.RandomGenerator;
 
+import fi.jyu.mit.ohj2.Mjonot;
+
 /**
  * Pelto-luokka joka pitää huolta esim omasta tunnuksestaan
  * @author Ville
@@ -134,6 +136,74 @@ public class Pelto {
         return tallennusNro;
     }
 
+    
+    /**
+     * Asettaa tunnusnumeron ja samalla varmistaa että seuraava numero on aina suuermpi kuin edellinen
+     * @param nr asetettava tunnusnumero
+     */
+    private void setTunnusNro(int nr) {
+        tunnusNro = nr;
+        if (tunnusNro >= seuraavaNro) seuraavaNro = tunnusNro + 1;
+    }
+    
+    /**
+     * Palauttaa harrastuksen tiedot merkkijonona jonka voi tallentaa tiedostoon.
+     * @return harrastus tolppaeroteltuna merkkijonona 
+     * @example
+     * <pre name="test">
+     *   Pelto pelto = new Pelto();
+     *   pelto.parse("   2   |  10  |   Pelto 20  | Äestys | Maissi | Kerran |  Poisto |  Puinti ");
+     *   pelto.toString() === "2|10|Pelto 20|Äestys|Maissi|Kerran|Poisto|Puinti";
+     * </pre>
+     */
+    @Override
+    public String toString() {
+        return "" + getTunnusNro() + "|" + tallennusNro + "|" + nimi + "|" + maanMuok + "|" + vilja + "|" +
+                lannoitus + "|" + rikkaruohot + "|" + korjuu;
+    }
+    
+    
+    /**
+     * Selvittää pellon tiedot | erotellusta merkkijonosta
+     * @param rivi josta pellon tiedot otetaan
+     * @example
+     * <pre name="test">
+     * Pelto pelto = new Pelto();
+     * pelto.parse("   2   |  10  |   Pelto 20  | Äestys | Maissi | Kerran |  Poisto |  Puinti ");
+     * pelto.getTallennusNro() === 10;
+     * pelto.toString() === "2|10|Pelto 20|Äestys|Maissi|Kerran|Poisto|Puinti";
+     * pelto.rekisteroi();
+     * int n = pelto.getTunnusNro();
+     * pelto.parse(""+(n+20));
+     * pelto.rekisteroi();
+     * pelto.getTunnusNro() === n+20+1;
+     * pelto.toString() === "" + (n+20+1) + "|10|Pelto 20|Äestys|Maissi|Kerran|Poisto|Puinti";
+     * </pre>
+     */
+    public void parse(String rivi) {
+        StringBuilder sb = new StringBuilder(rivi);
+        setTunnusNro(Mjonot.erota(sb,  '|', getTunnusNro()));
+        tallennusNro = Mjonot.erota(sb, '|', tallennusNro);
+        nimi = Mjonot.erota(sb, '|', nimi);
+        maanMuok = Mjonot.erota(sb, '|', maanMuok);
+        vilja = Mjonot.erota(sb, '|', vilja);
+        lannoitus = Mjonot.erota(sb, '|', lannoitus);
+        rikkaruohot = Mjonot.erota(sb, '|', rikkaruohot);
+        korjuu = Mjonot.erota(sb, '|', korjuu);
+    }
+    
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        return this.toString().equals(obj.toString());
+    }
+    
+    
+    @Override
+    public int hashCode() {
+        return tunnusNro;
+    }
     
     
     /**

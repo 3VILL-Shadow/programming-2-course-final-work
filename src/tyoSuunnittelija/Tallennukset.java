@@ -1,5 +1,15 @@
 package tyoSuunnittelija;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 /**
  * Työ suunnittelijan tallennukset
  * @author Ville
@@ -8,10 +18,9 @@ package tyoSuunnittelija;
 public class Tallennukset implements Iterable<Tallennus> {
     private static final int MAX_TALLENNUKSIA = 10;
     private int lkm = 0;
-    private String tiedPerusNimi = "";
     private Tallennus alkiot[] = new Tallennus[MAX_TALLENNUKSIA];
     private boolean muutettu = false;
-    private String kokoNimi = "";
+    private String tiedPerusNimi = "tallennukset";
     
     /**
      * Oletus muodostaja
@@ -73,36 +82,37 @@ public class Tallennukset implements Iterable<Tallennus> {
 
     
     /**
-     * Lukee tallennukset tiedostosta.  Kesken.
-     * @param hakemisto tiedoston hakemisto
+     * Lukee tallennukset tiedostosta.
+     * @param hakemisto tiedoston perusnimi
      * @throws SailoException jos lukeminen epäonnistuu
      * @example
      * <pre name="test">
      * #THROWS SailoException 
      * #import java.io.File;
+     * #import java.util.Iterator;
      * 
-     *  Jasenet jasenet = new Jasenet();
-     *  Jasen aku1 = new Jasen(), aku2 = new Jasen();
-     *  aku1.vastaaAkuAnkka();
-     *  aku2.vastaaAkuAnkka();
-     *  String hakemisto = "testikelmit";
+     *  Tallennukset tallennukset = new Tallennukset();
+     *  Tallennus tallennus1 = new Tallennus(), tallennus2 = new Tallennus();
+     *  tallennus1.kokeileTallennus();
+     *  tallennus2.kokeileTallennus();
+     *  String hakemisto = "testitallennukset";
      *  String tiedNimi = hakemisto+"/nimet";
      *  File ftied = new File(tiedNimi+".dat");
      *  File dir = new File(hakemisto);
      *  dir.mkdir();
      *  ftied.delete();
-     *  jasenet.lueTiedostosta(tiedNimi); #THROWS SailoException
-     *  jasenet.lisaa(aku1);
-     *  jasenet.lisaa(aku2);
-     *  jasenet.tallenna();
-     *  jasenet = new Jasenet();            // Poistetaan vanhat luomalla uusi
-     *  jasenet.lueTiedostosta(tiedNimi);  // johon ladataan tiedot tiedostosta.
-     *  Iterator<Jasen> i = jasenet.iterator();
-     *  i.next() === aku1;
-     *  i.next() === aku2;
+     *  tallennukset.lueTiedostosta(tiedNimi); #THROWS SailoException
+     *  tallennukset.lisaa(tallennus1);
+     *  tallennukset.lisaa(tallennus2);
+     *  tallennukset.talleta();
+     *  tallennukset = new Tallennukset();            // Poistetaan vanhat luomalla uusi
+     *  tallennukset.lueTiedostosta(tiedNimi);  // johon ladataan tiedot tiedostosta.
+     *  Iterator<Tallennus> i = tallennukset.iterator();
+     *  i.next() === tallennus1;
+     *  i.next() === tallennus2;
      *  i.hasNext() === false;
-     *  jasenet.lisaa(aku2);
-     *  jasenet.tallenna();
+     *  tallennukset.lisaa(tallennus2);
+     *  tallennukset.talleta();
      *  ftied.delete() === true;
      *  File fbak = new File(tiedNimi+".bak");
      *  fbak.delete() === true;
@@ -111,17 +121,59 @@ public class Tallennukset implements Iterable<Tallennus> {
 
      */
     public void lueTiedostosta(String hakemisto) throws SailoException {
-        tiedNimi = hakemisto + "/tallennukset.dat";
-        throw new SailoException("Ei osata vielä lukea tiedostoa " + tiedNimi);
+        setTiedostonPerusNimi(hakemisto);
+        try ( BufferedReader fi = new BufferedReader(new FileReader(getTiedostonNimi())) ) {
+           String rivi = fi.readLine();
+            if ( rivi == null ) throw new SailoException("Maksimikoko puuttuu");
+
+            while ( (rivi = fi.readLine()) != null ) {
+                rivi = rivi.trim();
+                if ( "".equals(rivi) || rivi.charAt(0) == ';' ) continue;
+                Tallennus tallennus= new Tallennus();
+                tallennus.parse(rivi);
+                lisaa(tallennus);
+            }
+            muutettu = false;
+        } catch ( FileNotFoundException e ) {
+            throw new SailoException("Tiedosto " + getTiedostonNimi() + " ei aukea");
+        } catch ( IOException e ) {
+            throw new SailoException("Ongelmia tiedoston kanssa: " + e.getMessage());
+        }
+    }
+    
+    
+    /**
+     * Luetaan aikaisemmin annetun nimisestä tiedostosta
+     * @throws SailoException jos tulee poikkeus
+     */
+    public void lueTiedostosta() throws SailoException {
+        lueTiedostosta(getTiedostonPerusNimi());
     }
 
 
     /**
-     * Tallentaa tallennukset tiedostoon.  Kesken.
+     * Tallentaa tallennukset tiedostoon.
      * @throws SailoException jos talletus epäonnistuu
      */
     public void talleta() throws SailoException {
-        throw new SailoException("Ei osata vielä tallettaa tiedostoa " + tiedNimi);
+        if (!muutettu) return;
+        File fbak = new File(getBakNimi());
+        File ftied = new File(getTiedostonNimi());
+        fbak.delete();
+        ftied.renameTo(fbak);
+        
+        try (PrintWriter fo = new PrintWriter(new FileWriter(ftied.getCanonicalPath()))) {
+            fo.println(alkiot.length);
+            for (Tallennus tal : this) {
+                fo.println(tal.toString());
+            }
+        } catch ( FileNotFoundException ex ) {
+            throw new SailoException("Tiedosto " + ftied.getName() + " ei aukea");
+        } catch ( IOException ex ) {
+            throw new SailoException("Tiedoston " + ftied.getName() + " kirjoittamisessa ongelmia");
+        }
+
+        muutettu = false;
     }
 
     
@@ -133,6 +185,92 @@ public class Tallennukset implements Iterable<Tallennus> {
         return lkm;
     }
 
+    
+    /**
+     * Palauttaa tiedoston nimen, jota käytetään tallennukseen
+     * @return tallennustiedoston nimi
+     */
+    public String getTiedostonPerusNimi() {
+        return tiedPerusNimi;
+    }
+
+
+    /**
+     * Asettaa tiedoston perusnimen ilman tarkenninta
+     * @param nimi tallennustiedoston perusnimi
+     */
+    public void setTiedostonPerusNimi(String nimi) {
+        tiedPerusNimi = nimi;
+    }
+
+
+    /**
+     * Palauttaa tiedoston nimen, jota käytetään tallennukseen
+     * @return tallennustiedoston nimi
+     */
+    public String getTiedostonNimi() {
+        return getTiedostonPerusNimi() + ".dat";
+    }
+
+
+    /**
+     * Palauttaa varakopiotiedoston nimen
+     * @return varakopiotiedoston nimi
+     */
+    public String getBakNimi() {
+        return tiedPerusNimi + ".bak";
+    }
+
+    
+    
+    /**
+     * @author Ville
+     * @version 7 Apr 2025
+     *
+     */
+    public class TallennuksetIterator implements Iterator<Tallennus> {
+        private int kohdalla = 0;
+        
+        
+        /**
+         * Onko olemassa vielä seuraavaa tallennusta
+         */
+        @Override
+        public boolean hasNext() {
+            return kohdalla < getLkm();
+        }
+        
+        
+        /**
+         * Annetaan seuraava tallennus
+         * @return seuraava tallennus
+         * @throws NoSuchElementException jos seuraavaa alkiota ei enää ole
+         */
+        @Override
+        public Tallennus next() throws NoSuchElementException {
+            if (!hasNext()) throw new NoSuchElementException("Ei ole lisää");
+            return anna(kohdalla++);
+        }
+        
+        /**
+         * Tuhoamista ei ole toteutettu
+         * @throws UnsupportedOperationException aina
+         */
+        @Override
+        public void remove() throws UnsupportedOperationException {
+            throw new UnsupportedOperationException("Ei poisteta");
+        }
+    }
+
+    /**
+     * Palautetaan iteraattori tallennuksesta.
+     * @return tallennus iteraattori
+     */
+
+    @Override
+    public Iterator<Tallennus> iterator() {
+        return new TallennuksetIterator();
+    }
     
     
     /**

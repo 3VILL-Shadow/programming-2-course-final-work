@@ -168,6 +168,15 @@ public class TyoSuunnittelijaGUIController implements Initializable {
     
     
     /**
+     * @param nimi tiedosto, josta työsuunnittelijan tiedot luetaan
+     * @return null jos onnistuu, muuten virhe
+     */
+    protected String lueTiedosto(String nimi) {
+        return null;
+    }
+    
+    
+    /**
      * 
      */
     protected void alusta() {

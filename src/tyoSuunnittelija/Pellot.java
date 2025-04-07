@@ -1,5 +1,12 @@
 package tyoSuunnittelija;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 
 /**
@@ -9,7 +16,8 @@ import java.util.*;
  *
  */
 public class Pellot implements Iterable<Pelto> {
-    private String tiedNimi = "";
+    private boolean muutettu = false;
+    private String tiedPerusNimi = "pellot";
 
     /*Taulukko pelloista*/
     private final Collection<Pelto> alkiot = new ArrayList<Pelto>();
@@ -30,17 +38,77 @@ public class Pellot implements Iterable<Pelto> {
      */
     public void lisaa(Pelto Pel) {
         alkiot.add(Pel);
+        muutettu = true;
     }
     
     /**
      * Lukee pellot tiedostosta.  
-     * TODO Kesken.
      * @param hakemisto tiedoston hakemisto
      * @throws SailoException jos lukeminen epäonnistuu
+     * 
+     * @example
+     * <pre name="test">
+     * #THROWS SailoException 
+     * #import java.io.File;
+     *  Pellot pellot = new Pellot();
+     *  Pelto testiPelto21 = new Pelto(); testiPelto21.kokeilePelto(2);
+     *  Pelto testiPelto11 = new Pelto(); testiPelto11.kokeilePelto(1);
+     *  Pelto testiPelto22 = new Pelto(); testiPelto22.kokeilePelto(2); 
+     *  Pelto testiPelto12 = new Pelto(); testiPelto12.kokeilePelto(1); 
+     *  Pelto testiPelto23 = new Pelto(); testiPelto23.kokeilePelto(2); 
+     *  String tiedNimi = "testikelmit";
+     *  File ftied = new File(tiedNimi+".dat");
+     *  ftied.delete();
+     *  pellot.lueTiedostosta(tiedNimi); #THROWS SailoException
+     *  pellot.lisaa(testiPelto21);
+     *  pellot.lisaa(testiPelto11);
+     *  pellot.lisaa(testiPelto22);
+     *  pellot.lisaa(testiPelto12);
+     *  pellot.lisaa(testiPelto23);
+     *  pellot.talleta();
+     *  pellot = new Pellot();
+     *  pellot.lueTiedostosta(tiedNimi);
+     *  Iterator<Pelto> i = pellot.iterator();
+     *  i.next().toString() === testiPelto21.toString();
+     *  i.next().toString() === testiPelto11.toString();
+     *  i.next().toString() === testiPelto22.toString();
+     *  i.next().toString() === testiPelto12.toString();
+     *  i.next().toString() === testiPelto23.toString();
+     *  i.hasNext() === false;
+     *  pellot.lisaa(testiPelto23);
+     *  pellot.talleta();
+     *  ftied.delete() === true;
+     *  File fbak = new File(tiedNimi+".bak");
+     *  fbak.delete() === true;
+     * </pre>
+
      */
     public void lueTiedostosta(String hakemisto) throws SailoException {
-        tiedNimi = hakemisto + ".har";
-        throw new SailoException("Ei osata vielä lukea tiedostoa " + tiedNimi);
+       setTiedPerusNimi(hakemisto);
+       try (BufferedReader fi = new BufferedReader(new FileReader(getTiedostonNimi()))) {
+           String rivi;
+           while ((rivi = fi.readLine()) != null) {
+               rivi = rivi.trim();
+               if ("".equals(rivi) || rivi.charAt(0) == ';') continue;
+               Pelto pelto = new Pelto();
+               pelto.parse(rivi);
+               lisaa(pelto);
+           }
+           muutettu = false;
+       } catch ( FileNotFoundException e ) {
+           throw new SailoException("Tiedosto " + getTiedostonNimi() + " ei aukea");
+       } catch ( IOException e ) {
+           throw new SailoException("Ongelmia tiedoston kanssa: " + e.getMessage());
+       }
+    }
+    
+    
+    /**
+     * Luetaan tiedostosta
+     * @throws SailoException jos tulee poikkeus
+     */
+    public void lueTiedostosta() throws SailoException {
+        lueTiedostosta(getTiedostonPerusNimi());
     }
     
     
@@ -50,9 +118,62 @@ public class Pellot implements Iterable<Pelto> {
      * @throws SailoException jos talletus epäonnistuu
      */
     public void talleta() throws SailoException {
-        throw new SailoException("Ei osata vielä tallettaa tiedostoa " + tiedNimi);
+        if (!muutettu) return;
+        File fbak = new File(getBakNimi());
+        File ftied = new File(getTiedostonNimi());
+        fbak.delete();
+        ftied.renameTo(fbak);
+        
+        try (PrintWriter fo = new PrintWriter(new FileWriter(ftied.getCanonicalPath()))) {
+            for (Pelto pel : this) {
+                fo.println(pel.toString());
+            }
+        } catch ( FileNotFoundException ex ) {
+            throw new SailoException("Tiedosto " + ftied.getName() + " ei aukea");
+        } catch ( IOException ex ) {
+            throw new SailoException("Tiedoston " + ftied.getName() + " kirjoittamisessa ongelmia");
+        }
+
+        muutettu = false;
     }
 
+    
+    /**
+     * Asettaa tiedoston perusnimen ilan tarkenninta
+     * @param tied tallennustiedoston perusnimi
+     */
+    public void setTiedPerusNimi(String tied) {
+        tiedPerusNimi = tied;
+    }
+
+
+    /**
+     * Palauttaa tiedoston nimen, jota käytetään tallennukseen
+     * @return tallennustiedoston nimi
+     */
+    public String getTiedostonPerusNimi() {
+        return tiedPerusNimi;
+    }
+
+
+    /**
+     * Palauttaa tiedoston nimen, jota käytetään tallennukseen
+     * @return tallennustiedoston nimi
+     */
+    public String getTiedostonNimi() {
+        return tiedPerusNimi + ".dat";
+    }
+
+
+    /**
+     * Palauttaa varakopiotiedoston nimen
+     * @return varakopiotiedoston nimi
+     */
+    public String getBakNimi() {
+        return tiedPerusNimi + ".bak";
+    }
+
+    
     
     /**
      * Palauttaa työsuunnittelijan peltojen lukumäärän

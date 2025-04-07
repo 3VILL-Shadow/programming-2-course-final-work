@@ -116,9 +116,7 @@ public class Tallennus {
      */
     @Override
     public String toString() {
-        return "" +
-                getTunnusNro() + "|" +
-                nimi;
+        return "" + getTunnusNro() + "|" + nimi;
     }
 
     
