@@ -14,8 +14,8 @@ public class TyoSuunnittelija {
     
     
     /**
-     * Listään uusi harrastus kerhoon
-     * @param pel lisättävä harrastus 
+     * Listään uusi pelto tyosuunnittelijaan
+     * @param pel lisättävä pelto 
      */
     public void lisaa(Pelto pel) {
         pellot.lisaa(pel);
