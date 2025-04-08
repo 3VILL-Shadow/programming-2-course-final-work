@@ -102,7 +102,7 @@ public class Tallennukset implements Iterable<Tallennus> {
      *  tallennukset.lisaa(tallennus1);
      *  tallennukset.lisaa(tallennus2);
      *  tallennukset.talleta();
-     *  tallennukset = new Tallennukset();            
+     *  //tallennukset = new Tallennukset();            
      *  tallennukset.lueTiedostosta(tiedNimi+".dat"); 
      *  Iterator<Tallennus> i = tallennukset.iterator();
      *  i.next() === tallennus1;
@@ -111,8 +111,6 @@ public class Tallennukset implements Iterable<Tallennus> {
      *  tallennukset.lisaa(tallennus2);
      *  tallennukset.talleta();
      *  ftied.delete() === true;
-     *  File fbak = new File(tiedNimi+".bak");
-     *  fbak.delete() === true;
      * </pre>
 
      */

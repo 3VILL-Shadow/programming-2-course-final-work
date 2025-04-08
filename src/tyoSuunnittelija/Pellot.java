@@ -58,7 +58,7 @@ public class Pellot implements Iterable<Pelto> {
      *  Pelto testiPelto23 = new Pelto(); testiPelto23.kokeilePelto(2); 
      *  String tiedNimi = "data\\testidata\\testiPellot";
      *  File ftied = new File(tiedNimi+".dat");
-     *  //ftied.delete();
+     *  ftied.delete();
      *  pellot.lueTiedostosta(ftied.getName()); #THROWS SailoException
      *  pellot.lisaa(testiPelto21);
      *  pellot.lisaa(testiPelto11);
@@ -66,7 +66,7 @@ public class Pellot implements Iterable<Pelto> {
      *  pellot.lisaa(testiPelto12);
      *  pellot.lisaa(testiPelto23);
      *  pellot.talleta();
-     *  pellot = new Pellot();
+     *  //pellot = new Pellot();
      *  pellot.lueTiedostosta(tiedNimi+".dat");
      *  Iterator<Pelto> i = pellot.iterator();
      *  i.next().toString() === testiPelto21.toString();
@@ -78,8 +78,6 @@ public class Pellot implements Iterable<Pelto> {
      *  pellot.lisaa(testiPelto23);
      *  pellot.talleta();
      *  ftied.delete() === true;
-     *  File fbak = new File(tiedNimi+".bak");
-     *  fbak.delete() === true;
      * </pre>
 
      */
