@@ -148,9 +148,22 @@ public class TyoSuunnittelija {
      * @throws SailoException jos tallettamisessa ongelmia
      */
     public void talleta() throws SailoException {
-        tallennukset.talleta();
-        pellot.talleta();
-        // TODO: yritä tallettaa toinen vaikka toinen epäonnistuisi
+//        tallennukset.talleta();
+//        pellot.talleta();
+        String virhe = "";
+        try {
+            tallennukset.talleta();
+        } catch ( SailoException ex ) {
+            virhe = ex.getMessage();
+        }
+
+        try {
+            pellot.talleta();
+        } catch ( SailoException ex ) {
+            virhe += ex.getMessage();
+        }
+        if ( !"".equals(virhe) ) throw new SailoException(virhe);
+
     }
 
     

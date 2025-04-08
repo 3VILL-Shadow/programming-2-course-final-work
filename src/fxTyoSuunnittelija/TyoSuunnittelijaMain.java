@@ -34,6 +34,7 @@ public class TyoSuunnittelijaMain extends Application {
             
             TyoSuunnittelija tyoSuunnittelija = new TyoSuunnittelija();  
             tyosuunnittelijaCtrl.setTyoSuunnittelija(tyoSuunnittelija);
+            tyosuunnittelijaCtrl.lueTiedosto();
 
             primaryStage.show();
         } catch(Exception e) {

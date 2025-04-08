@@ -17,7 +17,7 @@ import java.util.*;
  */
 public class Pellot implements Iterable<Pelto> {
     private boolean muutettu = false;
-    private String tiedPerusNimi = "pellot";
+    private String tiedPerusNimi = "data\\pellot";
 
     /*Taulukko pelloista*/
     private final Collection<Pelto> alkiot = new ArrayList<Pelto>();

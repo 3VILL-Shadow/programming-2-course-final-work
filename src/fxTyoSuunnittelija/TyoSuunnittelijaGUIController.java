@@ -162,17 +162,36 @@ public class TyoSuunnittelijaGUIController implements Initializable {
     /**
      * Tietojen tallennus
      */
-    private void tallenna() {
-        Dialogs.showMessageDialog("Tallennetetaan! Mutta ei toimi vielä");
+    private String tallenna() {
+//        Dialogs.showMessageDialog("Tallennetetaan! Mutta ei toimi vielä");
+        try {
+            tyoSuunnittelija.talleta();
+            return null;
+        } catch (SailoException ex) {
+            Dialogs.showMessageDialog("Tallennuksessa ongelmia! " + ex.getMessage());
+            return ex.getMessage();
+        }
+
     }
     
     
     /**
-     * @param nimi tiedosto, josta työsuunnittelijan tiedot luetaan
      * @return null jos onnistuu, muuten virhe
      */
-    protected String lueTiedosto(String nimi) {
-        return null;
+    protected String lueTiedosto() {
+        try {
+            tyoSuunnittelija.lueTiedostosta();
+            haeT(0);
+            haeP(0);
+            return null;
+        } catch (SailoException e) {
+            haeT(0);
+            haeP(0);
+            String virhe = e.getMessage(); 
+            if ( virhe != null ) Dialogs.showMessageDialog(virhe);
+            return virhe;
+        }
+
     }
     
     
