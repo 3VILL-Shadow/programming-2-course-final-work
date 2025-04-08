@@ -149,9 +149,9 @@ public class Tallennus {
 
     
     @Override
-    public boolean equals(Object jasen) {
-        if ( jasen == null ) return false;
-        return this.toString().equals(jasen.toString());
+    public boolean equals(Object tallennus) {
+        if ( tallennus == null ) return false;
+        return this.toString().equals(tallennus.toString());
     }
 
 

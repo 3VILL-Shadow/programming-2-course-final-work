@@ -56,9 +56,9 @@ public class Pellot implements Iterable<Pelto> {
      *  Pelto testiPelto22 = new Pelto(); testiPelto22.kokeilePelto(2); 
      *  Pelto testiPelto12 = new Pelto(); testiPelto12.kokeilePelto(1); 
      *  Pelto testiPelto23 = new Pelto(); testiPelto23.kokeilePelto(2); 
-     *  String tiedNimi = "testiPellot";
+     *  String tiedNimi = "data\\testidata\\testiPellot";
      *  File ftied = new File(tiedNimi+".dat");
-     *  ftied.delete();
+     *  //ftied.delete();
      *  pellot.lueTiedostosta(ftied.getName()); #THROWS SailoException
      *  pellot.lisaa(testiPelto21);
      *  pellot.lisaa(testiPelto11);
@@ -67,7 +67,7 @@ public class Pellot implements Iterable<Pelto> {
      *  pellot.lisaa(testiPelto23);
      *  pellot.talleta();
      *  pellot = new Pellot();
-     *  pellot.lueTiedostosta(ftied.getName());
+     *  pellot.lueTiedostosta(tiedNimi+".dat");
      *  Iterator<Pelto> i = pellot.iterator();
      *  i.next().toString() === testiPelto21.toString();
      *  i.next().toString() === testiPelto11.toString();

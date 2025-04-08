@@ -95,15 +95,15 @@ public class Tallennukset implements Iterable<Tallennus> {
      *  Tallennus tallennus1 = new Tallennus(), tallennus2 = new Tallennus();
      *  tallennus1.kokeileTallennus();
      *  tallennus2.kokeileTallennus();
-     *  String tiedNimi = "testiTallennukset";
+     *  String tiedNimi = "data\\testidata\\testiTallennukset";
      *  File ftied = new File(tiedNimi+".dat");
-     *  ftied.delete();
+     *  //ftied.delete();
      *  tallennukset.lueTiedostosta(ftied.getName()); #THROWS SailoException
      *  tallennukset.lisaa(tallennus1);
      *  tallennukset.lisaa(tallennus2);
      *  tallennukset.talleta();
-     *  tallennukset = new Tallennukset();            // Poistetaan vanhat luomalla uusi
-     *  tallennukset.lueTiedostosta(ftied.getName());  // johon ladataan tiedot tiedostosta.
+     *  tallennukset = new Tallennukset();            
+     *  tallennukset.lueTiedostosta(tiedNimi+".dat"); 
      *  Iterator<Tallennus> i = tallennukset.iterator();
      *  i.next() === tallennus1;
      *  i.next() === tallennus2;
