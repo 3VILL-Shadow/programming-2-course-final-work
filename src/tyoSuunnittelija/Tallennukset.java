@@ -20,7 +20,7 @@ public class Tallennukset implements Iterable<Tallennus> {
     private int lkm = 0;
     private Tallennus alkiot[] = new Tallennus[MAX_TALLENNUKSIA];
     private boolean muutettu = false;
-    private String tiedPerusNimi = "tallennukset";
+    private String tiedNimi = "data\\tallennukset";
     
     /**
      * Oletus muodostaja
@@ -83,7 +83,7 @@ public class Tallennukset implements Iterable<Tallennus> {
     
     /**
      * Lukee tallennukset tiedostosta.
-     * @param hakemisto tiedoston perusnimi
+     * @param tiedosto joka luetaan
      * @throws SailoException jos lukeminen epäonnistuu
      * @example
      * <pre name="test">
@@ -95,18 +95,15 @@ public class Tallennukset implements Iterable<Tallennus> {
      *  Tallennus tallennus1 = new Tallennus(), tallennus2 = new Tallennus();
      *  tallennus1.kokeileTallennus();
      *  tallennus2.kokeileTallennus();
-     *  String hakemisto = "testitallennukset";
-     *  String tiedNimi = hakemisto+"/nimet";
+     *  String tiedNimi = "testiTallennukset";
      *  File ftied = new File(tiedNimi+".dat");
-     *  File dir = new File(hakemisto);
-     *  dir.mkdir();
      *  ftied.delete();
-     *  tallennukset.lueTiedostosta(tiedNimi); #THROWS SailoException
+     *  tallennukset.lueTiedostosta(ftied.getName()); #THROWS SailoException
      *  tallennukset.lisaa(tallennus1);
      *  tallennukset.lisaa(tallennus2);
      *  tallennukset.talleta();
      *  tallennukset = new Tallennukset();            // Poistetaan vanhat luomalla uusi
-     *  tallennukset.lueTiedostosta(tiedNimi);  // johon ladataan tiedot tiedostosta.
+     *  tallennukset.lueTiedostosta(ftied.getName());  // johon ladataan tiedot tiedostosta.
      *  Iterator<Tallennus> i = tallennukset.iterator();
      *  i.next() === tallennus1;
      *  i.next() === tallennus2;
@@ -116,13 +113,11 @@ public class Tallennukset implements Iterable<Tallennus> {
      *  ftied.delete() === true;
      *  File fbak = new File(tiedNimi+".bak");
      *  fbak.delete() === true;
-     *  dir.delete() === true;
      * </pre>
 
      */
-    public void lueTiedostosta(String hakemisto) throws SailoException {
-        setTiedostonPerusNimi(hakemisto);
-        try ( BufferedReader fi = new BufferedReader(new FileReader(getTiedostonNimi())) ) {
+    public void lueTiedostosta(String tiedosto) throws SailoException {
+        try ( BufferedReader fi = new BufferedReader(new FileReader(tiedosto)) ) {
            String rivi = fi.readLine();
             if ( rivi == null ) throw new SailoException("Maksimikoko puuttuu");
 
@@ -135,7 +130,7 @@ public class Tallennukset implements Iterable<Tallennus> {
             }
             muutettu = false;
         } catch ( FileNotFoundException e ) {
-            throw new SailoException("Tiedosto " + getTiedostonNimi() + " ei aukea");
+            throw new SailoException("Tiedosto " + tiedosto + " ei aukea");
         } catch ( IOException e ) {
             throw new SailoException("Ongelmia tiedoston kanssa: " + e.getMessage());
         }
@@ -147,7 +142,7 @@ public class Tallennukset implements Iterable<Tallennus> {
      * @throws SailoException jos tulee poikkeus
      */
     public void lueTiedostosta() throws SailoException {
-        lueTiedostosta(getTiedostonPerusNimi());
+        lueTiedostosta(getTiedostonNimi());
     }
 
 
@@ -190,26 +185,8 @@ public class Tallennukset implements Iterable<Tallennus> {
      * Palauttaa tiedoston nimen, jota käytetään tallennukseen
      * @return tallennustiedoston nimi
      */
-    public String getTiedostonPerusNimi() {
-        return tiedPerusNimi;
-    }
-
-
-    /**
-     * Asettaa tiedoston perusnimen ilman tarkenninta
-     * @param nimi tallennustiedoston perusnimi
-     */
-    public void setTiedostonPerusNimi(String nimi) {
-        tiedPerusNimi = nimi;
-    }
-
-
-    /**
-     * Palauttaa tiedoston nimen, jota käytetään tallennukseen
-     * @return tallennustiedoston nimi
-     */
     public String getTiedostonNimi() {
-        return getTiedostonPerusNimi() + ".dat";
+        return tiedNimi + ".dat";
     }
 
 
@@ -218,7 +195,7 @@ public class Tallennukset implements Iterable<Tallennus> {
      * @return varakopiotiedoston nimi
      */
     public String getBakNimi() {
-        return tiedPerusNimi + ".bak";
+        return tiedNimi + ".bak";
     }
 
     

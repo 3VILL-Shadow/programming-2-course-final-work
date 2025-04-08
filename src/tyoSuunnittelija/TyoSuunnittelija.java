@@ -135,12 +135,11 @@ public class TyoSuunnittelija {
     
     /**
      * Lukee TyöSuunnittelijan tiedot tiedostosta
-     * @param nimi jota käyteään lukemisessa
      * @throws SailoException jos lukeminen epäonnistuu
      */
-    public void lueTiedostosta(String nimi) throws SailoException {
-        tallennukset.lueTiedostosta(nimi);
-        pellot.lueTiedostosta(nimi);
+    public void lueTiedostosta() throws SailoException {
+        tallennukset.lueTiedostosta();
+        pellot.lueTiedostosta();
     }
 
 

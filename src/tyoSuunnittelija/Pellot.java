@@ -43,7 +43,7 @@ public class Pellot implements Iterable<Pelto> {
     
     /**
      * Lukee pellot tiedostosta.  
-     * @param hakemisto tiedoston hakemisto
+     * @param tiedosto joka luetaan
      * @throws SailoException jos lukeminen epäonnistuu
      * 
      * @example
@@ -56,10 +56,10 @@ public class Pellot implements Iterable<Pelto> {
      *  Pelto testiPelto22 = new Pelto(); testiPelto22.kokeilePelto(2); 
      *  Pelto testiPelto12 = new Pelto(); testiPelto12.kokeilePelto(1); 
      *  Pelto testiPelto23 = new Pelto(); testiPelto23.kokeilePelto(2); 
-     *  String tiedNimi = "testikelmit";
+     *  String tiedNimi = "testiPellot";
      *  File ftied = new File(tiedNimi+".dat");
      *  ftied.delete();
-     *  pellot.lueTiedostosta(tiedNimi); #THROWS SailoException
+     *  pellot.lueTiedostosta(ftied.getName()); #THROWS SailoException
      *  pellot.lisaa(testiPelto21);
      *  pellot.lisaa(testiPelto11);
      *  pellot.lisaa(testiPelto22);
@@ -67,7 +67,7 @@ public class Pellot implements Iterable<Pelto> {
      *  pellot.lisaa(testiPelto23);
      *  pellot.talleta();
      *  pellot = new Pellot();
-     *  pellot.lueTiedostosta(tiedNimi);
+     *  pellot.lueTiedostosta(ftied.getName());
      *  Iterator<Pelto> i = pellot.iterator();
      *  i.next().toString() === testiPelto21.toString();
      *  i.next().toString() === testiPelto11.toString();
@@ -83,9 +83,8 @@ public class Pellot implements Iterable<Pelto> {
      * </pre>
 
      */
-    public void lueTiedostosta(String hakemisto) throws SailoException {
-       setTiedPerusNimi(hakemisto);
-       try (BufferedReader fi = new BufferedReader(new FileReader(getTiedostonNimi()))) {
+    public void lueTiedostosta(String tiedosto) throws SailoException {
+       try (BufferedReader fi = new BufferedReader(new FileReader(tiedosto))) {
            String rivi;
            while ((rivi = fi.readLine()) != null) {
                rivi = rivi.trim();
@@ -96,7 +95,7 @@ public class Pellot implements Iterable<Pelto> {
            }
            muutettu = false;
        } catch ( FileNotFoundException e ) {
-           throw new SailoException("Tiedosto " + getTiedostonNimi() + " ei aukea");
+           throw new SailoException("Tiedosto " + tiedosto + " ei aukea");
        } catch ( IOException e ) {
            throw new SailoException("Ongelmia tiedoston kanssa: " + e.getMessage());
        }
@@ -108,13 +107,12 @@ public class Pellot implements Iterable<Pelto> {
      * @throws SailoException jos tulee poikkeus
      */
     public void lueTiedostosta() throws SailoException {
-        lueTiedostosta(getTiedostonPerusNimi());
+        lueTiedostosta(getTiedostonNimi());
     }
     
     
     /**
      * Tallentaa pellot tiedostoon.  
-     * TODO Kesken.
      * @throws SailoException jos talletus epäonnistuu
      */
     public void talleta() throws SailoException {
@@ -138,24 +136,6 @@ public class Pellot implements Iterable<Pelto> {
     }
 
     
-    /**
-     * Asettaa tiedoston perusnimen ilan tarkenninta
-     * @param tied tallennustiedoston perusnimi
-     */
-    public void setTiedPerusNimi(String tied) {
-        tiedPerusNimi = tied;
-    }
-
-
-    /**
-     * Palauttaa tiedoston nimen, jota käytetään tallennukseen
-     * @return tallennustiedoston nimi
-     */
-    public String getTiedostonPerusNimi() {
-        return tiedPerusNimi;
-    }
-
-
     /**
      * Palauttaa tiedoston nimen, jota käytetään tallennukseen
      * @return tallennustiedoston nimi
