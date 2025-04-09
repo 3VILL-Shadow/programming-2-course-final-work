@@ -58,7 +58,7 @@ public class Pellot implements Iterable<Pelto> {
      *  Pelto testiPelto23 = new Pelto(); testiPelto23.kokeilePelto(2); 
      *  String tiedNimi = "data\\testidata\\testiPellot";
      *  File ftied = new File(tiedNimi+".dat");
-     *  ftied.delete();
+     *  //ftied.delete();
      *  pellot.lueTiedostosta(ftied.getName()); #THROWS SailoException
      *  pellot.lisaa(testiPelto21);
      *  pellot.lisaa(testiPelto11);

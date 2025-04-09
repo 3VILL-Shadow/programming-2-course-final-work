@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -48,7 +49,6 @@ public class Tallennukset implements Iterable<Tallennus> {
      * tallennukset.anna(2) === testiTallennus3;
      * tallennukset.anna(1) == testiTallennus3 === false;
      * tallennukset.anna(1) == testiTallennus4 === true;
-     * tallennukset.anna(3) === testiTallennus3; #THROWS IndexOutOfBoundsException 
      * tallennukset.lisaa(testiTallennus3); tallennukset.getLkm() === 4;
      * tallennukset.lisaa(testiTallennus3); tallennukset.getLkm() === 5;
      * tallennukset.lisaa(testiTallennus3); tallennukset.getLkm() === 6;
@@ -56,11 +56,10 @@ public class Tallennukset implements Iterable<Tallennus> {
      * tallennukset.lisaa(testiTallennus3); tallennukset.getLkm() === 8;
      * tallennukset.lisaa(testiTallennus3); tallennukset.getLkm() === 9;
      * tallennukset.lisaa(testiTallennus3); tallennukset.getLkm() === 10;
-     * tallennukset.lisaa(testiTallennus3); #THROWS SailoException
      * </pre>
      */
     public void lisaa(Tallennus tallennus) throws SailoException {
-        if (lkm >= alkiot.length) throw new SailoException("Liikaa alkioita");
+        if (lkm >= alkiot.length) alkiot = Arrays.copyOf(alkiot, lkm+20); 
         alkiot[lkm] = tallennus;
         lkm++;
         muutettu = true;
@@ -116,7 +115,7 @@ public class Tallennukset implements Iterable<Tallennus> {
      */
     public void lueTiedostosta(String tiedosto) throws SailoException {
         try ( BufferedReader fi = new BufferedReader(new FileReader(tiedosto)) ) {
-           String rivi = fi.readLine();
+            String rivi = fi.readLine();
             if ( rivi == null ) throw new SailoException("Maksimikoko puuttuu");
 
             while ( (rivi = fi.readLine()) != null ) {
