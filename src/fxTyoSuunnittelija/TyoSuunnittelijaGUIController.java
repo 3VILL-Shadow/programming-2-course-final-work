@@ -30,12 +30,6 @@ public class TyoSuunnittelijaGUIController implements Initializable {
     @FXML private ListChooser<Tallennus> chooserTallennukset;
     @FXML private ListChooser<Pelto> chooserPellot;
     @FXML private TextArea areaPelto;
-    
-    
-    @Override
-    public void initialize(URL url, ResourceBundle bundle) {
-        alusta();      
-    }
 
     
     /**
@@ -131,6 +125,12 @@ public class TyoSuunnittelijaGUIController implements Initializable {
     private TyoSuunnittelija tyoSuunnittelija;
     private Tallennus tallennusKohdalla;
     private Pelto peltoKohdalla;
+    
+    
+    @Override
+    public void initialize(URL url, ResourceBundle bundle) {
+        alusta();      
+    }
     
     
     /**
