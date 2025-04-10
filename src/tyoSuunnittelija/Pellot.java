@@ -115,7 +115,6 @@ public class Pellot implements Iterable<Pelto> {
      */
     public void talleta() throws SailoException {
         if (!muutettu) return;
-        File fbak = new File(getBakNimi());
         File ftied = new File(getTiedostonNimi());
         
         String kommenttiRivi = null;
@@ -130,9 +129,6 @@ public class Pellot implements Iterable<Pelto> {
                 throw new SailoException("Tiedoston " + ftied.getName() + " kirjoittamisessa ongelmia");
             }
         }
-        
-        fbak.delete();
-        ftied.renameTo(fbak);
         
         try (PrintWriter fo = new PrintWriter(new FileWriter(ftied.getCanonicalPath()))) {
             if (kommenttiRivi != null) fo.println(kommenttiRivi);
@@ -157,16 +153,6 @@ public class Pellot implements Iterable<Pelto> {
     public String getTiedostonNimi() {
         return tiedPerusNimi + ".dat";
     }
-
-
-    /**
-     * Palauttaa varakopiotiedoston nimen
-     * @return varakopiotiedoston nimi
-     */
-    public String getBakNimi() {
-        return tiedPerusNimi + ".bak";
-    }
-
     
     
     /**

@@ -149,10 +149,7 @@ public class Tallennukset implements Iterable<Tallennus> {
      */
     public void talleta() throws SailoException {
         if (!muutettu) return;
-        File fbak = new File(getBakNimi());
         File ftied = new File(getTiedostonNimi());
-        fbak.delete();
-        ftied.renameTo(fbak);
         
         try (PrintWriter fo = new PrintWriter(new FileWriter(ftied.getCanonicalPath()))) {
             fo.println(alkiot.length);
@@ -186,16 +183,6 @@ public class Tallennukset implements Iterable<Tallennus> {
         return tiedNimi + ".dat";
     }
 
-
-    /**
-     * Palauttaa varakopiotiedoston nimen
-     * @return varakopiotiedoston nimi
-     */
-    public String getBakNimi() {
-        return tiedNimi + ".bak";
-    }
-
-    
     
     /**
      * @author Ville
