@@ -117,10 +117,26 @@ public class Pellot implements Iterable<Pelto> {
         if (!muutettu) return;
         File fbak = new File(getBakNimi());
         File ftied = new File(getTiedostonNimi());
+        
+        String kommenttiRivi = null;
+        
+        if (ftied.exists()) {
+            try (BufferedReader br = new BufferedReader(new FileReader(ftied))) {
+                String ekaRivi = br.readLine();
+                if (ekaRivi != null && ekaRivi.startsWith(";")) {
+                    kommenttiRivi = ekaRivi;
+                }
+            } catch (IOException e) {
+                throw new SailoException("Tiedoston " + ftied.getName() + " kirjoittamisessa ongelmia");
+            }
+        }
+        
         fbak.delete();
         ftied.renameTo(fbak);
         
         try (PrintWriter fo = new PrintWriter(new FileWriter(ftied.getCanonicalPath()))) {
+            if (kommenttiRivi != null) fo.println(kommenttiRivi);
+                
             for (Pelto pel : this) {
                 fo.println(pel.toString());
             }

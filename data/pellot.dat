@@ -1,5 +1,16 @@
-1|2|Pelto 13|Äestys|Maissi|Kerran|Poisto|Puinti
-2|2|Pelto 18|Äestys|Maissi|Kerran|Poisto|Puinti
-3|1|Pelto 6|Äestys|Maissi|Kerran|Poisto|Puinti
-4|1|Pelto 4|Äestys|Maissi|Kerran|Poisto|Puinti
-5|1|Pelto 5|Äestys|Maissi|Kerran|Poisto|Puinti
+;id     |tallennuksen id 	|Pellon nimi  	|Maanmuokkaus   |MaanmuokkausTehty		|Kylvetty vilja	|KylvöTehty 	|Lannoitus		|LannoitusTehty 	|Rikkaruohot	|RikkaruohotTehty	|Korjuu		|KorjuuTehty
+1|1|Pelto 20|Kynnetty|true|Vehnä|true|Kerran|true|Poisto|true|Puinti|false
+2|1|Pelto 21|Äestetty|false|Ohra|false|Kaksi kertaa|false|Poisto|false|Puinti|false
+3|1|Pelto 22|Äestetty|true|Maissi|true|Kerran|true|Poisto|true|Puinti|false
+4|1|Pelto 23|Kynnetty|false|Nurmi|false|Kaksi kertaa|false|Ei poistoa|false|Niitto|false
+5|2|Pelto 43|Suorakylvetty|true|Kaura|true|Ei kertaakaan|true|Poisto|true|Puinti|false
+6|2|Pelto 42|Suorakylvetty|false|Kaura|false|Ei kertaakaan|false|Poisto|false|Puinti|false
+7|2|Pelto 31|Suorakylvetty|false|Nurmi|false|Kerran|false|Ei poistoa|false|Niitto|false
+8|3|Pelto 10|Äestetty|true|Vehnä|true|Kaksi kertaa|true|Poisto|true|Puinti|false
+9|3|Pelto 09|Äestetty|true|Maissi|true|Kaksi kertaa|true|Poisto|true|Puinti|false
+10|4|Pelto 16|Äestys|true|Maissi|true|Kerran|true|Poisto|false|Puinti|false
+11|4|Pelto 17|Äestys|true|Maissi|true|Kerran|true|Poisto|false|Puinti|false
+12|5|Pelto 9|Äestys|true|Maissi|true|Kerran|true|Poisto|false|Puinti|false
+13|5|Pelto 12|Äestys|true|Maissi|true|Kerran|true|Poisto|false|Puinti|false
+14|5|Pelto 8|Äestys|true|Maissi|true|Kerran|true|Poisto|false|Puinti|false
+15|5|Pelto 11|Äestys|true|Maissi|true|Kerran|true|Poisto|false|Puinti|false

@@ -18,15 +18,15 @@ public class Pelto {
     private int tallennusNro;
     private String nimi = "";
     private String maanMuok = "";
-    private Boolean maanMuokTeht;
+    private String maanMuokTeht = "false";
     private String vilja = "";
-    private Boolean viljaTeht;
+    private String viljaTeht = "";
     private String lannoitus = "";
-    private Boolean lannoitusTeht;
+    private String lannoitusTeht = "";
     private String rikkaruohot = "";
-    private Boolean rikkaruohotTeht;
+    private String rikkaruohotTeht = "";
     private String korjuu = "";
-    private Boolean korjuuTeht;
+    private String korjuuTeht = "";
     
     private static int seuraavaNro = 1;
     
@@ -66,15 +66,15 @@ public class Pelto {
         tallennusNro = nro;
         nimi = "Pelto " + random.nextInt(20);
         maanMuok = "Äestys";
-        maanMuokTeht = true;
+        maanMuokTeht = "true";
         vilja = "Maissi";
-        viljaTeht = true;
+        viljaTeht = "true";
         lannoitus = "Kerran";
-        lannoitusTeht = true;
+        lannoitusTeht = "true";
         rikkaruohot = "Poisto";
-        rikkaruohotTeht = false;
+        rikkaruohotTeht = "false";
         korjuu = "Puinti";
-        korjuuTeht = false;
+        korjuuTeht = "false";
     }
     
     
@@ -152,14 +152,15 @@ public class Pelto {
      * @example
      * <pre name="test">
      *   Pelto pelto = new Pelto();
-     *   pelto.parse("   2   |  10  |   Pelto 20  | Äestys | Maissi | Kerran |  Poisto |  Puinti ");
-     *   pelto.toString() === "2|10|Pelto 20|Äestys|Maissi|Kerran|Poisto|Puinti";
+     *   pelto.parse("   2   |  10  |   Pelto 20  | Äestys | false | Maissi | false | Kerran | false | Poisto | false | Puinti | false |");
+     *   pelto.toString() === "2|10|Pelto 20|Äestys|false|Maissi|false|Kerran|false|Poisto|false|Puinti|false";
      * </pre>
      */
     @Override
     public String toString() {
-        return "" + getTunnusNro() + "|" + tallennusNro + "|" + nimi + "|" + maanMuok + "|" + vilja + "|" +
-                lannoitus + "|" + rikkaruohot + "|" + korjuu;
+        return "" + getTunnusNro() + "|" + tallennusNro + "|" + nimi + "|" + maanMuok + "|" + maanMuokTeht + "|" + vilja + "|" +
+                viljaTeht + "|" +lannoitus + "|" + lannoitusTeht + "|" + rikkaruohot + "|" + rikkaruohotTeht + "|" + korjuu
+                + "|" + korjuuTeht;
     }
     
     
@@ -169,15 +170,15 @@ public class Pelto {
      * @example
      * <pre name="test">
      * Pelto pelto = new Pelto();
-     * pelto.parse("   2   |  10  |   Pelto 20  | Äestys | Maissi | Kerran |  Poisto |  Puinti ");
+     * pelto.parse("   2   |  10  |   Pelto 20  | Äestys | false | Maissi | false | Kerran | false | Poisto | false | Puinti | false |");
      * pelto.getTallennusNro() === 10;
-     * pelto.toString() === "2|10|Pelto 20|Äestys|Maissi|Kerran|Poisto|Puinti";
+     * pelto.toString() === "2|10|Pelto 20|Äestys|false|Maissi|false|Kerran|false|Poisto|false|Puinti|false";
      * pelto.rekisteroi();
      * int n = pelto.getTunnusNro();
      * pelto.parse(""+(n+20));
      * pelto.rekisteroi();
      * pelto.getTunnusNro() === n+20+1;
-     * pelto.toString() === "" + (n+20+1) + "|10|Pelto 20|Äestys|Maissi|Kerran|Poisto|Puinti";
+     * pelto.toString() === "" + (n+20+1) + "|10|Pelto 20|Äestys|false|Maissi|false|Kerran|false|Poisto|false|Puinti|false";
      * </pre>
      */
     public void parse(String rivi) {
@@ -186,10 +187,15 @@ public class Pelto {
         tallennusNro = Mjonot.erota(sb, '|', tallennusNro);
         nimi = Mjonot.erota(sb, '|', nimi);
         maanMuok = Mjonot.erota(sb, '|', maanMuok);
+        maanMuokTeht = Mjonot.erota(sb, '|', maanMuokTeht);
         vilja = Mjonot.erota(sb, '|', vilja);
+        viljaTeht = Mjonot.erota(sb, '|', viljaTeht);
         lannoitus = Mjonot.erota(sb, '|', lannoitus);
+        lannoitusTeht = Mjonot.erota(sb, '|', lannoitusTeht);
         rikkaruohot = Mjonot.erota(sb, '|', rikkaruohot);
+        rikkaruohotTeht = Mjonot.erota(sb, '|', rikkaruohotTeht);
         korjuu = Mjonot.erota(sb, '|', korjuu);
+        korjuuTeht = Mjonot.erota(sb, '|', korjuuTeht);
     }
     
     
