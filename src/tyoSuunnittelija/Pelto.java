@@ -95,7 +95,7 @@ public class Pelto implements Cloneable {
     public String getKorjuu() {
         return korjuu;
     }
-    
+
     
     /**
      * Testi metodi jolla annetaan testiarvot

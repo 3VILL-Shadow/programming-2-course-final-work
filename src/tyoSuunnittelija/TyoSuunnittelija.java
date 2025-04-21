@@ -64,6 +64,14 @@ public class TyoSuunnittelija {
     public List<Pelto> annaPellot(Tallennus tallennus) {
         return pellot.annaPellot(tallennus.getTunnusNro());
     }
+    
+    
+    /**
+     * @return kenttien maara
+     */
+    public int getKenttia() {
+        return 5;
+    }
 
     
     

@@ -232,6 +232,13 @@ public class TyoSuunnittelijaGUIController implements Initializable {
         
         if (tallennusKohdalla == null) return;
         haeP(tallennusKohdalla.getTunnusNro());
+        
+        peltoKohdalla = chooserPellot.getSelectedObject();
+        if (peltoKohdalla == null) {
+            for (int i = 0; i < tyoSuunnittelija.getKenttia(); i++) {
+                muokattavat[i].setText("");
+            }
+        }
     }
     
     /**
