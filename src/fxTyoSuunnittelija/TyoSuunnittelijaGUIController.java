@@ -141,7 +141,6 @@ public class TyoSuunnittelijaGUIController implements Initializable {
     private Pelto peltoKohdalla;
     private TextField muokattavat[];
     
-    
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
         alusta();      
@@ -222,6 +221,8 @@ public class TyoSuunnittelijaGUIController implements Initializable {
         
         muokattavat = new TextField[] {fieldMaanMuok,  fieldKylvetty, fieldLannoitus, fieldRikat, fieldKorjuu};
     }
+    
+   
 
     
     /**
@@ -235,7 +236,7 @@ public class TyoSuunnittelijaGUIController implements Initializable {
         
         peltoKohdalla = chooserPellot.getSelectedObject();
         if (peltoKohdalla == null) {
-            for (int i = 0; i < tyoSuunnittelija.getKenttia(); i++) {
+            for (int i = 0; i < Pelto.getKenttia(); i++) {
                 muokattavat[i].setText("");
             }
         }
@@ -249,7 +250,7 @@ public class TyoSuunnittelijaGUIController implements Initializable {
         
         if (peltoKohdalla == null) return;
         
-        muokattavat[0].setText(peltoKohdalla.getNimi());
+        muokattavat[0].setText(peltoKohdalla.getMaanMuok());
         muokattavat[1].setText(peltoKohdalla.getVilja());
         muokattavat[2].setText(peltoKohdalla.getLannoitus());
         muokattavat[3].setText(peltoKohdalla.getRikat());

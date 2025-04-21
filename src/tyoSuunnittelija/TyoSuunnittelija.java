@@ -67,15 +67,6 @@ public class TyoSuunnittelija {
     
     
     /**
-     * @return kenttien maara
-     */
-    public int getKenttia() {
-        return 5;
-    }
-
-    
-    
-    /**
      * Palautaa TyöSuuttnittelijan tallennusten määrän
      * @return tallennusten määrä
      */

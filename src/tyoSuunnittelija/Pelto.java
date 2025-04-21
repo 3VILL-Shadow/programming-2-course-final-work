@@ -98,6 +98,14 @@ public class Pelto implements Cloneable {
 
     
     /**
+     * @return kenttien maara
+     */
+    public static int getKenttia() {
+        return 5;
+    }
+    
+    
+    /**
      * Testi metodi jolla annetaan testiarvot
      * @param nro viite tallennukseen, jonka pellosta kyse
      */
