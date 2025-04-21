@@ -44,6 +44,15 @@ public class Tallennus {
     
     
     /**
+     * Asetetaan tallennuksen nimeksi nimi jonka käyttäjä valtisee uutta tallennusta luodessaan
+     * @param talNimi tallennuksen nimi, joka annetaan uutta luodessa
+     */
+    public void asetaNimi(String talNimi) {
+        nimi = talNimi; 
+    }
+    
+    
+    /**
      * Tulostetaan tallennuksen tiedot
      * @param out tietovirta johon tulostetaan
      */

@@ -18,7 +18,7 @@ public class Pelto {
     private int tallennusNro;
     private String nimi = "";
     private String maanMuok = "";
-    private String maanMuokTeht = "false";
+    private String maanMuokTeht = "";
     private String vilja = "";
     private String viljaTeht = "";
     private String lannoitus = "";
@@ -75,6 +75,18 @@ public class Pelto {
         rikkaruohotTeht = "false";
         korjuu = "Puinti";
         korjuuTeht = "false";
+    }
+    
+    
+    /**
+     * asetetaan pellolle tallennuksen numero, jotta pelto pysyy omassa tallennuksessaan ja asetetaan nimeksi
+     * nimi, joka annetaan uutta luodessa
+     * @param nro tallennuksen numero, johon pelto kuuluu
+     * @param pelNimi pellon nimi joka annetaan uutta luodessa
+     */
+    public void asetaNimi(int nro, String pelNimi) {
+        tallennusNro = nro;
+        nimi = pelNimi;
     }
     
     

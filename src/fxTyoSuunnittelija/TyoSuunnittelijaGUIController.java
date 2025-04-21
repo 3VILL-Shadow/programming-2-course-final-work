@@ -36,7 +36,9 @@ public class TyoSuunnittelijaGUIController implements Initializable {
      * Lisätään uusi tallennus
      */
     @FXML private void handleUusiTallennus() {
-        uusiTallennus();
+        String talNimi = Dialogs.showInputDialog("Anna Tallennuksen nimi", "");
+        if (talNimi == null) return;
+        uusiTallennus(talNimi);
         //Dialogs.showMessageDialog("Ei osata vielä lisätä tallennusta");
     }
 
@@ -44,7 +46,9 @@ public class TyoSuunnittelijaGUIController implements Initializable {
      * Lisätään uusi pelto
      */
     @FXML private void handleUusiPelto() {
-        uusiPelto();
+        String pelNimi = Dialogs.showInputDialog("Anna Pellon nimi", "");
+        if (pelNimi == null) return;
+        uusiPelto(pelNimi);
         //Dialogs.showMessageDialog("Ei osata vielä lisätä peltoa");
     }
     
@@ -275,11 +279,13 @@ public class TyoSuunnittelijaGUIController implements Initializable {
     
     /**
      * Luo uuden tallennuksen jota aletaan editoimaan 
+     * @param talNimi tallennuksen nimi joka annetaan uutta luodessa
      */
-    protected void uusiTallennus() {
+    protected void uusiTallennus(String talNimi) {
         Tallennus uusi = new Tallennus();
         uusi.rekisteroi();
-        uusi.kokeileTallennus();
+//        uusi.kokeileTallennus();
+        uusi.asetaNimi(talNimi);
         try {
             tyoSuunnittelija.lisaa(uusi);
         } catch (SailoException e) {
@@ -292,12 +298,14 @@ public class TyoSuunnittelijaGUIController implements Initializable {
     
     /** 
      * Tekee uuden tyhjän pellon editointia varten 
+     * @param pelNimi pellon nimi joka annetaan uutta luodessa
      */ 
-    public void uusiPelto() { 
+    public void uusiPelto(String pelNimi) { 
         if ( tallennusKohdalla == null ) return;  
         Pelto pel = new Pelto();  
         pel.rekisteroi();  
-        pel.kokeilePelto(tallennusKohdalla.getTunnusNro());  
+//        pel.kokeilePelto(tallennusKohdalla.getTunnusNro());  
+        pel.asetaNimi(tallennusKohdalla.getTunnusNro(), pelNimi);
         tyoSuunnittelija.lisaa(pel);  
         haeP(pel.getTunnusNro());          
     } 
