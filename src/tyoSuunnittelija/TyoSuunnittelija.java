@@ -20,6 +20,14 @@ public class TyoSuunnittelija {
     public void lisaa(Pelto pel) {
         pellot.lisaa(pel);
     }
+    
+    /**
+     * @param pelto pelto jonka nimeä muutetaan
+     * @param uusiPelNimi nimi joka muokatessa annetaan pellolle
+     */
+    public void muutaPelNimi(Pelto pelto, String uusiPelNimi) {
+        pellot.muutaNimi(pelto, uusiPelNimi);
+    }
 
     
     /**
@@ -119,6 +127,15 @@ public class TyoSuunnittelija {
      */
     public void lisaa(Tallennus tallennus) throws SailoException {
         tallennukset.lisaa(tallennus);
+    }
+    
+    
+    /**
+     * @param tallennus tallennus jonka nimeä muutetaan
+     * @param uusiTalNimi nimi joka muokatessa annetaan tallennukselle
+     */
+    public void muutaTalNimi(Tallennus tallennus, String uusiTalNimi) {
+        tallennukset.muutaNimi(tallennus, uusiTalNimi);
     }
 
     

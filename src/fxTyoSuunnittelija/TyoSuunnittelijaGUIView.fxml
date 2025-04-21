@@ -46,7 +46,7 @@
    <center>
       <HBox BorderPane.alignment="CENTER">
          <children>
-            <BorderPane id="Tallennukset" prefHeight="200.0">
+            <BorderPane id="Tallennukset" minHeight="400.0" prefHeight="400.0">
                <top>
                   <Label text="Tallennukset" BorderPane.alignment="CENTER">
                      <BorderPane.margin>
@@ -66,7 +66,7 @@
                   <Insets bottom="3.0" left="3.0" right="3.0" />
                </HBox.margin>
             </BorderPane>
-            <BorderPane id="Pellot" prefHeight="200.0" prefWidth="200.0">
+            <BorderPane id="Pellot" minHeight="400.0" prefHeight="400.0">
                <top>
                   <Label text="Pellot" BorderPane.alignment="CENTER">
                      <BorderPane.margin>
@@ -80,7 +80,7 @@
                   <Insets bottom="3.0" left="3.0" right="3.0" />
                </HBox.margin>
             </BorderPane>
-            <BorderPane id="Tyotehtavat" fx:id="paneTyotehtavat">
+            <BorderPane id="Tyotehtavat" fx:id="paneTyotehtavat" minHeight="400.0" prefHeight="400.0">
                <top>
                   <Label text="Työtehtävät" BorderPane.alignment="CENTER">
                      <BorderPane.margin>

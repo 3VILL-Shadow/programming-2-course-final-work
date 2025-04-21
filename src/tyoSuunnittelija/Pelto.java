@@ -13,7 +13,7 @@ import fi.jyu.mit.ohj2.Mjonot;
  * @version 17 Mar 2025
  *
  */
-public class Pelto {
+public class Pelto implements Cloneable {
     private int tunnusNro;
     private int tallennusNro;
     private String nimi = "";
@@ -126,6 +126,13 @@ public class Pelto {
     public void asetaNimi(int nro, String pelNimi) {
         tallennusNro = nro;
         nimi = pelNimi;
+    }
+    
+    /**
+     * @param uusiPelNimi nimi joksi pellon nimi muutetaan
+     */
+    public void muutaNimi(String uusiPelNimi) {
+        nimi = uusiPelNimi;
     }
     
     
@@ -260,6 +267,14 @@ public class Pelto {
     @Override
     public int hashCode() {
         return tunnusNro;
+    }
+    
+    
+    @Override
+    public Pelto clone() throws CloneNotSupportedException {
+        Pelto uusi;
+        uusi = (Pelto) super.clone();
+        return uusi;
     }
     
     

@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
 
+
 /**
  * Työsuunnittelijan pellot, joka osaa lisätä uuden pellon
  * @author Ville
@@ -39,6 +40,22 @@ public class Pellot implements Iterable<Pelto> {
     public void lisaa(Pelto Pel) {
         alkiot.add(Pel);
         muutettu = true;
+    }
+    
+    /**
+     * @param pelto pelto, jonka nimeä muutetaan
+     * @param uusiPelNimi pellon uusi nimi
+     */
+    public void muutaNimi(Pelto pelto, String uusiPelNimi) {
+        int nro = pelto.getTunnusNro();
+        for (Pelto pel : alkiot) {
+            if (pel.getTunnusNro() == nro) {
+                pel.muutaNimi(uusiPelNimi);
+                muutettu = true;
+                return;                
+            }
+        }
+        lisaa(pelto);
     }
     
     /**

@@ -11,6 +11,8 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import fi.jyu.mit.fxgui.Dialogs;
+
 /**
  * Työ suunnittelijan tallennukset
  * @author Ville
@@ -63,6 +65,27 @@ public class Tallennukset implements Iterable<Tallennus> {
         alkiot[lkm] = tallennus;
         lkm++;
         muutettu = true;
+    }
+    
+    
+    /**
+     * @param tallennus tallennus, jonka nimeä muutetaan
+     * @param uusiTalNimi tallennuksen uusi nimi
+     */
+    public void muutaNimi(Tallennus tallennus, String uusiTalNimi) {
+        int nro = tallennus.getTunnusNro();
+        for (int i = 0; i < lkm; i++) {
+            if (alkiot[i].getTunnusNro() == nro) {
+                alkiot[i].muutaNimi(uusiTalNimi);
+                muutettu = true;
+                return;                
+            }
+        }
+        try {
+            lisaa(tallennus);
+        } catch (SailoException e) {
+            Dialogs.showMessageDialog(e.getMessage());
+        }
     }
     
     

@@ -61,7 +61,10 @@ public class TyoSuunnittelijaGUIController implements Initializable {
      * Muutetaan tallennuksen nimeä
      */
     @FXML private void handleMuutaTallennusta() {
-        Dialogs.showMessageDialog("Ei osata vielä muuttaa tallennuksen nimeä");
+        String uusiTalNimi = Dialogs.showInputDialog("Muuta Tallennuksen nimeä", "");
+        if (uusiTalNimi == null) return;
+        muokkaaTal(uusiTalNimi);
+        //Dialogs.showMessageDialog("Ei osata vielä muuttaa tallennuksen nimeä");
     }
     
     
@@ -69,7 +72,10 @@ public class TyoSuunnittelijaGUIController implements Initializable {
      * Muutetaan pellon nimeä
      */
     @FXML private void handleMuutaPeltoa() {
-        Dialogs.showMessageDialog("Ei osata vielä muuttaa pellon nimeä");
+        String uusiPelNimi = Dialogs.showInputDialog("Muuta Pellon nimeä", "");
+        if (uusiPelNimi == null) return;
+        muokkaaPel(uusiPelNimi);
+        //Dialogs.showMessageDialog("Ei osata vielä muuttaa pellon nimeä");
     }
     
     
@@ -299,6 +305,23 @@ public class TyoSuunnittelijaGUIController implements Initializable {
         }
         haeT(uusi.getTunnusNro());
     }
+    
+    /**
+     * Muutetaan tallennuksen nimeä
+     * @param uusiTalNimi tallennuksen nimi joka annetaan sitä muuttaessa
+     */
+    private void muokkaaTal(String uusiTalNimi) {
+        if (tallennusKohdalla == null) return;
+        try {
+            Tallennus tallennus;
+            tallennus = tallennusKohdalla.clone();
+            if (tallennus == null) return;
+            tyoSuunnittelija.muutaTalNimi(tallennus, uusiTalNimi);
+            haeT(tallennus.getTunnusNro());
+        } catch (CloneNotSupportedException e) {
+            //
+        }
+    }
 
     
     /** 
@@ -313,6 +336,19 @@ public class TyoSuunnittelijaGUIController implements Initializable {
         tyoSuunnittelija.lisaa(pel);  
         haeP(pel.getTunnusNro());          
     } 
+    
+    private void muokkaaPel(String uusiPelNimi) {
+        if (tallennusKohdalla == null) return;
+        try {
+            Pelto pelto;
+            pelto = peltoKohdalla.clone();
+            if (pelto == null) return;
+            tyoSuunnittelija.muutaPelNimi(pelto, uusiPelNimi);
+            haeT(pelto.getTunnusNro());
+        } catch (CloneNotSupportedException e) {
+            //
+        }
+    }
 
     
     /**

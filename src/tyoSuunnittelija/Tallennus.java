@@ -11,7 +11,7 @@ import fi.jyu.mit.ohj2.Mjonot;
  * @author Ville
  * @version 16 Mar 2025
  */
-public class Tallennus {
+public class Tallennus implements Cloneable {
     private int tunnusNro;
     private String nimi = "";
     
@@ -49,6 +49,14 @@ public class Tallennus {
      */
     public void asetaNimi(String talNimi) {
         nimi = talNimi; 
+    }
+    
+    
+    /**
+     * @param uusiTalNimi nimi joksi tallennuksen nimi muutetaan
+     */
+    public void muutaNimi(String uusiTalNimi) {
+        nimi = uusiTalNimi;
     }
     
     
@@ -169,6 +177,13 @@ public class Tallennus {
         return tunnusNro;
     }
 
+    
+    @Override
+    public Tallennus clone() throws CloneNotSupportedException {
+        Tallennus uusi;
+        uusi = (Tallennus) super.clone();
+        return uusi;
+    }
     
     
     /**
