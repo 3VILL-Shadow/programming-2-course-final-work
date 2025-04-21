@@ -50,11 +50,50 @@ public class Pelto {
     
     
     /**
-     * 
      * @return pellon nimi
      */
     public String getNimi() {
         return nimi;
+    }
+
+    
+    /**
+     * @return maanmuokkaus
+     */
+    public String getMaanMuok() {
+        return maanMuok;
+    }
+    
+    
+    /**
+     * @return kylvetty vilja
+     */
+    public String getVilja() {
+        return vilja;
+    }
+    
+    
+    /**
+     * @return lannoitus
+     */
+    public String getLannoitus() {
+        return lannoitus;
+    }
+    
+    
+    /**
+     * @return rikkaruohot
+     */
+    public String getRikat() {
+        return rikkaruohot;
+    }
+    
+    
+    /**
+     * @return korjuu
+     */
+    public String getKorjuu() {
+        return korjuu;
     }
     
     

@@ -3,7 +3,7 @@ package fxTyoSuunnittelija;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import tyoSuunnittelija.Pelto;
 import tyoSuunnittelija.SailoException;
 import tyoSuunnittelija.Tallennus;
@@ -29,7 +29,11 @@ public class TyoSuunnittelijaGUIController implements Initializable {
       
     @FXML private ListChooser<Tallennus> chooserTallennukset;
     @FXML private ListChooser<Pelto> chooserPellot;
-    @FXML private TextArea areaPelto;
+    @FXML private TextField fieldMaanMuok;
+    @FXML private TextField fieldKylvetty;
+    @FXML private TextField fieldLannoitus;
+    @FXML private TextField fieldRikat;
+    @FXML private TextField fieldKorjuu;
 
     
     /**
@@ -129,6 +133,7 @@ public class TyoSuunnittelijaGUIController implements Initializable {
     private TyoSuunnittelija tyoSuunnittelija;
     private Tallennus tallennusKohdalla;
     private Pelto peltoKohdalla;
+    private TextField muokattavat[];
     
     
     @Override
@@ -208,6 +213,8 @@ public class TyoSuunnittelijaGUIController implements Initializable {
         
         chooserPellot.clear();
         chooserPellot.addSelectionListener(_ -> naytaPelto());
+        
+        muokattavat = new TextField[] {fieldMaanMuok,  fieldKylvetty, fieldLannoitus, fieldRikat, fieldKorjuu};
     }
 
     
@@ -218,7 +225,6 @@ public class TyoSuunnittelijaGUIController implements Initializable {
         tallennusKohdalla = chooserTallennukset.getSelectedObject();
         
         if (tallennusKohdalla == null) return;
-        areaPelto.setText("");
         haeP(tallennusKohdalla.getTunnusNro());
     }
     
@@ -230,11 +236,11 @@ public class TyoSuunnittelijaGUIController implements Initializable {
         
         if (peltoKohdalla == null) return;
         
-        areaPelto.setText("");
-        try (PrintStream os = TextAreaOutputStream.getTextPrintStream(areaPelto)) {
-            tulosta(os, peltoKohdalla);  
-        }
-        
+        muokattavat[0].setText(peltoKohdalla.getNimi());
+        muokattavat[1].setText(peltoKohdalla.getVilja());
+        muokattavat[2].setText(peltoKohdalla.getLannoitus());
+        muokattavat[3].setText(peltoKohdalla.getRikat());
+        muokattavat[4].setText(peltoKohdalla.getKorjuu());
     }
     
     
@@ -284,7 +290,6 @@ public class TyoSuunnittelijaGUIController implements Initializable {
     protected void uusiTallennus(String talNimi) {
         Tallennus uusi = new Tallennus();
         uusi.rekisteroi();
-//        uusi.kokeileTallennus();
         uusi.asetaNimi(talNimi);
         try {
             tyoSuunnittelija.lisaa(uusi);
@@ -304,7 +309,6 @@ public class TyoSuunnittelijaGUIController implements Initializable {
         if ( tallennusKohdalla == null ) return;  
         Pelto pel = new Pelto();  
         pel.rekisteroi();  
-//        pel.kokeilePelto(tallennusKohdalla.getTunnusNro());  
         pel.asetaNimi(tallennusKohdalla.getTunnusNro(), pelNimi);
         tyoSuunnittelija.lisaa(pel);  
         haeP(pel.getTunnusNro());          
