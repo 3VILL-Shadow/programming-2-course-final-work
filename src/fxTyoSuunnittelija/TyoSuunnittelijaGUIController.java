@@ -304,11 +304,6 @@ public class TyoSuunnittelijaGUIController implements Initializable {
             Dialogs.showMessageDialog("Tallennuksen haussa ongelmia" + ex.getMessage());
         }
         
-//        for (int i = 0; i < tyoSuunnittelija.getTallennuksia(); i++) {
-//            Tallennus tallennus = tyoSuunnittelija.annaTallennukset(i);
-//            if (tallennus.getTunnusNro() == tnro) index = i;
-//            chooserTallennukset.add(tallennus.getNimi(), tallennus);
-//        }
         chooserTallennukset.setSelectedIndex(index); 
     }
 
@@ -316,17 +311,22 @@ public class TyoSuunnittelijaGUIController implements Initializable {
     /**
      * Hakee tallennusten tiedot listaan
      * @param pnr tallennuksen numero, joka aktivoidaan haun jälkeen
+     
      */
     protected void haeP(int pnr) {
-        
-        int tnro = pnr;
-        if (tnro <= 0) {
+        int pnro = pnr;
+        if (pnro <= 0) {
             Pelto kohdalla = peltoKohdalla;
-            if (kohdalla != null) tnro = kohdalla.getTunnusNro();
+            if (kohdalla != null) pnro = kohdalla.getTunnusNro();
         }
         
         String ehto = hakuEhto.getText();
-        if (ehto.indexOf('*') < 0) ehto = "*" + ehto + "*";
+        boolean haePeltoa = (haettava.getSelectedIndex() == 1);
+        
+        if (!haePeltoa) ehto = "*";
+        else if (!ehto.contains("*")) ehto = "*" + ehto + "*";
+        
+//        if (ehto.indexOf('*') < 0) ehto = "*" + ehto + "*";
         
         chooserPellot.clear();
 
@@ -340,23 +340,13 @@ public class TyoSuunnittelijaGUIController implements Initializable {
             pellot = tyoSuunnittelija.etsiPel(ehto, valittuTal);
             int i = 0;
             for (Pelto pel : pellot) {
-                if (pel.getTunnusNro() == tnro) index = i;
+                if (pel.getTunnusNro() == pnro) index = i;
                 chooserPellot.add(pel.getNimi(), pel);
                 i++;
             } 
         } catch (SailoException ex) {
             Dialogs.showMessageDialog("Tallennuksen haussa ongelmia" + ex.getMessage());
         }
-//        chooserPellot.clear();
-//        
-//        List<Pelto> pellot = tyoSuunnittelija.annaPellot(valittuTal);
-//        
-//        int index = 0;
-//        for (int i = 0; i < pellot.size(); i++) {
-//            Pelto pelto = pellot.get(i);
-//            if (pelto.getTunnusNro() == pnr) index = i;
-//            chooserPellot.add(pelto.getNimi(), pelto);
-//        }
         chooserPellot.setSelectedIndex(index); 
     }
     
