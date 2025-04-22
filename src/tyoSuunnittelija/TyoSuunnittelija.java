@@ -1,5 +1,6 @@
 package tyoSuunnittelija;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -30,6 +31,16 @@ public class TyoSuunnittelija {
         pellot.muutaNimi(pelto, uusiPelNimi);
     }
 
+    
+    /**
+     * @param peltoKohdalla pelto jonka tietoja muutetaan
+     * @param tiedot tiedot joita on muutettu
+     */
+    public void muokkaaPelTietoja(Pelto peltoKohdalla, ArrayList<String> tiedot) {
+        pellot.muokkaaTiedot(peltoKohdalla, tiedot);
+        
+    }
+    
     
     /**
      * Haetaan kaikki tallennuksen pellot
@@ -250,4 +261,13 @@ public class TyoSuunnittelija {
             System.out.println(ex.getMessage());
         }
     }
+
+    
+    /**
+     * @return onko tietoja muutettu
+     */
+    public boolean getMuutettu() {
+        return pellot.getMuutettu();
+    }
+
 }

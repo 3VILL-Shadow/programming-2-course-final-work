@@ -15,6 +15,7 @@ import java.io.PrintStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.ResourceBundle;
 
@@ -78,6 +79,11 @@ public class TyoSuunnittelijaGUIController implements Initializable {
         if (uusiPelNimi == null) return;
         muokkaaPel(uusiPelNimi);
         //Dialogs.showMessageDialog("Ei osata vielä muuttaa pellon nimeä");
+    }
+    
+    
+    @FXML private void handleMuokkaPelTietoja() {
+        muokkaaPelTietoja();
     }
     
     
@@ -326,8 +332,6 @@ public class TyoSuunnittelijaGUIController implements Initializable {
         if (!haePeltoa) ehto = "*";
         else if (!ehto.contains("*")) ehto = "*" + ehto + "*";
         
-//        if (ehto.indexOf('*') < 0) ehto = "*" + ehto + "*";
-        
         chooserPellot.clear();
 
         Tallennus valittuTal = chooserTallennukset.getSelectedObject();
@@ -367,6 +371,7 @@ public class TyoSuunnittelijaGUIController implements Initializable {
         }
         haeT(uusi.getTunnusNro());
     }
+    
     
     /**
      * Muutetaan tallennuksen nimeä
@@ -410,10 +415,24 @@ public class TyoSuunnittelijaGUIController implements Initializable {
             pelto = peltoKohdalla.clone();
             if (pelto == null) return;
             tyoSuunnittelija.muutaPelNimi(pelto, uusiPelNimi);
-            haeT(pelto.getTunnusNro());
+            haeP(pelto.getTunnusNro());
         } catch (CloneNotSupportedException e) {
             //
         }
+    }
+    
+    
+    private void muokkaaPelTietoja() {
+        if (peltoKohdalla == null) return;
+        
+        ArrayList<String> tiedot = new ArrayList<>();
+        tiedot.add(fieldMaanMuok.getText());
+        tiedot.add(fieldKylvetty.getText());
+        tiedot.add(fieldLannoitus.getText());
+        tiedot.add(fieldRikat.getText());
+        tiedot.add(fieldKorjuu.getText());
+        
+        tyoSuunnittelija.muokkaaPelTietoja(peltoKohdalla, tiedot); 
     }
 
     

@@ -102,7 +102,7 @@
                                           <Insets top="17.5" />
                                        </HBox.margin>
                                     </Label>
-                                    <TextField fx:id="fieldMaanMuok">
+                                    <TextField fx:id="fieldMaanMuok" onKeyReleased="#handleMuokkaPelTietoja">
                                        <HBox.margin>
                                           <Insets left="5.0" right="3.0" top="15.0" />
                                        </HBox.margin>
@@ -126,7 +126,7 @@
                                           <Insets right="18.0" top="10.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <TextField fx:id="fieldKylvetty">
+                                    <TextField fx:id="fieldKylvetty" onKeyReleased="#handleMuokkaPelTietoja">
                                        <HBox.margin>
                                           <Insets left="5.0" right="3.0" top="5.0" />
                                        </HBox.margin>
@@ -145,7 +145,7 @@
                                           <Insets right="32.0" top="10.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <TextField fx:id="fieldLannoitus">
+                                    <TextField fx:id="fieldLannoitus" onKeyReleased="#handleMuokkaPelTietoja">
                                        <HBox.margin>
                                           <Insets left="5.0" right="3.0" top="5.0" />
                                        </HBox.margin>
@@ -164,7 +164,7 @@
                                           <Insets right="19.0" top="10.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <TextField fx:id="fieldRikat">
+                                    <TextField fx:id="fieldRikat" onKeyReleased="#handleMuokkaPelTietoja">
                                        <HBox.margin>
                                           <Insets left="5.0" right="3.0" top="5.0" />
                                        </HBox.margin>
@@ -183,7 +183,7 @@
                                           <Insets right="49.0" top="10.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <TextField fx:id="fieldKorjuu">
+                                    <TextField fx:id="fieldKorjuu" onKeyReleased="#handleMuokkaPelTietoja">
                                        <HBox.margin>
                                           <Insets left="5.0" right="3.0" top="5.0" />
                                        </HBox.margin>

@@ -60,6 +60,26 @@ public class Pellot implements Iterable<Pelto> {
         lisaa(pelto);
     }
     
+    
+    /**
+     * @param peltoKohdalla pelto jota muokataan
+     * @param tiedot lista kenttien sisältämästä tiedosta
+     */
+    public void muokkaaTiedot(Pelto peltoKohdalla, ArrayList<String> tiedot) {
+        if (tiedot.size() < 5 || peltoKohdalla == null) return;
+
+        peltoKohdalla.asetaMaanMuok(tiedot.get(0));
+        peltoKohdalla.asetaVilja(tiedot.get(1));
+        peltoKohdalla.asetaLannoitus(tiedot.get(2));
+        peltoKohdalla.asetaRikat(tiedot.get(3));
+        peltoKohdalla.asetaKorjuu(tiedot.get(4));
+
+        muutettu = true;
+        
+    }
+
+    
+    
     /**
      * Lukee pellot tiedostosta.  
      * @param tiedosto joka luetaan
@@ -180,6 +200,14 @@ public class Pellot implements Iterable<Pelto> {
      */
     public int getLkm() {
         return alkiot.size();
+    }
+    
+    
+    /**
+     * @return onko tietoja muutettu
+     */
+    public boolean getMuutettu() {
+        return muutettu;
     }
 
     
@@ -311,5 +339,4 @@ public class Pellot implements Iterable<Pelto> {
         }
 
     }
-
 }
