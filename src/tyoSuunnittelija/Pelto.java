@@ -145,6 +145,51 @@ public class Pelto implements Cloneable {
     
     
     /**
+     * asetetaan maan muokkaus kenttään tieto joka voidaan tallentaa
+     * @param tieto kentän sisältö
+     */
+    public void asetaMaanMuok(String tieto) {
+        maanMuok = tieto;
+    }
+    
+    
+    /**
+     * asetetaan kylvetty vilja kenttään tieto joka voidaan tallentaa
+     * @param tieto kentän sisältö
+     */
+    public void asetaVilja(String tieto) {
+        vilja = tieto;
+    }
+    
+    
+    /**
+     * asetetaan lannoitus kenttään tieto joka voidaan tallentaa
+     * @param tieto kentän sisältö
+     */
+    public void asetaLannoitus(String tieto) {
+        lannoitus= tieto;
+    }
+    
+    
+    /**
+     * asetetaan rikkaruohot kenttään tieto joka voidaan tallentaa
+     * @param tieto kentän sisältö
+     */
+    public void asetaRikat(String tieto) {
+        rikkaruohot = tieto;
+    }
+    
+        
+    /**
+     * asetetaan korjuu kenttään tieto joka voidaan tallentaa
+     * @param tieto kentän sisältö
+     */
+    public void asetaKorjuu(String tieto) {
+        korjuu = tieto;
+    }
+    
+    
+    /**
      * Tulostetaan pellon tiedot
      * @param out tietovirta johon tulostetaan
      */

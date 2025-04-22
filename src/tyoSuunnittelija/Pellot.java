@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
 
+import fi.jyu.mit.ohj2.WildChars;
+
 
 /**
  * Työsuunnittelijan pellot, joka osaa lisätä uuden pellon
@@ -258,6 +260,24 @@ public class Pellot implements Iterable<Pelto> {
         return loydetyt;
     }
 
+    
+    /**
+     * Etsitään hakuehdon mukaisesti ja lisätään löytyneet collectioniin joka palautetaan 
+     * työSuunnittelija luokalle
+     * @param hakuehto ehto jolla haetaan
+     * @param valittuTal tallennus josta peltoja etsitään
+     * @return colletion löytyneistä
+     */
+    public Collection<Pelto> etsi(String hakuehto, int valittuTal) { 
+        String ehto = "*"; 
+        if ( hakuehto != null && hakuehto.length() > 0 ) ehto = hakuehto; 
+        Collection<Pelto> loytyneet = new ArrayList<Pelto>(); 
+        for (Pelto pel: this) { 
+        if (WildChars.onkoSamat(pel.getNimi(), ehto) && pel.getTallennusNro() == valittuTal) loytyneet.add(pel);   
+        } 
+        
+        return loytyneet;
+    }
     
     
     /**

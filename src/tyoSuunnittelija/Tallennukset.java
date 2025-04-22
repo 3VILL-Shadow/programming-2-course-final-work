@@ -7,11 +7,14 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import fi.jyu.mit.fxgui.Dialogs;
+import fi.jyu.mit.ohj2.WildChars;
 
 /**
  * Työ suunnittelijan tallennukset
@@ -254,6 +257,24 @@ public class Tallennukset implements Iterable<Tallennus> {
     @Override
     public Iterator<Tallennus> iterator() {
         return new TallennuksetIterator();
+    }
+    
+    
+    /**
+     * Etsitään hakuehdon mukaisesti ja lisätään löytyneet collectioniin joka palautetaan 
+     * työSuunnittelija luokalle
+     * @param hakuehto ehto jolla haetaan
+     * @return colletion löytyneistä
+     */
+    public Collection<Tallennus> etsi(String hakuehto) { 
+        String ehto = "*"; 
+        if ( hakuehto != null && hakuehto.length() > 0 ) ehto = hakuehto; 
+        Collection<Tallennus> loytyneet = new ArrayList<Tallennus>(); 
+        for (Tallennus tal: this) { 
+        if (WildChars.onkoSamat(tal.getNimi(), ehto)) loytyneet.add(tal);   
+        } 
+        
+        return loytyneet;
     }
     
     

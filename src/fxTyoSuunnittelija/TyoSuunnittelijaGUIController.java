@@ -15,7 +15,7 @@ import java.io.PrintStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.List;
+import java.util.Collection;
 import java.util.ResourceBundle;
 
 import fi.jyu.mit.fxgui.*;
@@ -34,6 +34,8 @@ public class TyoSuunnittelijaGUIController implements Initializable {
     @FXML private TextField fieldLannoitus;
     @FXML private TextField fieldRikat;
     @FXML private TextField fieldKorjuu;
+    @FXML private ComboBoxChooser<String> haettava;
+    @FXML private TextField hakuEhto;
 
     
     /**
@@ -61,7 +63,7 @@ public class TyoSuunnittelijaGUIController implements Initializable {
      * Muutetaan tallennuksen nimeä
      */
     @FXML private void handleMuutaTallennusta() {
-        String uusiTalNimi = Dialogs.showInputDialog("Muuta Tallennuksen nimeä", "");
+        String uusiTalNimi = Dialogs.showInputDialog("Muuta Tallennuksen nimeä", chooserTallennukset.getSelectedObject().getNimi());
         if (uusiTalNimi == null) return;
         muokkaaTal(uusiTalNimi);
         //Dialogs.showMessageDialog("Ei osata vielä muuttaa tallennuksen nimeä");
@@ -72,7 +74,7 @@ public class TyoSuunnittelijaGUIController implements Initializable {
      * Muutetaan pellon nimeä
      */
     @FXML private void handleMuutaPeltoa() {
-        String uusiPelNimi = Dialogs.showInputDialog("Muuta Pellon nimeä", "");
+        String uusiPelNimi = Dialogs.showInputDialog("Muuta Pellon nimeä", chooserPellot.getSelectedObject().getNimi());
         if (uusiPelNimi == null) return;
         muokkaaPel(uusiPelNimi);
         //Dialogs.showMessageDialog("Ei osata vielä muuttaa pellon nimeä");
@@ -97,6 +99,15 @@ public class TyoSuunnittelijaGUIController implements Initializable {
                 "EI VIELÄ TOTEUTETTU! \nHaluatko poistaa pellon: PELLON_NIMI", "Kyllä", "Ei");
         if (vastaus); //poistaPelto(); pellon poistamista ei vielä osata toteuttaa
         }
+    
+    /**
+     * haetaan valitun ehdon mukaan
+     */
+    @FXML private void handleHaku() {
+        if (haettava.getSelectedIndex() == 0) haeT(0);
+        if (haettava.getSelectedIndex() == 1) haeP(0);
+    }
+    
     
     /**
      * Tallennetaan tiedot
@@ -210,7 +221,9 @@ public class TyoSuunnittelijaGUIController implements Initializable {
     
     
     /**
-     * 
+     * alustetaan listchooserit ja asetetaan niihin selection listenerit
+     * alustetaan hakuehto chooser
+     * alustetaan muokattavat kentät
      */
     protected void alusta() {
         chooserTallennukset.clear();
@@ -219,12 +232,15 @@ public class TyoSuunnittelijaGUIController implements Initializable {
         chooserPellot.clear();
         chooserPellot.addSelectionListener(_ -> naytaPelto());
         
+        haettava.clear();
+        haettava.add("Tallennukset");
+        haettava.add("Pellot");
+        haettava.getSelectionModel().select(0);
+        
         muokattavat = new TextField[] {fieldMaanMuok,  fieldKylvetty, fieldLannoitus, fieldRikat, fieldKorjuu};
     }
     
    
-
-    
     /**
      * Näyttää listasta valitun tallennuksen tiedot, tilapäisesti yhteen isoon edit-kenttään
      */
@@ -260,39 +276,87 @@ public class TyoSuunnittelijaGUIController implements Initializable {
     
     /**
      * Hakee tallennusten tiedot listaan
-     * @param tnro tallennuksen numero, joka aktivoidaan haun jälkeen
+     * @param tnr tallennuksen numero, joka aktivoidaan haun jälkeen
      */
-    protected void haeT(int tnro) {
+    protected void haeT(int tnr) {
+        int tnro = tnr;
+        if (tnro <= 0) {
+            Tallennus kohdalla = tallennusKohdalla;
+            if (kohdalla != null) tnro = kohdalla.getTunnusNro();
+        }
+        
+        String ehto = hakuEhto.getText();
+        if (ehto.indexOf('*') < 0) ehto = "*" + ehto + "*";
+        
         chooserTallennukset.clear();
 
         int index = 0;
-        for (int i = 0; i < tyoSuunnittelija.getTallennuksia(); i++) {
-            Tallennus tallennus = tyoSuunnittelija.annaTallennukset(i);
-            if (tallennus.getTunnusNro() == tnro) index = i;
-            chooserTallennukset.add(tallennus.getNimi(), tallennus);
+        Collection<Tallennus> tallennukset;
+        try {
+            tallennukset = tyoSuunnittelija.etsiTal(ehto);
+            int i = 0;
+            for (Tallennus tal : tallennukset) {
+                if (tal.getTunnusNro() == tnro) index = i;
+                chooserTallennukset.add(tal.getNimi(), tal);
+                i++;
+            } 
+        } catch (SailoException ex) {
+            Dialogs.showMessageDialog("Tallennuksen haussa ongelmia" + ex.getMessage());
         }
+        
+//        for (int i = 0; i < tyoSuunnittelija.getTallennuksia(); i++) {
+//            Tallennus tallennus = tyoSuunnittelija.annaTallennukset(i);
+//            if (tallennus.getTunnusNro() == tnro) index = i;
+//            chooserTallennukset.add(tallennus.getNimi(), tallennus);
+//        }
         chooserTallennukset.setSelectedIndex(index); 
     }
 
     
     /**
      * Hakee tallennusten tiedot listaan
-     * @param pnro tallennuksen numero, joka aktivoidaan haun jälkeen
+     * @param pnr tallennuksen numero, joka aktivoidaan haun jälkeen
      */
-    protected void haeP(int pnro) {
+    protected void haeP(int pnr) {
+        
+        int tnro = pnr;
+        if (tnro <= 0) {
+            Pelto kohdalla = peltoKohdalla;
+            if (kohdalla != null) tnro = kohdalla.getTunnusNro();
+        }
+        
+        String ehto = hakuEhto.getText();
+        if (ehto.indexOf('*') < 0) ehto = "*" + ehto + "*";
+        
         chooserPellot.clear();
+
         Tallennus valittuTal = chooserTallennukset.getSelectedObject();
         
         if (valittuTal == null) return;
         
-        List<Pelto> pellot = tyoSuunnittelija.annaPellot(valittuTal);
-        
         int index = 0;
-        for (int i = 0; i < pellot.size(); i++) {
-            Pelto pelto = pellot.get(i);
-            if (pelto.getTunnusNro() == pnro) index = i;
-            chooserPellot.add(pelto.getNimi(), pelto);
+        Collection<Pelto> pellot;
+        try {
+            pellot = tyoSuunnittelija.etsiPel(ehto, valittuTal);
+            int i = 0;
+            for (Pelto pel : pellot) {
+                if (pel.getTunnusNro() == tnro) index = i;
+                chooserPellot.add(pel.getNimi(), pel);
+                i++;
+            } 
+        } catch (SailoException ex) {
+            Dialogs.showMessageDialog("Tallennuksen haussa ongelmia" + ex.getMessage());
         }
+//        chooserPellot.clear();
+//        
+//        List<Pelto> pellot = tyoSuunnittelija.annaPellot(valittuTal);
+//        
+//        int index = 0;
+//        for (int i = 0; i < pellot.size(); i++) {
+//            Pelto pelto = pellot.get(i);
+//            if (pelto.getTunnusNro() == pnr) index = i;
+//            chooserPellot.add(pelto.getNimi(), pelto);
+//        }
         chooserPellot.setSelectedIndex(index); 
     }
     
@@ -345,6 +409,10 @@ public class TyoSuunnittelijaGUIController implements Initializable {
         haeP(pel.getTunnusNro());          
     } 
     
+    
+    /**
+     * @param uusiPelNimi pellon nimi joka annettu sitä muokatessa
+     */
     private void muokkaaPel(String uusiPelNimi) {
         if (tallennusKohdalla == null) return;
         try {

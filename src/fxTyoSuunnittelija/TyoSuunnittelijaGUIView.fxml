@@ -57,8 +57,8 @@
                   <VBox BorderPane.alignment="CENTER">
                      <children>
                         <ListChooser fx:id="chooserTallennukset" rivit="Tallennus 1&#10;Tallennus 2&#10;Tallennus 3" />
-                        <ComboBoxChooser prefWidth="250.0" rivit="Tallennukset&#10;Pellot" />
-                        <TextField />
+                        <ComboBoxChooser fx:id="haettava" onAction="#handleHaku" prefWidth="250.0" rivit="Tallennukset&#10;Pellot" />
+                        <TextField fx:id="hakuEhto" onKeyReleased="#handleHaku" />
                      </children>
                   </VBox>
                </center>

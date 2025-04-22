@@ -1,5 +1,6 @@
 package tyoSuunnittelija;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -181,7 +182,29 @@ public class TyoSuunnittelija {
         if ( !"".equals(virhe) ) throw new SailoException(virhe);
 
     }
+    
+    
+    /**
+     * Siirretään etsiminen tallennus luokalle ja palautetaan sen tulos käyttöliittymälle
+     * @param hakuehto ehto jolla haetaan
+     * @return löydetyt tallennukset
+     * @throws SailoException jos hakeminen ei onnistu
+     */
+    public Collection<Tallennus> etsiTal(String hakuehto) throws SailoException {
+        return tallennukset.etsi(hakuehto); 
+    } 
 
+    
+    /**
+     * Siirretään etsiminen pellot luokalle ja palautetaan sen tulos käyttöliittymälle
+     * @param hakuehto ehto jolla haetaan
+     * @param valittuTal valittu tallennus josta haetaan peltoja
+     * @return löydetyt pellot
+     * @throws SailoException jos hakeminen ei onnistu
+     */
+    public Collection<Pelto> etsiPel(String hakuehto, Tallennus valittuTal) throws SailoException {
+        return pellot.etsi(hakuehto, valittuTal.getTunnusNro()); 
+    }
     
     
     /**
