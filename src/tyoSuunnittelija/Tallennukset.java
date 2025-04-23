@@ -286,6 +286,22 @@ public class Tallennukset implements Iterable<Tallennus> {
     public String getTiedostonNimi() {
         return tiedNimi + ".dat";
     }
+    
+    /**
+     * @return onko tietoja muutettu
+     */
+    public boolean getMuutettu() {
+        return muutettu;
+    }
+    
+    
+    /**
+     * asetetaan tietojen muuttumisen arvo tilaan jolloin tietoja ei ole muutettu
+     * @param arvo onko tietoja muutettu 
+     */
+    public void setMuutettu(boolean arvo) {
+        muutettu = arvo;
+    }
 
     
     /**

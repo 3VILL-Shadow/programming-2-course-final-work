@@ -132,8 +132,12 @@ public class TyoSuunnittelijaGUIController implements Initializable {
      * Käsitellään lopetuskäsky
      */
     @FXML private void handleLopeta() {
-        tallenna(); 
+        if (tyoSuunnittelija.getMuutettu()) {
+            boolean vastaus = Dialogs.showQuestionDialog("Tallentamattomia tietoja!", "Tietoja ei ole tallennettu!\nTallennetaanko?", "Tallenna", "Älä tallenna");
+            if (vastaus) tallenna();
+        }
         Platform.exit();
+        tyoSuunnittelija.setMuutettu(false);
     }
     
     
@@ -162,6 +166,7 @@ public class TyoSuunnittelijaGUIController implements Initializable {
     private Pelto peltoKohdalla;
     private TextField muokattavat[];
     private CheckBox checkBoxit[];
+    private boolean updatingUI = false;
     
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
@@ -190,7 +195,8 @@ public class TyoSuunnittelijaGUIController implements Initializable {
      * @return true jos saa sulkaa sovelluksen, false jos ei
      */
     public boolean voikoSulkea() {
-        tallenna();
+        boolean vastaus = Dialogs.showQuestionDialog("Tallentamattomia tietoja!", "Tietoja ei ole tallennettu!\nTallennetaanko?", "Tallenna", "Älä tallenna");
+        if (vastaus) tallenna();
         return true;
     }
     
@@ -250,7 +256,7 @@ public class TyoSuunnittelijaGUIController implements Initializable {
         muokattavat = new TextField[] {fieldMaanMuok,  fieldKylvetty, fieldLannoitus, fieldRikat, fieldKorjuu};
         checkBoxit = new CheckBox[] {checkMaanMuok,  checkKylvetty, checkLannoitus, checkRikat, checkKorjuu};
         for (CheckBox cb : checkBoxit) {
-            cb.selectedProperty().addListener((_, _, _) -> muokkaaPelTietoja());
+            cb.selectedProperty().addListener((_, _, _) ->{ if (!updatingUI) muokkaaPelTietoja();});
         }
 
     }
@@ -281,6 +287,8 @@ public class TyoSuunnittelijaGUIController implements Initializable {
         
         if (peltoKohdalla == null) return;
         
+        updatingUI = true; 
+        
         muokattavat[0].setText(peltoKohdalla.getMaanMuok());
         muokattavat[1].setText(peltoKohdalla.getVilja());
         muokattavat[2].setText(peltoKohdalla.getLannoitus());
@@ -292,6 +300,8 @@ public class TyoSuunnittelijaGUIController implements Initializable {
         checkBoxit[2].setSelected(Boolean.parseBoolean(peltoKohdalla.getLannoitusTeht()));
         checkBoxit[3].setSelected(Boolean.parseBoolean(peltoKohdalla.getRikatTeht()));
         checkBoxit[4].setSelected(Boolean.parseBoolean(peltoKohdalla.getKorjuuTeht()));
+        
+        updatingUI = true; 
     }
     
 

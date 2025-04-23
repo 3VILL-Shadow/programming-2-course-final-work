@@ -289,6 +289,15 @@ public class Pellot implements Iterable<Pelto> {
     public boolean getMuutettu() {
         return muutettu;
     }
+    
+    
+    /**
+     * asetetaan tietojen muuttumisen arvo tilaan jolloin tietoja ei ole muutettu
+     * @param arvo onko tietoja muutettu 
+     */
+    public void setMuutettu(boolean arvo) {
+        muutettu = arvo;
+    }
 
     
     /**

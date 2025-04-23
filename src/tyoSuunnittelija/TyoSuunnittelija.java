@@ -211,6 +211,26 @@ public class TyoSuunnittelija {
     
     
     /**
+     * @return onko tietoja muutettu
+     */
+    public boolean getMuutettu() {
+        boolean muutettu = false;
+        if (tallennukset.getMuutettu()) muutettu = true;
+        if (pellot.getMuutettu()) muutettu = true;
+        return muutettu;
+    }
+    
+    /**
+     * palautetaan muutetun arvoksi false
+     * @param arvo onko tietoja muutettu 
+     */
+    public void setMuutettu(boolean arvo) {
+        tallennukset.setMuutettu(arvo);
+        pellot.setMuutettu(arvo);
+    }
+    
+    
+    /**
      * Palauttaa i:n tallennuksen
      * @param i monesko tallennus palautetaan
      * @return viite i:teen tallennukseen
