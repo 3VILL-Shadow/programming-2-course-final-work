@@ -3,6 +3,7 @@ package fxTyoSuunnittelija;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import tyoSuunnittelija.Pelto;
 import tyoSuunnittelija.SailoException;
@@ -35,6 +36,11 @@ public class TyoSuunnittelijaGUIController implements Initializable {
     @FXML private TextField fieldLannoitus;
     @FXML private TextField fieldRikat;
     @FXML private TextField fieldKorjuu;
+    @FXML private CheckBox checkMaanMuok;
+    @FXML private CheckBox checkKylvetty;
+    @FXML private CheckBox checkLannoitus;
+    @FXML private CheckBox checkRikat;
+    @FXML private CheckBox checkKorjuu;
     @FXML private ComboBoxChooser<String> haettava;
     @FXML private TextField hakuEhto;
 
@@ -91,20 +97,18 @@ public class TyoSuunnittelijaGUIController implements Initializable {
      * Poistetaan tallennus
      */
     @FXML private void handlePoistaTallennus() {
-        boolean vastaus = Dialogs.showQuestionDialog("Poista tallennus?",
-                "EI VIELÄ TOTEUTETTU! \nHaluatko poistaa tallennuksen: TALLENNUKSEN_NIMI", "Kyllä", "Ei");
-        if (vastaus); //poistaTallennus(); tallennuksen poistamista ei vielä osata toteuttaa
-        }
+        boolean vastaus = Dialogs.showQuestionDialog("Poista tallennus?","Haluatko poistaa tallennuksen: " + tallennusKohdalla.getNimi(), "Kyllä", "Ei");
+        if (vastaus) poistaTallennus();
+    }
     
     
     /**
      * Poistetaan pelto
      */
     @FXML private void handlePoistaPelto() {
-        boolean vastaus = Dialogs.showQuestionDialog("Poista pelto?",
-                "EI VIELÄ TOTEUTETTU! \nHaluatko poistaa pellon: PELLON_NIMI", "Kyllä", "Ei");
-        if (vastaus); //poistaPelto(); pellon poistamista ei vielä osata toteuttaa
-        }
+        boolean vastaus = Dialogs.showQuestionDialog("Poista pelto?", "Haluatko poistaa pellon: " + peltoKohdalla.getNimi(), "Kyllä", "Ei");
+        if (vastaus) poistaPelto(); 
+    }
     
     /**
      * haetaan valitun ehdon mukaan
@@ -128,7 +132,7 @@ public class TyoSuunnittelijaGUIController implements Initializable {
      * Käsitellään lopetuskäsky
      */
     @FXML private void handleLopeta() {
-        tallenna();
+        tallenna(); 
         Platform.exit();
     }
     
@@ -157,6 +161,7 @@ public class TyoSuunnittelijaGUIController implements Initializable {
     private Tallennus tallennusKohdalla;
     private Pelto peltoKohdalla;
     private TextField muokattavat[];
+    private CheckBox checkBoxit[];
     
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
@@ -194,7 +199,6 @@ public class TyoSuunnittelijaGUIController implements Initializable {
      * Tietojen tallennus
      */
     private String tallenna() {
-//        Dialogs.showMessageDialog("Tallennetetaan! Mutta ei toimi vielä");
         try {
             tyoSuunnittelija.talleta();
             return null;
@@ -244,6 +248,11 @@ public class TyoSuunnittelijaGUIController implements Initializable {
         haettava.getSelectionModel().select(0);
         
         muokattavat = new TextField[] {fieldMaanMuok,  fieldKylvetty, fieldLannoitus, fieldRikat, fieldKorjuu};
+        checkBoxit = new CheckBox[] {checkMaanMuok,  checkKylvetty, checkLannoitus, checkRikat, checkKorjuu};
+        for (CheckBox cb : checkBoxit) {
+            cb.selectedProperty().addListener((_, _, _) -> muokkaaPelTietoja());
+        }
+
     }
     
    
@@ -277,9 +286,15 @@ public class TyoSuunnittelijaGUIController implements Initializable {
         muokattavat[2].setText(peltoKohdalla.getLannoitus());
         muokattavat[3].setText(peltoKohdalla.getRikat());
         muokattavat[4].setText(peltoKohdalla.getKorjuu());
+        
+        checkBoxit[0].setSelected(Boolean.parseBoolean(peltoKohdalla.getMaanMuokTeht()));
+        checkBoxit[1].setSelected(Boolean.parseBoolean(peltoKohdalla.getViljaTeht()));
+        checkBoxit[2].setSelected(Boolean.parseBoolean(peltoKohdalla.getLannoitusTeht()));
+        checkBoxit[3].setSelected(Boolean.parseBoolean(peltoKohdalla.getRikatTeht()));
+        checkBoxit[4].setSelected(Boolean.parseBoolean(peltoKohdalla.getKorjuuTeht()));
     }
     
-    
+
     /**
      * Hakee tallennusten tiedot listaan
      * @param tnr tallennuksen numero, joka aktivoidaan haun jälkeen
@@ -360,6 +375,13 @@ public class TyoSuunnittelijaGUIController implements Initializable {
      * @param talNimi tallennuksen nimi joka annetaan uutta luodessa
      */
     protected void uusiTallennus(String talNimi) {
+        for (Tallennus t : chooserTallennukset.getObjects()) {
+            if (t.getNimi().equalsIgnoreCase(talNimi)) {
+                Dialogs.showMessageDialog("Nimi '" + talNimi + "' on jo käytössä.");
+                return;
+            }
+        }
+        
         Tallennus uusi = new Tallennus();
         uusi.rekisteroi();
         uusi.asetaNimi(talNimi);
@@ -389,6 +411,20 @@ public class TyoSuunnittelijaGUIController implements Initializable {
             //
         }
     }
+    
+    
+    /*
+     * Poistetaan listalta valittu tallennus
+     */
+    private void poistaTallennus() {
+        Tallennus tallennus = tallennusKohdalla;
+        if ( tallennus == null ) return;
+        tyoSuunnittelija.poistaTal(tallennus);
+        int index = chooserTallennukset.getSelectedIndex();
+        haeT(tallennus.getTunnusNro());
+        chooserTallennukset.setSelectedIndex(index);
+    }
+
 
     
     /** 
@@ -396,7 +432,14 @@ public class TyoSuunnittelijaGUIController implements Initializable {
      * @param pelNimi pellon nimi joka annetaan uutta luodessa
      */ 
     public void uusiPelto(String pelNimi) { 
-        if ( tallennusKohdalla == null ) return;  
+        if ( tallennusKohdalla == null ) return; 
+        
+        for (Pelto p : chooserPellot.getObjects()) {
+            if (p.getNimi().equalsIgnoreCase(pelNimi)) {
+                Dialogs.showMessageDialog("Nimi '" + pelNimi + "' on jo käytössä.");
+                return;
+            }
+        }
         Pelto pel = new Pelto();  
         pel.rekisteroi();  
         pel.asetaNimi(tallennusKohdalla.getTunnusNro(), pelNimi);
@@ -427,14 +470,31 @@ public class TyoSuunnittelijaGUIController implements Initializable {
         
         ArrayList<String> tiedot = new ArrayList<>();
         tiedot.add(fieldMaanMuok.getText());
+        tiedot.add(Boolean.toString(checkMaanMuok.isSelected()));
         tiedot.add(fieldKylvetty.getText());
+        tiedot.add(Boolean.toString(checkKylvetty.isSelected()));
         tiedot.add(fieldLannoitus.getText());
+        tiedot.add(Boolean.toString(checkLannoitus.isSelected()));
         tiedot.add(fieldRikat.getText());
+        tiedot.add(Boolean.toString(checkRikat.isSelected()));
         tiedot.add(fieldKorjuu.getText());
+        tiedot.add(Boolean.toString(checkKorjuu.isSelected()));
         
         tyoSuunnittelija.muokkaaPelTietoja(peltoKohdalla, tiedot); 
     }
 
+    
+    /*
+     * Poistetaan listalta valittu pelto
+     */
+    private void poistaPelto() {
+        Pelto pelto = peltoKohdalla;
+        if ( pelto == null ) return;
+        tyoSuunnittelija.poistaPel(pelto);
+        int index = chooserPellot.getSelectedIndex();
+        haeP(pelto.getTunnusNro());
+        chooserPellot.setSelectedIndex(index);
+    }
     
     /**
      * Tulostaa pellon tiedot

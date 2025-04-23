@@ -9,7 +9,48 @@ import java.util.List;
  * ovat vain "välittäjämetodeja" tallennuksiin.
  * @author Ville
  * @version 16 Mar 2025
- */
+ * 
+ * Testien alustus
+ * @example
+ * <pre name="testJAVA">
+ * #import tyoSuunnittelija.SailoException;
+ *  private TyoSuunnittelija tyoSuunnittelija;
+ *  private Tallennus testiTal1;
+ *  private Tallennus testiTal2;
+ *  private int tid1;
+ *  private int tid2;
+ *  private Pelto testiPelto21;
+ *  private Pelto testiPelto11;
+ *  private Pelto testiPelto22; 
+ *  private Pelto testiPelto12; 
+ *  private Pelto testiPelto23;
+ *  
+ *  public void alustaTyoSuunnittelija() {
+ *    tyoSuunnittelija = new TyoSuunnittelija();
+ *    testiTal1 = new Tallennus(); testiTal1.kokeileTallennus(); testiTal1.rekisteroi();
+ *    testiTal2 = new Tallennus(); testiTal2.kokeileTallennus(); testiTal2.rekisteroi();
+ *    tid1 = testiTal1.getTunnusNro();
+ *    tid2 = testiTal2.getTunnusNro();
+ *    testiPelto21 = new Pelto(tid2); testiPelto21.kokeilePelto(tid2);
+ *    testiPelto11 = new Pelto(tid1); testiPelto11.kokeilePelto(tid1);
+ *    testiPelto22 = new Pelto(tid2); testiPelto22.kokeilePelto(tid2); 
+ *    testiPelto12 = new Pelto(tid1); testiPelto12.kokeilePelto(tid1); 
+ *    testiPelto23 = new Pelto(tid2); testiPelto23.kokeilePelto(tid2);
+ *    try {
+ *    tyoSuunnittelija.lisaa(testiTal1);
+ *    tyoSuunnittelija.lisaa(testiTal2);
+ *    tyoSuunnittelija.lisaa(testiPelto21);
+ *    tyoSuunnittelija.lisaa(testiPelto11);
+ *    tyoSuunnittelija.lisaa(testiPelto22);
+ *    tyoSuunnittelija.lisaa(testiPelto12);
+ *    tyoSuunnittelija.lisaa(testiPelto23);
+ *    } catch ( Exception e) {
+ *       System.err.println(e.getMessage());
+ *    }
+ *  }
+ * </pre>
+*/
+
 public class TyoSuunnittelija {
     private final Tallennukset tallennukset = new Tallennukset();
     private final Pellot pellot = new Pellot();
@@ -49,7 +90,7 @@ public class TyoSuunnittelija {
      * @example
      * <pre name="test">
      * #import java.util.*;
-     * 
+     *  alustaTyoSuunnittelija();
      *  TyoSuunnittelija tyoSuunnittelija = new TyoSuunnittelija();
      *  Tallennus testiTallennus3 = new Tallennus(), testiTallennus4 = new Tallennus(), testiTallennus5 = new Tallennus();
      *  testiTallennus3.rekisteroi(); testiTallennus4.rekisteroi(); testiTallennus5.rekisteroi();
@@ -97,11 +138,30 @@ public class TyoSuunnittelija {
     
     /**
      * Poistaa tallennuksista ja pelloista ne joilla on nro. Kesken.
-     * @param nro viitenumero, jonka mukaan poistetaan
+     * @param tallennus viitenumero, jonka mukaan poistetaan
      * @return montako tallennusta poistettiin
      */
-    public int poista(@SuppressWarnings("unused") int nro) {
-        return 0;
+    public int poistaTal(Tallennus tallennus) {
+        if ( tallennus == null ) return 0;
+        int ret = tallennukset.poista(tallennus.getTunnusNro()); 
+        pellot.poistaTallennuksenPellot(tallennus.getTunnusNro()); 
+        return ret; 
+
+    }
+
+    /** 
+     * Poistaa tämän pellon 
+     * @param pelto poistettava pelto 
+     * @example
+     * <pre name="test">
+     * #THROWS Exception
+     *   alustaTyoSuunnittelija();
+     *   tyoSuunnittelija.annaPellot(testiTal1).size() === 2;
+     *   tyoSuunnittelija.poistaPel(testiPelto11);
+     *   tyoSuunnittelija.annaPellot(testiTal1).size() === 1;
+     */ 
+    public void poistaPel(Pelto pelto) { 
+        pellot.poista(pelto); 
     }
 
     
@@ -113,6 +173,7 @@ public class TyoSuunnittelija {
      * @example
      * <pre name="test">
      * #THROWS SailoException 
+     * alustaTyoSuunnittelija();
      * TyoSuunnittelija tyoSuunnittelija = new TyoSuunnittelija();
      * Tallennus testiTallennus3 = new Tallennus(), testiTallennus4 = new Tallennus();
      * testiTallennus3.rekisteroi(); testiTallennus4.rekisteroi();
@@ -133,7 +194,6 @@ public class TyoSuunnittelija {
      * tyoSuunnittelija.lisaa(testiTallennus3); tyoSuunnittelija.getTallennuksia() === 8;
      * tyoSuunnittelija.lisaa(testiTallennus3); tyoSuunnittelija.getTallennuksia() === 9;
      * tyoSuunnittelija.lisaa(testiTallennus3); tyoSuunnittelija.getTallennuksia() === 10;
-     * tyoSuunnittelija.lisaa(testiTallennus3); #THROWS SailoException
      * </pre>
      */
     public void lisaa(Tallennus tallennus) throws SailoException {
@@ -148,7 +208,7 @@ public class TyoSuunnittelija {
     public void muutaTalNimi(Tallennus tallennus, String uusiTalNimi) {
         tallennukset.muutaNimi(tallennus, uusiTalNimi);
     }
-
+    
     
     /**
      * Palauttaa i:n tallennuksen
@@ -176,8 +236,6 @@ public class TyoSuunnittelija {
      * @throws SailoException jos tallettamisessa ongelmia
      */
     public void talleta() throws SailoException {
-//        tallennukset.talleta();
-//        pellot.talleta();
         String virhe = "";
         try {
             tallennukset.talleta();
@@ -260,14 +318,6 @@ public class TyoSuunnittelija {
         } catch (SailoException ex) {
             System.out.println(ex.getMessage());
         }
-    }
-
-    
-    /**
-     * @return onko tietoja muutettu
-     */
-    public boolean getMuutettu() {
-        return pellot.getMuutettu();
     }
 
 }

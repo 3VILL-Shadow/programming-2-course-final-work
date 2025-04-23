@@ -92,6 +92,84 @@ public class Tallennukset implements Iterable<Tallennus> {
     }
     
     
+    /** 
+     * Poistaa tallennuksen jolla on valittu tunnusnumero  
+     * @param id poistettavan tallennuksen tunnusnumero 
+     * @return 1 jos poistettiin, 0 jos ei löydy 
+     * @example 
+     * <pre name="test"> 
+     * #THROWS SailoException  
+     * Tallennukset tallennukset = new Tallennukset(); 
+     * Tallennus testiTal1 = new Tallennus(), testiTal2 = new Tallennus(), testiTal3 = new Tallennus(); 
+     * testiTal1.rekisteroi(); testiTal2.rekisteroi(); testiTal3.rekisteroi(); 
+     * int id1 = testiTal1.getTunnusNro(); 
+     * tallennukset.lisaa(testiTal1); tallennukset.lisaa(testiTal2); tallennukset.lisaa(testiTal3); 
+     * tallennukset.poista(id1+1) === 1; 
+     * tallennukset.annaId(id1+1) === null; tallennukset.getLkm() === 2; 
+     * tallennukset.poista(id1) === 1; tallennukset.getLkm() === 1; 
+     * tallennukset.poista(id1+3) === 0; tallennukset.getLkm() === 1; 
+     * </pre> 
+     *  
+     */ 
+    public int poista(int id) { 
+        int ind = etsiId(id); 
+        if (ind < 0) return 0; 
+        lkm--; 
+        for (int i = ind; i < lkm; i++) 
+            alkiot[i] = alkiot[i + 1]; 
+        alkiot[lkm] = null; 
+        muutettu = true; 
+        return 1; 
+    } 
+
+    
+    /** 
+     * Etsii tallennuksen id:n perusteella 
+     * @param id tunnusnumero, jonka mukaan etsitään 
+     * @return tallennus jolla etsittävä id tai null 
+     * <pre name="test"> 
+     * #THROWS SailoException  
+     * Tallennukset tallennukset = new Tallennukset(); 
+     * Tallennus testiTal1 = new Tallennus(), testiTal2 = new Tallennus(), testiTal3 = new Tallennus(); 
+     * testiTal1.rekisteroi(); testiTal2.rekisteroi(); testiTal3.rekisteroi(); 
+     * int id1 = testiTal1.getTunnusNro(); 
+     * tallennukset.lisaa(testiTal1); tallennukset.lisaa(testiTal2); tallennukset.lisaa(testiTal3); 
+     * tallennukset.annaId(id1  ) == testiTal1 === true; 
+     * tallennukset.annaId(id1+1) == testiTal2 === true; 
+     * tallennukset.annaId(id1+2) == testiTal3 === true; 
+     * </pre> 
+     */ 
+    public Tallennus annaId(int id) { 
+        for (Tallennus tallennus : this) { 
+            if (id == tallennus.getTunnusNro()) return tallennus; 
+        } 
+        return null; 
+    } 
+
+
+    /** 
+     * Etsii tallennuksen id:n perusteella 
+     * @param id tunnusnumero, jonka mukaan etsitään 
+     * @return löytyneen tallennuksen indeksi tai -1 jos ei löydy 
+     * <pre name="test"> 
+     * #THROWS SailoException  
+     * Tallennukset Tallennukset = new Tallennukset(); 
+     * Tallennus testiTal1 = new Tallennus(), testiTal2 = new Tallennus(), testiTal3 = new Tallennus(); 
+     * testiTal1.rekisteroi(); testiTal2.rekisteroi(); testiTal3.rekisteroi(); 
+     * int id1 = testiTal1.getTunnusNro(); 
+     * Tallennukset.lisaa(testiTal1); Tallennukset.lisaa(testiTal2); Tallennukset.lisaa(testiTal3); 
+     * Tallennukset.etsiId(id1+1) === 1; 
+     * Tallennukset.etsiId(id1+2) === 2; 
+     * </pre> 
+     */ 
+    public int etsiId(int id) { 
+        for (int i = 0; i < lkm; i++) 
+            if (id == alkiot[i].getTunnusNro()) return i; 
+        return -1; 
+    } 
+
+    
+    
     /**
      * Palauttaa viitteen i:teen tallennukseen.
      * @param i monennenko tallennuksen viite halutaan
@@ -271,7 +349,7 @@ public class Tallennukset implements Iterable<Tallennus> {
         if ( hakuehto != null && hakuehto.length() > 0 ) ehto = hakuehto; 
         Collection<Tallennus> loytyneet = new ArrayList<Tallennus>(); 
         for (Tallennus tal: this) { 
-        if (WildChars.onkoSamat(tal.getNimi(), ehto)) loytyneet.add(tal);   
+            if (WildChars.onkoSamat(tal.getNimi(), ehto)) loytyneet.add(tal);   
         } 
         
         return loytyneet;

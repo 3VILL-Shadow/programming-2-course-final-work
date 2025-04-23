@@ -66,10 +66,26 @@ public class Pelto implements Cloneable {
     
     
     /**
+     * @return onko maanmuokkaus tehty
+     */
+    public String getMaanMuokTeht() {
+        return maanMuokTeht;
+    }
+    
+    
+    /**
      * @return kylvetty vilja
      */
     public String getVilja() {
         return vilja;
+    }
+    
+    
+    /**
+     * @return onko kylvö tehty
+     */
+    public String getViljaTeht() {
+        return viljaTeht;
     }
     
     
@@ -82,12 +98,27 @@ public class Pelto implements Cloneable {
     
     
     /**
+     * @return onko lannoitus tehty
+     */
+    public String getLannoitusTeht() {
+        return lannoitusTeht;
+    }
+    
+    
+    /**
      * @return rikkaruohot
      */
     public String getRikat() {
         return rikkaruohot;
     }
+
     
+    /**
+     * @return onko rikkaruohojen poisto tehty
+     */
+    public String getRikatTeht() {
+        return rikkaruohotTeht;
+    }
     
     /**
      * @return korjuu
@@ -96,6 +127,13 @@ public class Pelto implements Cloneable {
         return korjuu;
     }
 
+    
+    /**
+     * @return onko maanmuokkaus tehty
+     */
+    public String getKorjuuTeht() {
+        return korjuuTeht;
+    }
     
     /**
      * @return kenttien maara
@@ -153,6 +191,14 @@ public class Pelto implements Cloneable {
     }
     
     
+     /**
+      * Asetetaan maan muokkaus checkboxin tila joka voidaan tallentaa
+      * @param tieto checkboxin tila
+      */
+    public void asetaMaanMuokTeht(String tieto) {
+        maanMuokTeht = tieto;
+    }
+    
     /**
      * asetetaan kylvetty vilja kenttään tieto joka voidaan tallentaa
      * @param tieto kentän sisältö
@@ -163,6 +209,15 @@ public class Pelto implements Cloneable {
     
     
     /**
+     * Asetetaan vilja checkboxin tila joka voidaan tallentaa
+     * @param tieto checkboxin tila
+     */
+   public void asetaViljaTeht(String tieto) {
+       viljaTeht = tieto;
+   }
+    
+   
+    /**
      * asetetaan lannoitus kenttään tieto joka voidaan tallentaa
      * @param tieto kentän sisältö
      */
@@ -172,6 +227,15 @@ public class Pelto implements Cloneable {
     
     
     /**
+     * Asetetaan lannoitus checkboxin tila joka voidaan tallentaa
+     * @param tieto checkboxin tila
+     */
+   public void asetaLannoitusTeht(String tieto) {
+       lannoitusTeht = tieto;
+   }
+   
+    
+    /**
      * asetetaan rikkaruohot kenttään tieto joka voidaan tallentaa
      * @param tieto kentän sisältö
      */
@@ -179,6 +243,15 @@ public class Pelto implements Cloneable {
         rikkaruohot = tieto;
     }
     
+    
+     /**
+     * Asetetaan rikkaruohot checkboxin tila joka voidaan tallentaa
+     * @param tieto checkboxin tila
+     */
+   public void asetaRikatTeht(String tieto) {
+       rikkaruohotTeht = tieto;
+   }
+   
         
     /**
      * asetetaan korjuu kenttään tieto joka voidaan tallentaa
@@ -187,6 +260,15 @@ public class Pelto implements Cloneable {
     public void asetaKorjuu(String tieto) {
         korjuu = tieto;
     }
+    
+    
+    /**
+     * Asetetaan korjuu checkboxin tila joka voidaan tallentaa
+     * @param tieto checkboxin tila
+     */
+   public void asetaKorjuuTeht(String tieto) {
+       korjuuTeht = tieto;
+   }
     
     
     /**

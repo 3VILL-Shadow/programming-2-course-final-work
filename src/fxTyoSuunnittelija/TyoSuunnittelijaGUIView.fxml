@@ -9,6 +9,8 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -20,23 +22,50 @@
         <menus>
           <Menu mnemonicParsing="false" text="Tiedosto">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#handleTallenna" text="Tallenna" />
-                  <MenuItem mnemonicParsing="false" onAction="#handleLopeta" text="Lopeta" />
+              <MenuItem mnemonicParsing="false" onAction="#handleTallenna" text="Tallenna">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#handleLopeta" text="Lopeta" >
+                  	<accelerator>
+                        <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Muokkaa">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#handleUusiTallennus" text="Lisää uusi tallennus" />
-                  <MenuItem mnemonicParsing="false" onAction="#handleUusiPelto" text="Lisää uusi pelto" />
-                  <MenuItem mnemonicParsing="false" onAction="#handleMuutaTallennusta" text="Muuta tallennuksen nimeä" />
-                  <MenuItem mnemonicParsing="false" onAction="#handleMuutaPeltoa" text="Muuta pellon nimeä" />
-                  <MenuItem mnemonicParsing="false" onAction="#handlePoistaTallennus" text="Poista tallennus" />
-                  <MenuItem mnemonicParsing="false" onAction="#handlePoistaPelto" text="Poista pelto" />
+              <MenuItem mnemonicParsing="false" onAction="#handleUusiTallennus" text="Lisää uusi tallennus">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#handleUusiPelto" text="Lisää uusi pelto">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                     </accelerator></MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#handleMuutaTallennusta" text="Muuta tallennuksen nimeä">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#handleMuutaPeltoa" text="Muuta pellon nimeä">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                     </accelerator></MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#handlePoistaTallennus" text="Poista tallennus">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="D" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#handlePoistaPelto" text="Poista pelto">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="D" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                     </accelerator></MenuItem>
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Apua">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#handleApua" text="Ohje" />
+              <MenuItem mnemonicParsing="false" onAction="#handleApua" text="Ohje">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="H" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
                   <MenuItem mnemonicParsing="false" onAction="#handleTietoja" text="Tietoja" />
             </items>
           </Menu>
@@ -57,8 +86,14 @@
                   <VBox BorderPane.alignment="CENTER">
                      <children>
                         <ListChooser fx:id="chooserTallennukset" rivit="Tallennus 1&#10;Tallennus 2&#10;Tallennus 3" />
-                        <ComboBoxChooser fx:id="haettava" onAction="#handleHaku" prefWidth="250.0" rivit="Tallennukset&#10;Pellot" />
-                        <TextField fx:id="hakuEhto" onKeyReleased="#handleHaku" />
+                        <ComboBoxChooser fx:id="haettava" onAction="#handleHaku" prefWidth="250.0" rivit="Tallennukset&#10;Pellot">
+                           <tooltip>
+                              <Tooltip text="Valtise kummasta listasta haetaan" />
+                           </tooltip></ComboBoxChooser>
+                        <TextField fx:id="hakuEhto" onKeyReleased="#handleHaku">
+                           <tooltip>
+                              <Tooltip text="Mitä haetaan" />
+                           </tooltip></TextField>
                      </children>
                   </VBox>
                </center>
@@ -106,14 +141,20 @@
                                        <HBox.margin>
                                           <Insets left="5.0" right="3.0" top="15.0" />
                                        </HBox.margin>
+                                       <tooltip>
+                                          <Tooltip text="Syötä maan muokkauksen tyyppi, esimerkiksi Kyntö tai äestys" />
+                                       </tooltip>
                                     </TextField>
                                     <VBox>
                                        <children>
                                           <Label text="Tehty" />
-                                          <CheckBox mnemonicParsing="false">
+                                          <CheckBox fx:id="checkMaanMuok" mnemonicParsing="false" onMousePressed="#handleMuokkaPelTietoja">
                                              <VBox.margin>
                                                 <Insets left="5.0" top="0.5" />
                                              </VBox.margin>
+                                             <tooltip>
+                                                <Tooltip text="Merkitse tehdyksi tai tekemättömäksi" />
+                                             </tooltip>
                                           </CheckBox>
                                        </children>
                                     </VBox>
@@ -130,11 +171,17 @@
                                        <HBox.margin>
                                           <Insets left="5.0" right="3.0" top="5.0" />
                                        </HBox.margin>
+                                       <tooltip>
+                                          <Tooltip text="Syötä kylvetty/kylvettävä vilja, esimerkiksi Vehntä tai maissi tai ruoho" />
+                                       </tooltip>
                                     </TextField>
-                                    <CheckBox mnemonicParsing="false">
+                                    <CheckBox fx:id="checkKylvetty" mnemonicParsing="false" onMousePressed="#handleMuokkaPelTietoja">
                                        <HBox.margin>
                                           <Insets left="5.0" top="8.0" />
                                        </HBox.margin>
+                                       <tooltip>
+                                          <Tooltip text="Merkitse tehdyksi tai tekemättömäksi" />
+                                       </tooltip>
                                     </CheckBox>
                                  </children>
                               </HBox>
@@ -149,11 +196,17 @@
                                        <HBox.margin>
                                           <Insets left="5.0" right="3.0" top="5.0" />
                                        </HBox.margin>
+                                       <tooltip>
+                                          <Tooltip text="Syötä lannoituksen tarve, esimerkiksi kerran tai ei ollenkaan" />
+                                       </tooltip>
                                     </TextField>
-                                    <CheckBox mnemonicParsing="false">
+                                    <CheckBox fx:id="checkLannoitus" mnemonicParsing="false" onMousePressed="#handleMuokkaPelTietoja">
                                        <HBox.margin>
                                           <Insets left="5.0" top="8.0" />
                                        </HBox.margin>
+                                       <tooltip>
+                                          <Tooltip text="Merkitse tehdyksi tai tekemättömäksi" />
+                                       </tooltip>
                                     </CheckBox>
                                  </children>
                               </HBox>
@@ -168,11 +221,17 @@
                                        <HBox.margin>
                                           <Insets left="5.0" right="3.0" top="5.0" />
                                        </HBox.margin>
+                                       <tooltip>
+                                          <Tooltip text="Syötä rikkaruohojen poiston tarve/tapa, esimerkiksi ei kertaakaan tai ruiskuts" />
+                                       </tooltip>
                                     </TextField>
-                                    <CheckBox mnemonicParsing="false">
+                                    <CheckBox fx:id="checkRikat" mnemonicParsing="false" onMousePressed="#handleMuokkaPelTietoja">
                                        <HBox.margin>
                                           <Insets left="5.0" top="8.0" />
                                        </HBox.margin>
+                                       <tooltip>
+                                          <Tooltip text="Merkitse tehdyksi tai tekemättömäksi" />
+                                       </tooltip>
                                     </CheckBox>
                                  </children>
                               </HBox>
@@ -187,11 +246,17 @@
                                        <HBox.margin>
                                           <Insets left="5.0" right="3.0" top="5.0" />
                                        </HBox.margin>
+                                       <tooltip>
+                                          <Tooltip text="Syötä korjuu tyyppi, esimerkiksi puinti tai niitto" />
+                                       </tooltip>
                                     </TextField>
-                                    <CheckBox mnemonicParsing="false">
+                                    <CheckBox fx:id="checkKorjuu" mnemonicParsing="false" onMousePressed="#handleMuokkaPelTietoja">
                                        <HBox.margin>
                                           <Insets left="5.0" top="8.0" />
                                        </HBox.margin>
+                                       <tooltip>
+                                          <Tooltip text="Merkitse tehdyksi tai tekemättömäksi" />
+                                       </tooltip>
                                     </CheckBox>
                                  </children>
                               </HBox>

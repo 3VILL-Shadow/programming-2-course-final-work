@@ -69,14 +69,94 @@ public class Pellot implements Iterable<Pelto> {
         if (tiedot.size() < 5 || peltoKohdalla == null) return;
 
         peltoKohdalla.asetaMaanMuok(tiedot.get(0));
-        peltoKohdalla.asetaVilja(tiedot.get(1));
-        peltoKohdalla.asetaLannoitus(tiedot.get(2));
-        peltoKohdalla.asetaRikat(tiedot.get(3));
-        peltoKohdalla.asetaKorjuu(tiedot.get(4));
+        peltoKohdalla.asetaMaanMuokTeht(tiedot.get(1));
+        peltoKohdalla.asetaVilja(tiedot.get(2));
+        peltoKohdalla.asetaViljaTeht(tiedot.get(3));
+        peltoKohdalla.asetaLannoitus(tiedot.get(4));
+        peltoKohdalla.asetaLannoitusTeht(tiedot.get(5));
+        peltoKohdalla.asetaRikat(tiedot.get(6));
+        peltoKohdalla.asetaRikatTeht(tiedot.get(7));
+        peltoKohdalla.asetaKorjuu(tiedot.get(8));
+        peltoKohdalla.asetaKorjuuTeht(tiedot.get(9));
 
         muutettu = true;
         
     }
+    
+    
+    /**
+     * Poistaa valitun pellon
+     * @param pelto poistettava pelto
+     * @return tosi jos löytyi poistettava tietue 
+     * @example
+     * <pre name="test">
+     * #THROWS SailoException 
+     * #import java.io.File;
+     *  Pellot testiPellot = new Pellot();
+     *  Pelto testiPelto21 = new Pelto(); testiPelto21.kokeilePelto(2);
+     *  Pelto testiPelto11 = new Pelto(); testiPelto11.kokeilePelto(1);
+     *  Pelto testiPelto22 = new Pelto(); testiPelto22.kokeilePelto(2); 
+     *  Pelto testiPelto12 = new Pelto(); testiPelto12.kokeilePelto(1); 
+     *  Pelto testiPelto23 = new Pelto(); testiPelto23.kokeilePelto(2); 
+     *  testiPellot.lisaa(testiPelto21);
+     *  testiPellot.lisaa(testiPelto11);
+     *  testiPellot.lisaa(testiPelto22);
+     *  testiPellot.lisaa(testiPelto12);
+     *  testiPellot.poista(testiPelto23) === false ; testiPellot.getLkm() === 4;
+     *  testiPellot.poista(testiPelto11) === true;   testiPellot.getLkm() === 3;
+     *  List<Pelto> h = testiPellot.annaPellot(1);
+     *  h.size() === 1; 
+     *  h.get(0) === testiPelto12;
+     * </pre>
+     */
+    public boolean poista(Pelto pelto) {
+        boolean ret = alkiot.remove(pelto);
+        if (ret) muutettu = true;
+        return ret;
+    }
+
+    
+    
+    /**
+     * Poistaa kaikki tietyn tietyn tallennuksen pellot
+     * @param tunnusNro viite siihen, mihin liittyvät tietueet poistetaan
+     * @return montako poistettiin 
+     * @example
+     * <pre name="test">
+     *  Pellot testiPellot = new Pellot();
+     *  Pelto testiPelto21 = new Pelto(); testiPelto21.kokeilePelto(2);
+     *  Pelto testiPelto11 = new Pelto(); testiPelto11.kokeilePelto(1);
+     *  Pelto testiPelto22 = new Pelto(); testiPelto22.kokeilePelto(2); 
+     *  Pelto testiPelto12 = new Pelto(); testiPelto12.kokeilePelto(1); 
+     *  Pelto testiPelto23 = new Pelto(); testiPelto23.kokeilePelto(2); 
+     *  testiPellot.lisaa(testiPelto21);
+     *  testiPellot.lisaa(testiPelto11);
+     *  testiPellot.lisaa(testiPelto22);
+     *  testiPellot.lisaa(testiPelto12);
+     *  testiPellot.lisaa(testiPelto23);
+     *  testiPellot.poistaTallennuksenPellot(2) === 3;  testiPellot.getLkm() === 2;
+     *  testiPellot.poistaTallennuksenPellot(3) === 0;  testiPellot.getLkm() === 2;
+     *  List<Pelto> h = testiPellot.annaPellot(2);
+     *  h.size() === 0; 
+     *  h = testiPellot.annaPellot(1);
+     *  h.get(0) === testiPelto11;
+     *  h.get(1) === testiPelto12;
+     * </pre>
+     */
+    public int poistaTallennuksenPellot(int tunnusNro) {
+        int n = 0;
+        for (Iterator<Pelto> it = alkiot.iterator(); it.hasNext();) {
+            Pelto pel = it.next();
+            if ( pel.getTallennusNro() == tunnusNro ) {
+                it.remove();
+                n++;
+            }
+        }
+        if (n > 0) muutettu = true;
+        return n;
+    }
+
+
 
     
     
@@ -301,7 +381,7 @@ public class Pellot implements Iterable<Pelto> {
         if ( hakuehto != null && hakuehto.length() > 0 ) ehto = hakuehto; 
         Collection<Pelto> loytyneet = new ArrayList<Pelto>(); 
         for (Pelto pel: this) { 
-        if (WildChars.onkoSamat(pel.getNimi(), ehto) && pel.getTallennusNro() == valittuTal) loytyneet.add(pel);   
+            if (WildChars.onkoSamat(pel.getNimi(), ehto) && pel.getTallennusNro() == valittuTal) loytyneet.add(pel);   
         } 
         
         return loytyneet;
