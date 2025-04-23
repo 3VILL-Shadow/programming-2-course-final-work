@@ -10,9 +10,9 @@ import javafx.fxml.FXMLLoader;
 
 
 /**
+ * Työsuunniittelijan käynnistäminen
  * @author ville
- * @version 27.1.2025
- *
+ * @version 23.4.2025
  */
 public class TyoSuunnittelijaMain extends Application {
     @Override

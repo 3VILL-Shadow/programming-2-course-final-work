@@ -8,7 +8,7 @@ import java.util.List;
  * TyöSunnittelija-luokka, joka huolehtii tallennuksista.  Pääosin kaikki metodit
  * ovat vain "välittäjämetodeja" tallennuksiin.
  * @author Ville
- * @version 16 Mar 2025
+ * @version 23.04.2025
  * 
  * Testien alustus
  * @example
@@ -64,7 +64,10 @@ public class TyoSuunnittelija {
         pellot.lisaa(pel);
     }
     
+    
     /**
+     * muutetaan pellon nimeä, viedään tietorakenne luokalle käyttöliittymän pyytämä pelto ja sen uusi nimi
+     * jonka käyttäjä on antanut käyttöliittymässä
      * @param pelto pelto jonka nimeä muutetaan
      * @param uusiPelNimi nimi joka muokatessa annetaan pellolle
      */
@@ -74,6 +77,8 @@ public class TyoSuunnittelija {
 
     
     /**
+     * muutetaan pellon tietoja, viedään tietorakenne luokalle käyttöliittymän pyytämä pelto ja sen uudet tiedot
+     * jotka käyttäjä on antanut käyttöliittymässä
      * @param peltoKohdalla pelto jonka tietoja muutetaan
      * @param tiedot tiedot joita on muutettu
      */
@@ -120,12 +125,13 @@ public class TyoSuunnittelija {
     
     
     /**
-     * Palautaa TyöSuuttnittelijan tallennusten määrän
+     * Palautaa työsuunnittelijan tallennusten määrän
      * @return tallennusten määrä
      */
     public int getTallennuksia() {
         return tallennukset.getLkm();
     }
+    
     
     /**
      * Palauttaa työsuunnittelijan peltojen määrän
@@ -137,7 +143,8 @@ public class TyoSuunnittelija {
 
     
     /**
-     * Poistaa tallennuksista ja pelloista ne joilla on nro. Kesken.
+     * Poistaa tallennukset tietorakenteesta sen tallennuksen joka käyttöliittymässä pyydetään poistamaan
+     * ja pelloista ne jotka kuuluvat kyseiselle tallennukselle
      * @param tallennus viitenumero, jonka mukaan poistetaan
      * @return montako tallennusta poistettiin
      */
@@ -146,11 +153,11 @@ public class TyoSuunnittelija {
         int ret = tallennukset.poista(tallennus.getTunnusNro()); 
         pellot.poistaTallennuksenPellot(tallennus.getTunnusNro()); 
         return ret; 
-
     }
 
+    
     /** 
-     * Poistaa tämän pellon 
+     * Poistaa pellot tietorakenteesta sen pellon joka käyttöliittymästä pyydetään poistamaan
      * @param pelto poistettava pelto 
      * @example
      * <pre name="test">
@@ -164,7 +171,6 @@ public class TyoSuunnittelija {
         pellot.poista(pelto); 
     }
 
-    
     
     /**
      * Lisää työsuunnittelijaan uuden tallennuksen
@@ -202,6 +208,7 @@ public class TyoSuunnittelija {
     
     
     /**
+     * Muutetaan tallennuksen joka on käyttöliittymästä pyydetty
      * @param tallennus tallennus jonka nimeä muutetaan
      * @param uusiTalNimi nimi joka muokatessa annetaan tallennukselle
      */
@@ -211,6 +218,7 @@ public class TyoSuunnittelija {
     
     
     /**
+     * palautetaan pää luokan kautta käyttölittymälle muutettu muuttujan arvo
      * @return onko tietoja muutettu
      */
     public boolean getMuutettu() {
@@ -219,6 +227,7 @@ public class TyoSuunnittelija {
         if (pellot.getMuutettu()) muutettu = true;
         return muutettu;
     }
+    
     
     /**
      * palautetaan muutetun arvoksi false
@@ -246,8 +255,8 @@ public class TyoSuunnittelija {
      * @throws SailoException jos lukeminen epäonnistuu
      */
     public void lueTiedostosta() throws SailoException {
-        tallennukset.lueTiedostosta();
-        pellot.lueTiedostosta();
+        tallennukset.lueTiedostosta(tallennukset.getTiedostonNimi());
+        pellot.lueTiedostosta(pellot.getTiedostonNimi());
     }
 
 
@@ -332,7 +341,6 @@ public class TyoSuunnittelija {
                 List<Pelto> loytyneet = tyoSuunnittelija.annaPellot(tallennus);
                 for (Pelto testiPelto : loytyneet)
                     testiPelto.tulosta(System.out);
-
             }
 
         } catch (SailoException ex) {

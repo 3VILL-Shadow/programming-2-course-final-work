@@ -4,7 +4,7 @@ package tyoSuunnittelija;
 /**
  * Poikkeusluokka tietorakenteesta aiheutuville poikkeuksille.
  * @author Ville
- * @version 16 Mar 2025
+ * @version 23.04.2025
  */
 public class SailoException extends Exception {
     private static final long serialVersionUID = 1L;

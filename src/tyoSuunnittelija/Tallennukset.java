@@ -13,13 +13,12 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import fi.jyu.mit.fxgui.Dialogs;
 import fi.jyu.mit.ohj2.WildChars;
 
 /**
- * Työ suunnittelijan tallennukset
+ * Työsuunnittelijan tallennukset
  * @author Ville
- * @version 16 Mar 2025
+ * @version 23.04.2025
  */
 public class Tallennukset implements Iterable<Tallennus> {
     private static final int MAX_TALLENNUKSIA = 10;
@@ -27,6 +26,7 @@ public class Tallennukset implements Iterable<Tallennus> {
     private Tallennus alkiot[] = new Tallennus[MAX_TALLENNUKSIA];
     private boolean muutettu = false;
     private String tiedNimi = "data\\tallennukset";
+    
     
     /**
      * Oletus muodostaja
@@ -39,7 +39,6 @@ public class Tallennukset implements Iterable<Tallennus> {
     /**
      * Lisää uuden tallennuksen tietorakenteeseen.  Ottaa tallennuksen omistukseensa.
      * @param tallennus lisätäävän tallennukseen viite.  Huom tietorakenne muuttuu omistajaksi
-     * @throws SailoException jos tietorakenne on jo täynnä
      * @example
      * <pre name="test">
      * #THROWS SailoException 
@@ -63,7 +62,7 @@ public class Tallennukset implements Iterable<Tallennus> {
      * tallennukset.lisaa(testiTallennus3); tallennukset.getLkm() === 10;
      * </pre>
      */
-    public void lisaa(Tallennus tallennus) throws SailoException {
+    public void lisaa(Tallennus tallennus) {
         if (lkm >= alkiot.length) alkiot = Arrays.copyOf(alkiot, lkm+20); 
         alkiot[lkm] = tallennus;
         lkm++;
@@ -72,6 +71,9 @@ public class Tallennukset implements Iterable<Tallennus> {
     
     
     /**
+     * Muuttaa tallennuksen nimeä
+     * etsii ensin tietorakenteesta tallennuksen jolla on halutun tallennuksen 
+     * tunnusnumero ja antaa tallennukselle muutaNimi aliohjelman parametrinä uuden nimen
      * @param tallennus tallennus, jonka nimeä muutetaan
      * @param uusiTalNimi tallennuksen uusi nimi
      */
@@ -84,11 +86,7 @@ public class Tallennukset implements Iterable<Tallennus> {
                 return;                
             }
         }
-        try {
-            lisaa(tallennus);
-        } catch (SailoException e) {
-            Dialogs.showMessageDialog(e.getMessage());
-        }
+        lisaa(tallennus);
     }
     
     
@@ -236,15 +234,6 @@ public class Tallennukset implements Iterable<Tallennus> {
             throw new SailoException("Ongelmia tiedoston kanssa: " + e.getMessage());
         }
     }
-    
-    
-    /**
-     * Luetaan aikaisemmin annetun nimisestä tiedostosta
-     * @throws SailoException jos tulee poikkeus
-     */
-    public void lueTiedostosta() throws SailoException {
-        lueTiedostosta(getTiedostonNimi());
-    }
 
 
     /**
@@ -287,7 +276,9 @@ public class Tallennukset implements Iterable<Tallennus> {
         return tiedNimi + ".dat";
     }
     
+    
     /**
+     * palautetaan pää luokan kautta käyttölittymälle muutettu muuttujan arvo
      * @return onko tietoja muutettu
      */
     public boolean getMuutettu() {
@@ -343,8 +334,9 @@ public class Tallennukset implements Iterable<Tallennus> {
         }
     }
 
+    
     /**
-     * Palautetaan iteraattori tallennuksesta.
+     * Palautetaan iteraattori tallennuksistaan.
      * @return tallennus iteraattori
      */
 
@@ -356,7 +348,8 @@ public class Tallennukset implements Iterable<Tallennus> {
     
     /**
      * Etsitään hakuehdon mukaisesti ja lisätään löytyneet collectioniin joka palautetaan 
-     * työSuunnittelija luokalle
+     * työSuunnittelija luokalle joka siirtää löytyneet käyttöliittymälle, jossa vain hakuehtoa
+     * vastaavat näytetään
      * @param hakuehto ehto jolla haetaan
      * @return colletion löytyneistä
      */
@@ -386,20 +379,15 @@ public class Tallennukset implements Iterable<Tallennus> {
         testiTallennus2.rekisteroi();
         testiTallennus2.kokeileTallennus();
 
-        try {
-            tallennukset.lisaa(testiTallennus);
-            tallennukset.lisaa(testiTallennus2);
+        tallennukset.lisaa(testiTallennus);
+        tallennukset.lisaa(testiTallennus2);
 
-            System.out.println("============= Tallennukset testi =================");
+        System.out.println("============= Tallennukset testi =================");
 
-            for (int i = 0; i < tallennukset.getLkm(); i++) {
-                Tallennus tallennus = tallennukset.anna(i);
-                System.out.println("Tallennus nro: " + i);
-                tallennus.tulosta(System.out);
-            }
-
-        } catch (SailoException ex) {
-            System.out.println(ex.getMessage());
+        for (int i = 0; i < tallennukset.getLkm(); i++) {
+            Tallennus tallennus = tallennukset.anna(i);
+            System.out.println("Tallennus nro: " + i);
+            tallennus.tulosta(System.out);
         }
     }
 

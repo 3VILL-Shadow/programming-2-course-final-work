@@ -9,7 +9,7 @@ import fi.jyu.mit.ohj2.Mjonot;
 /**
  * Työ suunnittelijan tallennus, joka pitää huolta numerostaan ja nimestään
  * @author Ville
- * @version 16 Mar 2025
+ * @version 23.04.2025
  */
 public class Tallennus implements Cloneable {
     private int tunnusNro;
@@ -17,7 +17,9 @@ public class Tallennus implements Cloneable {
     
     private static int seuraavaNro    = 1;
 
+    /*Käytössä vain testatessa pääohjelmalla ja esimerkki luonnissa, ennen oikeaa nimen antamista*/
     RandomGenerator random = RandomGenerator.getDefault();
+    
     
     /**
      * @return tallennuksen nimi
@@ -53,6 +55,7 @@ public class Tallennus implements Cloneable {
     
     
     /**
+     * Vaihdetaan tallennuksen nimi nimellä, jonka käyttäjä on käyttöliittymässä antanut
      * @param uusiTalNimi nimi joksi tallennuksen nimi muutetaan
      */
     public void muutaNimi(String uusiTalNimi) {
@@ -61,7 +64,7 @@ public class Tallennus implements Cloneable {
     
     
     /**
-     * Tulostetaan tallennuksen tiedot
+     * Tulostetaan tallennuksen tiedot ei enää käytössä sillä tiedot näkyvät käyttöliittymän kentissä
      * @param out tietovirta johon tulostetaan
      */
     public void tulosta(PrintStream out) {
@@ -70,14 +73,13 @@ public class Tallennus implements Cloneable {
 
 
     /**
-     * Tulostetaan tallennuksen tiedot
+     * Tulostetaan tallennuksen tiedot ei enää käytössä sillä tiedot näkyvät käyttöliittymän kentissä
      * @param os tietovirta johon tulostetaan
      */
     public void tulosta(OutputStream os) {
         tulosta(new PrintStream(os));
     }
 
-    
     
     /**
      * Antaa tallennuksille seuraavan rekisterinumeron.
@@ -101,8 +103,8 @@ public class Tallennus implements Cloneable {
     }
 
     
-    
     /**
+     * Palautetaan tallennuksen oma id
      * @return tallennuksen id
      */
     public int getTunnusNro() {
@@ -122,7 +124,8 @@ public class Tallennus implements Cloneable {
 
     
     /**
-     * Palauttaa tallennuksen tiedot merkkijonona jonka voi tallentaa tiedostoon.
+     * Palauttaa tallennuksen tiedot merkkijonona jotta käyttöliittymässä tehdyt 
+     * tietojen syötöt voidaan tallentaa tiedostoon
      * @return tallennus tolppaeroteltuna merkkijonona 
      * @example
      * <pre name="test">
@@ -164,20 +167,10 @@ public class Tallennus implements Cloneable {
        
     }
 
-    
-    @Override
-    public boolean equals(Object tallennus) {
-        if ( tallennus == null ) return false;
-        return this.toString().equals(tallennus.toString());
-    }
-
-
-    @Override
-    public int hashCode() {
-        return tunnusNro;
-    }
-
-    
+    /**
+     * tehdään tallennuksesta klooni sen nimeä muokatessa, jotta saadaan pidettyä alkuperäinen nimi
+     * mikäli muutosta ei tallenneta
+     */
     @Override
     public Tallennus clone() throws CloneNotSupportedException {
         Tallennus uusi;

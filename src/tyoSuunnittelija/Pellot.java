@@ -15,7 +15,7 @@ import fi.jyu.mit.ohj2.WildChars;
 /**
  * Työsuunnittelijan pellot, joka osaa lisätä uuden pellon
  * @author Ville
- * @version 17 Mar 2025
+ * @version 23.04.2025
  *
  */
 public class Pellot implements Iterable<Pelto> {
@@ -31,7 +31,7 @@ public class Pellot implements Iterable<Pelto> {
      * peltojen alustaminen
      */
     public Pellot() {
-        // toistaiseksi ei tarvitse tehdä mitään
+        // ei tarvitse tehdä mitään
     }
 
     
@@ -45,6 +45,9 @@ public class Pellot implements Iterable<Pelto> {
     }
     
     /**
+     * Muuttaa pellon nimeä
+     * etsii ensin tietorakenteesta pellon jolla on halutun pellon 
+     * tunnusnumero ja antaa pellolle muutaNimi aliohjelman parametrinä uuden nimen
      * @param pelto pelto, jonka nimeä muutetaan
      * @param uusiPelNimi pellon uusi nimi
      */
@@ -62,11 +65,13 @@ public class Pellot implements Iterable<Pelto> {
     
     
     /**
+     * muuttaa pellon tietoja 
+     * vie käyttöliittymältä saadun listan sisällön halutun pellon aliohjelmille joilla tiedot asetetaan
      * @param peltoKohdalla pelto jota muokataan
      * @param tiedot lista kenttien sisältämästä tiedosta
      */
     public void muokkaaTiedot(Pelto peltoKohdalla, ArrayList<String> tiedot) {
-        if (tiedot.size() < 5 || peltoKohdalla == null) return;
+        if (tiedot.size() < 10 || peltoKohdalla == null) return;
 
         peltoKohdalla.asetaMaanMuok(tiedot.get(0));
         peltoKohdalla.asetaMaanMuokTeht(tiedot.get(1));
@@ -119,7 +124,8 @@ public class Pellot implements Iterable<Pelto> {
     
     /**
      * Poistaa kaikki tietyn tietyn tallennuksen pellot
-     * @param tunnusNro viite siihen, mihin liittyvät tietueet poistetaan
+     * iteroi koko tietorakenteen ja poistaa pellot joiden tallennusNro vastaa tunnusNro:ta, 
+     * @param tunnusNro viite siihen tallennukseen, mihin liittyvät tietueet poistetaan
      * @return montako poistettiin 
      * @example
      * <pre name="test">
@@ -155,16 +161,12 @@ public class Pellot implements Iterable<Pelto> {
         if (n > 0) muutettu = true;
         return n;
     }
-
-
-
     
     
     /**
      * Lukee pellot tiedostosta.  
      * @param tiedosto joka luetaan
      * @throws SailoException jos lukeminen epäonnistuu
-     * 
      * @example
      * <pre name="test">
      * #THROWS SailoException 
@@ -177,7 +179,6 @@ public class Pellot implements Iterable<Pelto> {
      *  Pelto testiPelto23 = new Pelto(); testiPelto23.kokeilePelto(2); 
      *  String tiedNimi = "data\\testidata\\testiPellot";
      *  File ftied = new File(tiedNimi+".dat");
-     *  //ftied.delete();
      *  pellot.lueTiedostosta(ftied.getName()); #THROWS SailoException
      *  pellot.lisaa(testiPelto21);
      *  pellot.lisaa(testiPelto11);
@@ -185,7 +186,6 @@ public class Pellot implements Iterable<Pelto> {
      *  pellot.lisaa(testiPelto12);
      *  pellot.lisaa(testiPelto23);
      *  pellot.talleta();
-     *  //pellot = new Pellot();
      *  pellot.lueTiedostosta(tiedNimi+".dat");
      *  Iterator<Pelto> i = pellot.iterator();
      *  i.next().toString() === testiPelto21.toString();
@@ -216,15 +216,6 @@ public class Pellot implements Iterable<Pelto> {
        } catch ( IOException e ) {
            throw new SailoException("Ongelmia tiedoston kanssa: " + e.getMessage());
        }
-    }
-    
-    
-    /**
-     * Luetaan tiedostosta
-     * @throws SailoException jos tulee poikkeus
-     */
-    public void lueTiedostosta() throws SailoException {
-        lueTiedostosta(getTiedostonNimi());
     }
     
     
@@ -284,6 +275,7 @@ public class Pellot implements Iterable<Pelto> {
     
     
     /**
+     * palautetaan pää luokan kautta käyttölittymälle muutettu muuttujan arvo
      * @return onko tietoja muutettu
      */
     public boolean getMuutettu() {
@@ -303,12 +295,10 @@ public class Pellot implements Iterable<Pelto> {
     /**
      * Iteraattori kaikkien harrastusten läpikäymiseen
      * @return harrastusiteraattori
-     * 
      * @example
      * <pre name="test">
      * #PACKAGEIMPORT
      * #import java.util.*;
-     * 
      *  Pellot testiPellot2 = new Pellot();
      *  Pelto testiPelto21 = new Pelto(2); testiPellot2.lisaa(testiPelto21);
      *  Pelto testiPelto11 = new Pelto(1); testiPellot2.lisaa(testiPelto11);
@@ -349,7 +339,6 @@ public class Pellot implements Iterable<Pelto> {
      * @example
      * <pre name="test">
      * #import java.util.*;
-     * 
      *  Pellot testiPellot2 = new Pellot();
      *  Pelto testiPelto21 = new Pelto(2); testiPellot2.lisaa(testiPelto21);
      *  Pelto testiPelto11 = new Pelto(1); testiPellot2.lisaa(testiPelto11);
@@ -380,7 +369,8 @@ public class Pellot implements Iterable<Pelto> {
     
     /**
      * Etsitään hakuehdon mukaisesti ja lisätään löytyneet collectioniin joka palautetaan 
-     * työSuunnittelija luokalle
+     * työSuunnittelija luokalle joka siirtää löytyneet käyttöliittymälle, jossa vain hakuehtoa
+     * vastaavat näytetään
      * @param hakuehto ehto jolla haetaan
      * @param valittuTal tallennus josta peltoja etsitään
      * @return colletion löytyneistä
@@ -398,7 +388,7 @@ public class Pellot implements Iterable<Pelto> {
     
     
     /**
-     * Testiohjelma harrastuksille
+     * Testiohjelma pelloille
      * @param args ei käytössä
      */
     public static void main(String[] args) {

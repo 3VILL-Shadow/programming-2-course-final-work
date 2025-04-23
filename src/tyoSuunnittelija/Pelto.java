@@ -10,7 +10,7 @@ import fi.jyu.mit.ohj2.Mjonot;
 /**
  * Pelto-luokka joka pitää huolta esim omasta tunnuksestaan
  * @author Ville
- * @version 17 Mar 2025
+ * @version 23.04.2025
  *
  */
 public class Pelto implements Cloneable {
@@ -30,14 +30,15 @@ public class Pelto implements Cloneable {
     
     private static int seuraavaNro = 1;
     
+    /*Käytössä vain testatessa pääohjelmalla ja esimerkki luonnissa, ennen oikeaa nimen antamista*/
     RandomGenerator random = RandomGenerator.getDefault();
     
     
     /**
-     * Ei tarvetta vielä
+     * Ei tarvetta
      */
     public Pelto() {
-        // ei tarvetta vielä
+        // ei tarvetta
     }
     
     /**
@@ -175,6 +176,7 @@ public class Pelto implements Cloneable {
     }
     
     /**
+     * Vaihdetaan pellon nimi nimellä, jonka käyttäjä on käyttöliittymässä antanut
      * @param uusiPelNimi nimi joksi pellon nimi muutetaan
      */
     public void muutaNimi(String uusiPelNimi) {
@@ -183,7 +185,7 @@ public class Pelto implements Cloneable {
     
     
     /**
-     * asetetaan maan muokkaus kenttään tieto joka voidaan tallentaa
+     * asetetaan maanmuokkaus muuttujalle arvo joka on tuotu käyttöliittymästä
      * @param tieto kentän sisältö
      */
     public void asetaMaanMuok(String tieto) {
@@ -192,7 +194,7 @@ public class Pelto implements Cloneable {
     
     
      /**
-      * Asetetaan maan muokkaus checkboxin tila joka voidaan tallentaa
+      * Asetetaan maanMuokTeht muuttujalle arvo joka on tuotu käyttöliittymästä
       * @param tieto checkboxin tila
       */
     public void asetaMaanMuokTeht(String tieto) {
@@ -200,7 +202,7 @@ public class Pelto implements Cloneable {
     }
     
     /**
-     * asetetaan kylvetty vilja kenttään tieto joka voidaan tallentaa
+     * asetetaan vilja muuttujalle arvo joka on tuotu käyttöliittymästä
      * @param tieto kentän sisältö
      */
     public void asetaVilja(String tieto) {
@@ -209,7 +211,7 @@ public class Pelto implements Cloneable {
     
     
     /**
-     * Asetetaan vilja checkboxin tila joka voidaan tallentaa
+     * Asetetaan viljaTeht muuttujalle arvo joka on tuotu käyttöliittymästä
      * @param tieto checkboxin tila
      */
    public void asetaViljaTeht(String tieto) {
@@ -218,7 +220,7 @@ public class Pelto implements Cloneable {
     
    
     /**
-     * asetetaan lannoitus kenttään tieto joka voidaan tallentaa
+     * asetetaan lannoitus muuttujalle arvo joka on tuotu käyttöliittymästä
      * @param tieto kentän sisältö
      */
     public void asetaLannoitus(String tieto) {
@@ -227,7 +229,7 @@ public class Pelto implements Cloneable {
     
     
     /**
-     * Asetetaan lannoitus checkboxin tila joka voidaan tallentaa
+     * Asetetaan lannoitusTeht muuttujalle arvo joka on tuotu käyttöliittymästä
      * @param tieto checkboxin tila
      */
    public void asetaLannoitusTeht(String tieto) {
@@ -236,7 +238,7 @@ public class Pelto implements Cloneable {
    
     
     /**
-     * asetetaan rikkaruohot kenttään tieto joka voidaan tallentaa
+     * asetetaan rikkaruohot muuttujalle arvo joka on tuotu käyttöliittymästä
      * @param tieto kentän sisältö
      */
     public void asetaRikat(String tieto) {
@@ -245,7 +247,7 @@ public class Pelto implements Cloneable {
     
     
      /**
-     * Asetetaan rikkaruohot checkboxin tila joka voidaan tallentaa
+     * Asetetaan rikkaruohotTeht muuttujalle arvo joka on tuotu käyttöliittymästä
      * @param tieto checkboxin tila
      */
    public void asetaRikatTeht(String tieto) {
@@ -254,7 +256,7 @@ public class Pelto implements Cloneable {
    
         
     /**
-     * asetetaan korjuu kenttään tieto joka voidaan tallentaa
+     * asetetaan korjuu muuttujalle arvo joka on tuotu käyttöliittymästä
      * @param tieto kentän sisältö
      */
     public void asetaKorjuu(String tieto) {
@@ -263,7 +265,7 @@ public class Pelto implements Cloneable {
     
     
     /**
-     * Asetetaan korjuu checkboxin tila joka voidaan tallentaa
+     * Asetetaan korjuuTeht muuttujalle arvo joka on tuotu käyttöliittymästä
      * @param tieto checkboxin tila
      */
    public void asetaKorjuuTeht(String tieto) {
@@ -272,7 +274,7 @@ public class Pelto implements Cloneable {
     
     
     /**
-     * Tulostetaan pellon tiedot
+     * Tulostetaan pellon tiedot ei enää käytössä sillä tiedot näkyvät käyttöliittymän kentissä
      * @param out tietovirta johon tulostetaan
      */
     public void tulosta(PrintStream out) {
@@ -282,7 +284,7 @@ public class Pelto implements Cloneable {
     }
     
     /**
-     * Tulostetaan pellon tiedot
+     * Tulostetaan pellon tiedot ei enää käytössä sillä tiedot näkyvät käyttöliittymän kentissä
      * @param os tietovirta johon tulostetaan
      */
     public void tulosta(OutputStream os) {
@@ -291,8 +293,8 @@ public class Pelto implements Cloneable {
     
     
     /**
-     * Antaa harrastukselle seuraavan rekisterinumeron.
-     * @return harrastuksen uusi tunnus_nro
+     * Antaa pellolle seuraavan rekisterinumeron.
+     * @return pellon uusi tunnusNro
      * @example
      * <pre name="test">
      *   Pelto testiPelto2 = new Pelto();
@@ -313,8 +315,8 @@ public class Pelto implements Cloneable {
 
 
     /**
-     * Palautetaan harrastuksen oma id
-     * @return harrastuksen id
+     * Palautetaan pellon oma id
+     * @return pellon id
      */
     public int getTunnusNro() {
         return tunnusNro;
@@ -339,9 +341,11 @@ public class Pelto implements Cloneable {
         if (tunnusNro >= seuraavaNro) seuraavaNro = tunnusNro + 1;
     }
     
+    
     /**
-     * Palauttaa harrastuksen tiedot merkkijonona jonka voi tallentaa tiedostoon.
-     * @return harrastus tolppaeroteltuna merkkijonona 
+     * Palauttaa pellon tiedot merkkijonona jotta käyttöliittymässä tehdyt 
+     * tietojen syötöt voidaan tallentaa tiedostoon
+     * @return pelto tolppaeroteltuna merkkijonona 
      * @example
      * <pre name="test">
      *   Pelto pelto = new Pelto();
@@ -391,20 +395,11 @@ public class Pelto implements Cloneable {
         korjuuTeht = Mjonot.erota(sb, '|', korjuuTeht);
     }
     
-    
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) return false;
-        return this.toString().equals(obj.toString());
-    }
-    
-    
-    @Override
-    public int hashCode() {
-        return tunnusNro;
-    }
-    
-    
+
+    /**
+     * tehdään pellosta klooni sitä muokatessa, jotta saadaan pidettyä alkuperäiset tiedot
+     * mikäli muokkauksia ei tallenneta
+     */
     @Override
     public Pelto clone() throws CloneNotSupportedException {
         Pelto uusi;
