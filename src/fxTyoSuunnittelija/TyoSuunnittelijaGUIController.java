@@ -3,6 +3,7 @@ package fxTyoSuunnittelija;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import tyoSuunnittelija.Pelto;
@@ -44,6 +45,7 @@ public class TyoSuunnittelijaGUIController implements Initializable {
     @FXML private CheckBox checkKorjuu;
     @FXML private ComboBoxChooser<String> haettava;
     @FXML private TextField hakuEhto;
+    @FXML private Button buttonLajittele;
 
     
     /**
@@ -190,6 +192,15 @@ public class TyoSuunnittelijaGUIController implements Initializable {
     @FXML private void handleHaku() {
         if (haettava.getSelectedIndex() == 0) haeT(0);
         if (haettava.getSelectedIndex() == 1) haeP(0);
+    }
+    
+    
+    /**
+     * lajitellaan valitusta listasta
+     */
+    @FXML private void handleLajittele() {
+        if (haettava.getSelectedIndex() == 0) lajittele(haettava.getSelectedIndex()); 
+        if (haettava.getSelectedIndex() == 1) lajittele(haettava.getSelectedIndex());
     }
     
     
@@ -409,6 +420,34 @@ public class TyoSuunnittelijaGUIController implements Initializable {
         }
         
         chooserTallennukset.setSelectedIndex(index); 
+    }
+    
+    
+    /**
+     * lajitellaan haluttu lista
+     * @param i lista jota lajitellaan
+     */
+    protected void lajittele(int i) {
+        if (i == 0) {
+            ArrayList<Tallennus> tallennuksetLajiteltu = new ArrayList<>();
+            for (int j = 0; j < tyoSuunnittelija.getTallennuksia(); j++) {
+                tallennuksetLajiteltu.add(tyoSuunnittelija.annaTallennukset(j));
+            }
+            tallennuksetLajiteltu.sort((t1, t2) -> t1.getNimi().compareToIgnoreCase(t2.getNimi()));
+            chooserTallennukset.clear();
+            for (Tallennus tal : tallennuksetLajiteltu) {
+                chooserTallennukset.add(tal.getNimi(), tal);
+            }
+        }
+        
+        if (i == 1) {
+            ArrayList<Pelto> pellot = new ArrayList<>(tyoSuunnittelija.getPeltoja());
+            pellot.sort((t1, t2) -> t1.getNimi().compareToIgnoreCase(t2.getNimi()));
+            chooserPellot.clear();
+            for (Pelto pel : pellot) {
+                chooserPellot.add(pel.getNimi(), pel);
+            }
+        }
     }
 
     

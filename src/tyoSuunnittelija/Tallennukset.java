@@ -10,7 +10,9 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import fi.jyu.mit.ohj2.WildChars;
@@ -356,10 +358,11 @@ public class Tallennukset implements Iterable<Tallennus> {
     public Collection<Tallennus> etsi(String hakuehto) { 
         String ehto = "*"; 
         if ( hakuehto != null && hakuehto.length() > 0 ) ehto = hakuehto; 
-        Collection<Tallennus> loytyneet = new ArrayList<Tallennus>(); 
+        List<Tallennus> loytyneet = new ArrayList<Tallennus>(); 
         for (Tallennus tal: this) { 
             if (WildChars.onkoSamat(tal.getNimi(), ehto)) loytyneet.add(tal);   
         } 
+        Collections.sort(loytyneet, new Tallennus.Vertailija());
         
         return loytyneet;
     }

@@ -2,6 +2,7 @@ package tyoSuunnittelija;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.Comparator;
 import java.util.random.RandomGenerator;
 
 import fi.jyu.mit.ohj2.Mjonot;
@@ -19,6 +20,19 @@ public class Tallennus implements Cloneable {
 
     /*Käytössä vain testatessa pääohjelmalla ja esimerkki luonnissa, ennen oikeaa nimen antamista*/
     RandomGenerator random = RandomGenerator.getDefault();
+    
+    
+    /** 
+     * Tallennusten vertailija 
+     */ 
+    public static class Vertailija implements Comparator<Tallennus> { 
+         
+        @Override 
+        public int compare(Tallennus tal1, Tallennus tal2) { 
+            return tal1.getNimi().compareToIgnoreCase(tal2.getNimi()); 
+        } 
+    } 
+
     
     
     /**
