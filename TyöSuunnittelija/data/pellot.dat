@@ -1,1 +1,5 @@
 ;id     |tallennuksen id 	|Pellon nimi  	|Maanmuokkaus   |MaanmuokkausTehty		|Kylvetty vilja	|KylvöTehty 	|Lannoitus		|LannoitusTehty 	|Rikkaruohot	|RikkaruohotTehty	|Korjuu		|KorjuuTehty
+1|4|Pelto 32|Kultivointi|true|Maissi|true|Kerta vielä|true|Poisto kylvön jälkeen ruiskuttamalla|true|Puinti|false
+2|4|Pelto 33 N|Nurmi pelto|true|Nurmi|true|Kerran paalauksen jälkeen|true|Ei tarvetta|true|Niito tehty, paalaus|true
+3|4|Pelto 33 S|Nurmi pelto|true|Nurmi|true|Kerran paalauksen jälkeen|true|Ei tarvetta|true|Niitto ja paalien keräys|true
+4|4|Pelto 35|Alfalfa pelto|true|Alfalfa|true|Kerran paalauksen jälkeen|true|Ei tarvetta|true|Niito tehty, paalaus|true
