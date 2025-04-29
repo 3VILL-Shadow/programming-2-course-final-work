@@ -199,8 +199,8 @@ public class TyoSuunnittelijaGUIController implements Initializable {
      * lajitellaan valitusta listasta
      */
     @FXML private void handleLajittele() {
-        if (haettava.getSelectedIndex() == 0) lajittele(haettava.getSelectedIndex()); 
-        if (haettava.getSelectedIndex() == 1) lajittele(haettava.getSelectedIndex());
+//        if (haettava.getSelectedIndex() == 0) lajittele(haettava.getSelectedIndex()); 
+//        if (haettava.getSelectedIndex() == 1) lajittele(haettava.getSelectedIndex());
     }
     
     
@@ -359,6 +359,7 @@ public class TyoSuunnittelijaGUIController implements Initializable {
         if (peltoKohdalla == null) {
             for (int i = 0; i < Pelto.getKenttia(); i++) {
                 muokattavat[i].setText("");
+                checkBoxit[i].setSelected(false);
             }
         }
     }
@@ -427,28 +428,28 @@ public class TyoSuunnittelijaGUIController implements Initializable {
      * lajitellaan haluttu lista
      * @param i lista jota lajitellaan
      */
-    protected void lajittele(int i) {
-        if (i == 0) {
-            ArrayList<Tallennus> tallennuksetLajiteltu = new ArrayList<>();
-            for (int j = 0; j < tyoSuunnittelija.getTallennuksia(); j++) {
-                tallennuksetLajiteltu.add(tyoSuunnittelija.annaTallennukset(j));
-            }
-            tallennuksetLajiteltu.sort((t1, t2) -> t1.getNimi().compareToIgnoreCase(t2.getNimi()));
-            chooserTallennukset.clear();
-            for (Tallennus tal : tallennuksetLajiteltu) {
-                chooserTallennukset.add(tal.getNimi(), tal);
-            }
-        }
-        
-        if (i == 1) {
-            ArrayList<Pelto> pellot = new ArrayList<>(tyoSuunnittelija.getPeltoja());
-            pellot.sort((t1, t2) -> t1.getNimi().compareToIgnoreCase(t2.getNimi()));
-            chooserPellot.clear();
-            for (Pelto pel : pellot) {
-                chooserPellot.add(pel.getNimi(), pel);
-            }
-        }
-    }
+//    protected void lajittele(int i) {
+//        if (i == 0) {
+//            ArrayList<Tallennus> tallennuksetLajiteltu = new ArrayList<>();
+//            for (int j = 0; j < tyoSuunnittelija.getTallennuksia(); j++) {
+//                tallennuksetLajiteltu.add(tyoSuunnittelija.annaTallennukset(j));
+//            }
+//            tallennuksetLajiteltu.sort((t1, t2) -> t1.getNimi().compareToIgnoreCase(t2.getNimi()));
+//            chooserTallennukset.clear();
+//            for (Tallennus tal : tallennuksetLajiteltu) {
+//                chooserTallennukset.add(tal.getNimi(), tal);
+//            }
+//        }
+//        
+//        if (i == 1) {
+//            ArrayList<Pelto> pellot = new ArrayList<>(tyoSuunnittelija.getPeltoja());
+//            pellot.sort((t1, t2) -> t1.getNimi().compareToIgnoreCase(t2.getNimi()));
+//            chooserPellot.clear();
+//            for (Pelto pel : pellot) {
+//                chooserPellot.add(pel.getNimi(), pel);
+//            }
+//        }
+//    }
 
     
     /**
