@@ -27,6 +27,7 @@ public class Pelto implements Cloneable {
     private String rikkaruohotTeht = "";
     private String korjuu = "";
     private String korjuuTeht = "";
+    private String lisaTieto ="";
     
     private static int seuraavaNro = 1;
     
@@ -136,11 +137,19 @@ public class Pelto implements Cloneable {
         return korjuuTeht;
     }
     
+    
+    /**
+     * @return lisatiedot
+     */
+    public String getLisaTieto() {
+        return lisaTieto;
+    }
+    
     /**
      * @return kenttien maara
      */
     public static int getKenttia() {
-        return 5;
+        return 6;
     }
     
     
@@ -161,6 +170,7 @@ public class Pelto implements Cloneable {
         rikkaruohotTeht = "false";
         korjuu = "Puinti";
         korjuuTeht = "false";
+        lisaTieto ="Testi testi";
     }
     
     
@@ -271,6 +281,14 @@ public class Pelto implements Cloneable {
    public void asetaKorjuuTeht(String tieto) {
        korjuuTeht = tieto;
    }
+   
+   /**
+    * Asetetaan lisaTieto muuttujalle arvo joka on tuotu käyttöliittymästä
+    * @param tieto kentän sisältö
+    */
+   public void asetaLisaTiedot(String tieto) {
+       lisaTieto = tieto;
+   }
     
     
     /**
@@ -280,7 +298,7 @@ public class Pelto implements Cloneable {
     public void tulosta(PrintStream out) {
         out.println(nimi + " \n" + maanMuok + " " + maanMuokTeht + " \n" + vilja + " " + viljaTeht + " \n" +
                     lannoitus + " " + lannoitusTeht + " \n" + rikkaruohot + " " + rikkaruohotTeht + " \n" +
-                    korjuu + " " + korjuuTeht);
+                    korjuu + " " + korjuuTeht + " \n" + lisaTieto);
     }
     
     /**
@@ -357,7 +375,7 @@ public class Pelto implements Cloneable {
     public String toString() {
         return "" + getTunnusNro() + "|" + tallennusNro + "|" + nimi + "|" + maanMuok + "|" + maanMuokTeht + "|" + vilja + "|" +
                 viljaTeht + "|" +lannoitus + "|" + lannoitusTeht + "|" + rikkaruohot + "|" + rikkaruohotTeht + "|" + korjuu
-                + "|" + korjuuTeht;
+                + "|" + korjuuTeht + "|" + lisaTieto;
     }
     
     
@@ -393,6 +411,7 @@ public class Pelto implements Cloneable {
         rikkaruohotTeht = Mjonot.erota(sb, '|', rikkaruohotTeht);
         korjuu = Mjonot.erota(sb, '|', korjuu);
         korjuuTeht = Mjonot.erota(sb, '|', korjuuTeht);
+        lisaTieto = Mjonot.erota(sb, '|', lisaTieto);
     }
     
 
@@ -417,4 +436,6 @@ public class Pelto implements Cloneable {
         testiPelto.kokeilePelto(1);
         testiPelto.tulosta(System.out);
     }
+
+
 }

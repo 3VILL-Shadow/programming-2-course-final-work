@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import tyoSuunnittelija.Pelto;
 import tyoSuunnittelija.SailoException;
@@ -38,6 +39,7 @@ public class TyoSuunnittelijaGUIController implements Initializable {
     @FXML private TextField fieldLannoitus;
     @FXML private TextField fieldRikat;
     @FXML private TextField fieldKorjuu;
+    @FXML private TextArea areaLisaTieto;
     @FXML private CheckBox checkMaanMuok;
     @FXML private CheckBox checkKylvetty;
     @FXML private CheckBox checkLannoitus;
@@ -343,6 +345,8 @@ public class TyoSuunnittelijaGUIController implements Initializable {
         for (CheckBox cb : checkBoxit) {
             cb.selectedProperty().addListener((_, _, _) ->{ if (!valinnanVaihto) muokkaaPelTietoja();});
         }
+        
+        areaLisaTieto.clear();
     }
     
    
@@ -360,6 +364,7 @@ public class TyoSuunnittelijaGUIController implements Initializable {
             for (int i = 0; i < Pelto.getKenttia(); i++) {
                 muokattavat[i].setText("");
                 checkBoxit[i].setSelected(false);
+                areaLisaTieto.setText("");
             }
         }
     }
@@ -379,6 +384,8 @@ public class TyoSuunnittelijaGUIController implements Initializable {
         muokattavat[2].setText(peltoKohdalla.getLannoitus());
         muokattavat[3].setText(peltoKohdalla.getRikat());
         muokattavat[4].setText(peltoKohdalla.getKorjuu());
+        
+        areaLisaTieto.setText(peltoKohdalla.getLisaTieto());
         
         checkBoxit[0].setSelected(Boolean.parseBoolean(peltoKohdalla.getMaanMuokTeht()));
         checkBoxit[1].setSelected(Boolean.parseBoolean(peltoKohdalla.getViljaTeht()));
@@ -592,6 +599,7 @@ public class TyoSuunnittelijaGUIController implements Initializable {
         tiedot.add(Boolean.toString(checkRikat.isSelected()));
         tiedot.add(fieldKorjuu.getText());
         tiedot.add(Boolean.toString(checkKorjuu.isSelected()));
+        tiedot.add(areaLisaTieto.getText());
         
         tyoSuunnittelija.muokkaaPelTietoja(peltoKohdalla, tiedot); 
     }

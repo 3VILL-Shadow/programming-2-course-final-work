@@ -1,15 +1,16 @@
-;id     |tallennuksen id 	|Pellon nimi  	|Maanmuokkaus   |MaanmuokkausTehty		|Kylvetty vilja	|KylvöTehty 	|Lannoitus		|LannoitusTehty 	|Rikkaruohot	|RikkaruohotTehty	|Korjuu		|KorjuuTehty
-1|1|Pelto 20|Kynnetty|true|Vehnä|false|Kerran|false|Poisto|false|Puinti|false
-2|1|Pelto 21|Äestetty|false|Ohra|false|Kaksi kertaa|false|Poisto|false|Puinti|false
-3|1|Pelto 22|Äestetty|true|Maissi|true|Kerran|true|Poisto|true|Puinti|false
-4|1|Pelto 23|Kynnetty|false|Nurmi|false|Kaksi kertaa|false|Ei poistoa|false|Niitto|false
-5|2|Pelto 43|Suorakylvetty|true|Kaura|true|Ei kertaakaan|false|Poisto|false|Puinti|false
-6|2|Pelto 42|Suorakylvetty|false|Kaura|false|Ei kertaakaan|false|Poisto|false|Puinti|false
-7|2|Pelto 31|Suorakylvetty|false|Nurmi|false|Kerran|false|Ei poistoa|false|Niitto|false
-8|3|Pelto 10|Äestetty|true|Vehnä|false|Kaksi kertaa|false|Poisto|false|Puinti|false
-9|3|Pelto 09|Äestetty|true|Maissi|true|Kaksi kertaa|false|Poisto|false|Puinti|false
-12|4|Pelto 110||false||false||false||false||false
-13|5|Pelto 141||false||false||false||false||false
-14|6|Pelto 01||false||false||false||false||false
-15|6|Pelto 02||||||||||
-16|6|teas||||||||||
+;id     |tallennuksen id 	|Pellon nimi  	|Maanmuokkaus   |MaanmuokkausTehty		|Kylvetty vilja	|KylvöTehty 	|Lannoitus		|LannoitusTehty 	|Rikkaruohot	|RikkaruohotTehty	|Korjuu		|KorjuuTehty |Lisä tiedot
+1|1|Pelto 20|Kynnetty|true|Vehnä|false|Kerran|false|Poisto|false|Puinti|false|dasdafeegfdgfhgfdhgd
+2|1|Pelto 21|Äestetty|false|Ohra|false|Kaksi kertaa|false|Poisto|false|Puinti|false|
+3|1|Pelto 22|Äestetty|true|Maissi|true|Kerran|true|Poisto|true|Puinti|false|
+4|1|Pelto 23|Kynnetty|false|Nurmi|false|Kaksi kertaa|false|Ei poistoa|false|Niitto|false|
+5|2|Pelto 43|Suorakylvetty|true|Kaura|true|Ei kertaakaan|false|Poisto|false|Puinti|false|
+6|2|Pelto 42|Suorakylvetty|false|Kaura|false|Ei kertaakaan|false|Poisto|false|Puinti|false|
+7|2|Pelto 31|Suorakylvetty|false|Nurmi|false|Kerran|false|Ei poistoa|false|Niitto|false|
+8|3|Pelto 10|Äestetty|true|Vehnä|false|Kaksi kertaa|false|Poisto|false|Puinti|false|
+9|3|Pelto 09|Äestetty|true|Maissi|true|Kaksi kertaa|false|Poisto|false|Puinti|false|
+12|4|Pelto 110||false||false||false||false||false|
+13|5|Pelto 141||false||false||false||false||false|
+14|6|Pelto 01||false||false||false||false||false|
+15|6|Pelto 02|||||||||||
+16|6|teas|||||||||||
+17|6|dsadas||false||false||false||false||false|dsadsad

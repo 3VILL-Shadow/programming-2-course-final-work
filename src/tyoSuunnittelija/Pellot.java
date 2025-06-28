@@ -71,7 +71,7 @@ public class Pellot implements Iterable<Pelto> {
      * @param tiedot lista kenttien sisältämästä tiedosta
      */
     public void muokkaaTiedot(Pelto peltoKohdalla, ArrayList<String> tiedot) {
-        if (tiedot.size() < 10 || peltoKohdalla == null) return;
+        if (tiedot.size() < 11 || peltoKohdalla == null) return;
 
         peltoKohdalla.asetaMaanMuok(tiedot.get(0));
         peltoKohdalla.asetaMaanMuokTeht(tiedot.get(1));
@@ -83,6 +83,7 @@ public class Pellot implements Iterable<Pelto> {
         peltoKohdalla.asetaRikatTeht(tiedot.get(7));
         peltoKohdalla.asetaKorjuu(tiedot.get(8));
         peltoKohdalla.asetaKorjuuTeht(tiedot.get(9));
+        peltoKohdalla.asetaLisaTiedot(tiedot.get(10));
 
         muutettu = true;
         

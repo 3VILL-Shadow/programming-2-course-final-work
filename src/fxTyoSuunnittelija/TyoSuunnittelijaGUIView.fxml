@@ -9,6 +9,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.input.KeyCodeCombination?>
@@ -126,7 +127,7 @@
                   <Insets bottom="3.0" left="3.0" right="3.0" />
                </HBox.margin>
             </BorderPane>
-            <BorderPane id="Tyotehtavat" fx:id="paneTyotehtavat" minHeight="400.0" prefHeight="400.0">
+            <BorderPane id="Tyotehtavat" fx:id="paneTyotehtavat" minHeight="400.0">
                <top>
                   <Label text="Työtehtävät" BorderPane.alignment="CENTER">
                      <BorderPane.margin>
@@ -139,7 +140,7 @@
                <center>
                   <Pane BorderPane.alignment="CENTER">
                      <children>
-                        <VBox>
+                        <VBox alignment="CENTER">
                            <children>
                               <HBox>
                                  <children>
@@ -271,6 +272,19 @@
                                     </CheckBox>
                                  </children>
                               </HBox>
+                              <Label alignment="TOP_LEFT" text="Lisätiedot">
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <TextArea fx:id="areaLisaTieto" onKeyReleased="#handleMuokkaPelTietoja" prefHeight="189.2" prefWidth="260.0">
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                                 <tooltip>
+                                    <Tooltip text="Kirjoita pellolle lisätietoja" />
+                                 </tooltip>
+                              </TextArea>
                            </children>
                         </VBox>
                      </children>
