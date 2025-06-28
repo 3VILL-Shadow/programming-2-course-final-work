@@ -87,11 +87,20 @@
                   <VBox BorderPane.alignment="CENTER">
                      <children>
                         <ListChooser fx:id="chooserTallennukset" rivit="Tallennus 1&#10;Tallennus 2&#10;Tallennus 3" />
-                        <ComboBoxChooser fx:id="haettava" onAction="#handleHaku" prefWidth="250.0" rivit="Tallennukset&#10;Pellot">
-                           <tooltip>
-                              <Tooltip text="Valtise kummasta listasta haetaan" />
-                           </tooltip>
-                        </ComboBoxChooser>
+                        <HBox>
+                           <children>
+                              <ComboBoxChooser fx:id="haettava" onAction="#handleHaku" prefWidth="190.0" rivit="Tallennukset&#10;Pellot">
+                                 <tooltip>
+                                    <Tooltip text="Valtise kummasta listasta haetaan" />
+                                 </tooltip>
+                              </ComboBoxChooser>
+                              <Button fx:id="buttonLajittele" mnemonicParsing="false" onAction="#handleLajittele" text="Lajittele">
+                                 <tooltip>
+                                    <Tooltip text="Lajittelee valitun listan" />
+                                 </tooltip>
+                              </Button>
+                           </children>
+                        </HBox>
                         <TextField fx:id="hakuEhto" onKeyReleased="#handleHaku">
                            <tooltip>
                               <Tooltip text="Mitä haetaan" />
@@ -260,15 +269,6 @@
                                           <Tooltip text="Merkitse tehdyksi tai tekemättömäksi" />
                                        </tooltip>
                                     </CheckBox>
-                                 </children>
-                              </HBox>
-                              <HBox disable="true" prefWidth="250.0" visible="false">
-                                 <children>
-                                    <Button fx:id="buttonLajittele" mnemonicParsing="false" onAction="#handleLajittele" text="Lajittele">
-                                       <tooltip>
-                                          <Tooltip text="Lajittelee valitun listan" />
-                                       </tooltip>
-                                    </Button>
                                  </children>
                               </HBox>
                            </children>

@@ -10,7 +10,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
+//import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -362,7 +362,7 @@ public class Tallennukset implements Iterable<Tallennus> {
         for (Tallennus tal: this) { 
             if (WildChars.onkoSamat(tal.getNimi(), ehto)) loytyneet.add(tal);   
         } 
-        Collections.sort(loytyneet, new Tallennus.Vertailija());
+//        Collections.sort(loytyneet, new Tallennus.Vertailija());
         
         return loytyneet;
     }
