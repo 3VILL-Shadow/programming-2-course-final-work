@@ -125,6 +125,15 @@ public class TyoSuunnittelija {
     
     
     /**
+     * @param tallennus tallennus jonka pellot lajitellaan
+     * @param pellotLajiteltu lajiteltu lista tallennuksista
+     */
+    public void asetaPellot(Tallennus tallennus, ArrayList<Pelto> pellotLajiteltu) {
+        pellot.asetaPellot(tallennus.getTunnusNro(), pellotLajiteltu);
+    }
+    
+    
+    /**
      * Palautaa työsuunnittelijan tallennusten määrän
      * @return tallennusten määrä
      */
@@ -249,6 +258,14 @@ public class TyoSuunnittelija {
         return tallennukset.anna(i);
     }
 
+    
+    /**
+     * @param tallennuksetLajiteltu lajiteltu lista tallennuksista
+     */
+    public void asetaTallennukset(ArrayList<Tallennus> tallennuksetLajiteltu) {
+        tallennukset.asetaTallennukset(tallennuksetLajiteltu);
+    }
+    
     
     /**
      * Lukee TyöSuunnittelijan tiedot tiedostosta

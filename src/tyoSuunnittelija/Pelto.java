@@ -149,7 +149,7 @@ public class Pelto implements Cloneable {
      * @return kenttien maara
      */
     public static int getKenttia() {
-        return 6;
+        return 5;
     }
     
     

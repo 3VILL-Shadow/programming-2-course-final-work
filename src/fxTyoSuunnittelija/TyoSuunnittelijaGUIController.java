@@ -57,27 +57,13 @@ public class TyoSuunnittelijaGUIController implements Initializable {
      * ja käyttäjän sulkiessa ilmoitus dialogi annetaan käyttäjän 
      * antaa heti uusi nimi, mutta myös pitäen edellisen yrityksen 
      * syöte jotta käyttäjältä säästetään kirjoittamista
-     * TODO: voisi tehdä nimen olemassa olon tarkastukselle apumetodin
      */
     @FXML private void handleUusiTallennus() {
-        String talNimi = "";
-        while (true) {
-            talNimi = Dialogs.showInputDialog("Anna Tallennuksen nimi", talNimi);
-            if (talNimi == null) return;
-            boolean onOlemassa = false;
-            for (Tallennus t : chooserTallennukset.getObjects()) {
-                if (t.getNimi().equalsIgnoreCase(talNimi)) {
-                    Dialogs.showMessageDialog("Nimi '" + talNimi + "' on jo käytössä.");
-                    onOlemassa = true;
-                    break;
-                }
-            }
-            if (!onOlemassa) break;
-        }
-        uusiTallennus(talNimi);
+        String uusi = kokeileNimi("Anna tallennuksen nimi", "", true);
+        if (uusi != null) uusiTallennus(uusi);
     }
 
-    
+
     /**
      * Lisätään uusi pelto
      * ja tarkastetaan onko saman niminen pelto jo olemassa
@@ -85,24 +71,10 @@ public class TyoSuunnittelijaGUIController implements Initializable {
      * ja käyttäjän sulkiessa ilmoitus dialogi annetaan käyttäjän 
      * antaa heti uusi nimi, mutta myös pitäen edellisen yrityksen 
      * syöte jotta käyttäjältä säästetään kirjoittamista
-     * TODO: voisi tehdä nimen olemassa olon tarkastukselle apumetodin
      */
     @FXML private void handleUusiPelto() {
-        String pelNimi = "";
-        while (true) {
-            pelNimi = Dialogs.showInputDialog("Anna Pellon nimi", pelNimi);
-            if (pelNimi == null) return;
-            boolean onOlemassa = false;
-            for (Pelto p : chooserPellot.getObjects()) {
-                if (p.getNimi().equalsIgnoreCase(pelNimi)) {
-                    Dialogs.showMessageDialog("Nimi '" + pelNimi + "' on jo käytössä.");
-                    onOlemassa = true;
-                    break;
-                }
-            }
-            if (!onOlemassa) break;
-        }
-        uusiPelto(pelNimi);
+        String uusi = kokeileNimi("Anna pellon nimi", "", false);
+        if (uusi != null )uusiPelto(uusi);
     }
     
     
@@ -113,24 +85,10 @@ public class TyoSuunnittelijaGUIController implements Initializable {
      * ja käyttäjän sulkiessa ilmoitus dialogi annetaan käyttäjän 
      * antaa heti uusi nimi, mutta myös pitäen edellisen yrityksen 
      * syöte jotta käyttäjältä säästetään kirjoittamista
-     * TODO: voisi tehdä nimen olemassa olon tarkastukselle apumetodin
      */
     @FXML private void handleMuutaTallennusta() {
-        String uusiTalNimi = chooserTallennukset.getSelectedObject().getNimi();
-        while (true) {
-            uusiTalNimi = Dialogs.showInputDialog("Anna Pellon nimi", uusiTalNimi);
-            if (uusiTalNimi == null) return;
-            boolean onOlemassa = false;
-            for (Pelto p : chooserPellot.getObjects()) {
-                if (p.getNimi().equalsIgnoreCase(uusiTalNimi)) {
-                    Dialogs.showMessageDialog("Nimi '" + uusiTalNimi + "' on jo käytössä.");
-                    onOlemassa = true;
-                    break;
-                }
-            }
-            if (!onOlemassa) break;
-        }
-        muokkaaTal(uusiTalNimi);
+        String uusi = kokeileNimi("Anna tallennuksen nimi", chooserTallennukset.getSelectedObject().getNimi(), true);
+        if (uusi != null) muokkaaTal(uusi);
     }
     
     
@@ -141,24 +99,10 @@ public class TyoSuunnittelijaGUIController implements Initializable {
      * ja käyttäjän sulkiessa ilmoitus dialogi annetaan käyttäjän 
      * antaa heti uusi nimi, mutta myös pitäen edellisen yrityksen 
      * syöte jotta käyttäjältä säästetään kirjoittamista
-     * TODO: voisi tehdä nimen olemassa olon tarkastukselle apumetodin
      */
     @FXML private void handleMuutaPeltoa() {
-        String uusiPelNimi = chooserPellot.getSelectedObject().getNimi();
-        while (true) {
-            uusiPelNimi = Dialogs.showInputDialog("Anna Pellon nimi", uusiPelNimi);
-            if (uusiPelNimi == null) return;
-            boolean onOlemassa = false;
-            for (Pelto p : chooserPellot.getObjects()) {
-                if (p.getNimi().equalsIgnoreCase(uusiPelNimi)) {
-                    Dialogs.showMessageDialog("Nimi '" + uusiPelNimi + "' on jo käytössä.");
-                    onOlemassa = true;
-                    break;
-                }
-            }
-            if (!onOlemassa) break;
-        }
-        muokkaaPel(uusiPelNimi);
+        String uusi = kokeileNimi("Anna Pellon nimi", chooserPellot.getSelectedObject().getNimi(), false);
+        if (uusi != null) muokkaaPel(uusi);
     }
     
     
@@ -311,6 +255,11 @@ public class TyoSuunnittelijaGUIController implements Initializable {
             tyoSuunnittelija.lueTiedostosta();
             haeT(0);
             haeP(0);
+            lajittele(0);
+            for (int i = 0; i < tyoSuunnittelija.getTallennuksia(); i++) {   
+                chooserTallennukset.setSelectedIndex(i);
+                lajittele(1);
+            }
             return null;
         } catch (SailoException e) {
             haeT(0);
@@ -364,8 +313,8 @@ public class TyoSuunnittelijaGUIController implements Initializable {
             for (int i = 0; i < Pelto.getKenttia(); i++) {
                 muokattavat[i].setText("");
                 checkBoxit[i].setSelected(false);
-                areaLisaTieto.setText("");
             }
+            areaLisaTieto.setText("");
         }
     }
     
@@ -446,6 +395,8 @@ public class TyoSuunnittelijaGUIController implements Initializable {
             for (Tallennus tal : tallennuksetLajiteltu) {
                 chooserTallennukset.add(tal.getNimi(), tal);
             }
+            tyoSuunnittelija.asetaTallennukset(tallennuksetLajiteltu);
+
         }
         
         if (i == 1) {
@@ -456,6 +407,7 @@ public class TyoSuunnittelijaGUIController implements Initializable {
             for (Pelto pel : pellotLajiteltu) {
                 chooserPellot.add(pel.getNimi(), pel);
             }
+            tyoSuunnittelija.asetaPellot(chooserTallennukset.getSelectedObject(), pellotLajiteltu);
         }
     }
 
@@ -617,6 +569,47 @@ public class TyoSuunnittelijaGUIController implements Initializable {
         chooserPellot.setSelectedIndex(index);
     }
     
+    
+    /**
+     * Apumetodi nimen tarkastamiseksi 
+     * @param kysymys input dialogin kysymys
+     * @param nimi joka toimii oletus nimenä uuttaluodessa ja nimeä muutettaessa olion jo olemassa oleva nimi
+     * @param talPel tallennus(true) vai pelto(false)
+     * @return uniikki nimi jota ei ole vielä olemassa
+     */
+    private String kokeileNimi(String kysymys, String nimi, boolean talPel) {
+        String kokeiltavaNimi = nimi == null ? "" : nimi;
+        while (true) {
+            String syote = Dialogs.showInputDialog(kysymys, kokeiltavaNimi);
+            if (syote == null) return null;
+            
+            boolean onOlemassa = false;
+            
+            if (talPel) {
+                for (Tallennus t : chooserTallennukset.getObjects()) {
+                    if (t.getNimi().equalsIgnoreCase(syote)) {
+                        onOlemassa = true;
+                        break;
+                    }
+                }
+            }
+            else {
+                for (Pelto p : chooserPellot.getObjects()) {
+                    if (p.getNimi().equalsIgnoreCase(syote)) {
+                        onOlemassa = true;
+                        break;
+                    }
+                }
+            }
+            if (onOlemassa) {
+                Dialogs.showMessageDialog("Nimi '" + syote + "' on jo käytössä");
+                kokeiltavaNimi = syote;
+            }
+            else return syote;
+        }
+    }
+    
+    
     /**
      * Tulostaa pellon tiedot
      * Ei enää käytössä, sillä tiedot näkyvät kentissä ja checkboxeissa 
@@ -629,7 +622,6 @@ public class TyoSuunnittelijaGUIController implements Initializable {
         os.println("----------------------------------------------");
     }
 
-    
     
     /**
      * asetetaan pää luokan sisältö

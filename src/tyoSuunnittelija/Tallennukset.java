@@ -182,6 +182,19 @@ public class Tallennukset implements Iterable<Tallennus> {
         return alkiot[i];
     }
 
+    
+    /**
+     * kun tallennukset on lajiteltu käyttöliittymässä sijoitetaan alkiot lajitellussa järjestyksessä alkuperäisen listan päälle
+     * @param tallennuksetLajiteltu lajiteltu lista tallennuksista
+     */
+    public void asetaTallennukset(ArrayList<Tallennus> tallennuksetLajiteltu) {
+        for (Tallennus t : tallennuksetLajiteltu) {
+            int i = 0;
+            alkiot[i] = t;
+            i++;
+        }
+        
+    }
 
     
     /**
@@ -393,5 +406,6 @@ public class Tallennukset implements Iterable<Tallennus> {
             tallennus.tulosta(System.out);
         }
     }
+
 
 }

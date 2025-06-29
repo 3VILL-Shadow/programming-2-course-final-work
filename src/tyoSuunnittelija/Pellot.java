@@ -366,6 +366,20 @@ public class Pellot implements Iterable<Pelto> {
             if (pel.getTallennusNro() == tunnusnro) loydetyt.add(pel);
         return loydetyt;
     }
+    
+    
+    /**
+     * kun pellot on lajiteltu käyttöliittymässä sijoitetaan alkiot lajitellussa järjestyksessä alkuperäiseen listaan
+     * @param i tallennuksen tunnus numero, jonka pellot lajitellaan
+     * @param pellotLajiteltu lajiteltu lista pelloista
+     */
+    public void asetaPellot(int i, ArrayList<Pelto> pellotLajiteltu) {
+        for (Pelto p : pellotLajiteltu) {
+            if (p.getTallennusNro() == i) alkiot.remove(p);
+            alkiot.add(p);
+        }
+        
+    }
 
     
     /**
@@ -419,4 +433,6 @@ public class Pellot implements Iterable<Pelto> {
         }
 
     }
+
+
 }
