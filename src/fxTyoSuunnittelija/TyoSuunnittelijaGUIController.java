@@ -297,6 +297,7 @@ public class TyoSuunnittelijaGUIController implements Initializable {
         }
         
         areaLisaTieto.clear();
+        areaLisaTieto.setWrapText(true);
     }
     
    
