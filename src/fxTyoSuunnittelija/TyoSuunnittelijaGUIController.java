@@ -260,6 +260,7 @@ public class TyoSuunnittelijaGUIController implements Initializable {
                 chooserTallennukset.setSelectedIndex(i);
                 lajittele(1);
             }
+            chooserTallennukset.setSelectedIndex(0);
             return null;
         } catch (SailoException e) {
             haeT(0);
@@ -334,7 +335,7 @@ public class TyoSuunnittelijaGUIController implements Initializable {
         muokattavat[3].setText(peltoKohdalla.getRikat());
         muokattavat[4].setText(peltoKohdalla.getKorjuu());
         
-        areaLisaTieto.setText(peltoKohdalla.getLisaTieto());
+        areaLisaTieto.setText(peltoKohdalla.getLisaTieto().replace("\\n", "\n"));
         
         checkBoxit[0].setSelected(Boolean.parseBoolean(peltoKohdalla.getMaanMuokTeht()));
         checkBoxit[1].setSelected(Boolean.parseBoolean(peltoKohdalla.getViljaTeht()));

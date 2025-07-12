@@ -375,7 +375,7 @@ public class Pelto implements Cloneable {
     public String toString() {
         return "" + getTunnusNro() + "|" + tallennusNro + "|" + nimi + "|" + maanMuok + "|" + maanMuokTeht + "|" + vilja + "|" +
                 viljaTeht + "|" +lannoitus + "|" + lannoitusTeht + "|" + rikkaruohot + "|" + rikkaruohotTeht + "|" + korjuu
-                + "|" + korjuuTeht + "|" + lisaTieto;
+                + "|" + korjuuTeht + "|" + lisaTieto.replace("\n", "\\n");
     }
     
     
