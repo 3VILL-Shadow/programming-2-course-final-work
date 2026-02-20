@@ -1,6 +1,4 @@
-# pohja
+This is the final course work for University of Jyväskylä's Programmin 2 course.
 
-Pohja kevään 2025 harjoitustöiden GIT-repoille
-
-Lue käyttöohjeet TIMistä: <https://tim.jyu.fi/view/kurssit/tie/ohj2/tyokalut/git/ohj2git#fork>
-
+It is a job planning application made with java and javafx for Farming Simulator games and mainly for my personal use. 
+Comments in the files are in finnish. The src files contain test for testable methods and functions.
